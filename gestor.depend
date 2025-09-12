@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1757655256 source:c:\users\lucae\onedrive\imágenes\documentos\actividades prog 2\poo\gestor\main.cpp
+	<iostream>
+	<ctime>
+	"fecha.h"
+	"productos.h"
+
+1757655273 c:\users\lucae\onedrive\imágenes\documentos\actividades prog 2\poo\gestor\fecha.h
+
+1757654853 c:\users\lucae\onedrive\imágenes\documentos\actividades prog 2\poo\gestor\productos.h
+
