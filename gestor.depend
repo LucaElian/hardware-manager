@@ -9,3 +9,33 @@
 
 1757654853 c:\users\lucae\onedrive\imágenes\documentos\actividades prog 2\poo\gestor\productos.h
 
+1758001060 source:c:\users\lucae\downloads\gestor\fecha.cpp
+	<iostream>
+	<ctime>
+	"fecha.h"
+	"producto.h"
+
+1758001040 c:\users\lucae\downloads\gestor\fecha.h
+
+1757993427 c:\users\lucae\downloads\gestor\productos.h
+
+1758001085 source:c:\users\lucae\downloads\gestor\main.cpp
+	<iostream>
+	"fecha.h"
+
+1758002451 c:\users\lucae\downloads\gestor\producto.h
+	<cstring>
+	"fecha.h"
+
+1758000652 source:c:\users\lucae\downloads\gestor\producto.cpp
+	<iostream>
+	"producto.h"
+
+1758002958 source:c:\users\lucae\downloads\gestor\usuario.cpp
+	<iostream>
+	"usuario.h"
+
+1758002738 c:\users\lucae\downloads\gestor\usuario.h
+	<cstring>
+	"fecha.h"
+
