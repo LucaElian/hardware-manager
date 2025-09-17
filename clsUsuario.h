@@ -7,15 +7,21 @@
 class Usuario {
     //Declaro en privado los atributos
     private:
-        char user[20];
-        char pass[20];
+        int id;
+        char user[50];
+        char pass[50];
         char rol[20];
         //recibe desde fecha el valor de "ingresa"
         Fecha ingresa;
     //declaro en publico mis metodos
     public:
-        //Constructor principal, parsea todos los valores para sus nuevos "_"
-        Usuario(const char *_user, const char *_pass, const char *_rol, Fecha _fecha);
+        //Creacion del constructor principal (en el .h), parsea todos los valores para sus nuevos "_"
+        Usuario(int _id = 0,
+                const char *_user = "vacio",
+                const char *_pass = "vacio",
+                const char *_rol = "vacio",
+                Fecha _fecha);
+
         //Constructor vacio
         Usuario();
         ~Usuario(){}

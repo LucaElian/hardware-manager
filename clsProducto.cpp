@@ -4,14 +4,15 @@
 
 using namespace std;
 
-Producto::Producto(const char *_nombre, const char *_tipo, int _id, int _stock, float _precio, Fecha _fecha){
+Producto::Producto(int _id = 0, const char *_nombre = "vacio", const char *_tipo = " vacio", int _stock = 0, float _precio = 0.0, Fecha _fecha = (00,00,0000)){
+    id = _id;
     strcpy(nombre, _nombre);
     strcpy(tipo, _tipo);
-    id = _id;
     stock = _stock;
     precio = _precio;
     ingreso = _fecha;
 }
+
 
 void Producto::Cargar(){
     cout << "Ingrese el nombre del producto " << endl;

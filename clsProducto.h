@@ -6,15 +6,15 @@
 
 class Producto {
     private:
+        int id;
         char nombre[20];
         char tipo[20];
-        int id;
         float precio;
         int stock;
         Fecha ingreso;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Producto(const char *_nombre, const char *_tipo, int _id, int _stock, float _precio, Fecha _fecha);
+        Producto( int _id = 0, const char *_nombre = "vacio", const char *_tipo = "vacio", int _stock = 0, float _precio = 0, Fecha _fecha);
         Producto();
         ~Producto(){}
 

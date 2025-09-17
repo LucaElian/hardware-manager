@@ -8,7 +8,7 @@ class Fecha {
         int anio;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Fecha(int _dia, int _mes, int _anio);
+        Fecha(int _dia = 0, int _mes = 0, int _anio = 0);
         Fecha();
         ~Fecha(){}
 
@@ -26,6 +26,7 @@ class Fecha {
 
         /// METODOS
         std::string formatToDate();
+        void CargarFechaProducto();
         void Mostrar() const;
         ///void autoCompletado();
 };
