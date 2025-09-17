@@ -26,6 +26,7 @@ class Fecha {
 
         /// METODOS
         std::string formatToDate();
+        void Mostrar() const;
         ///void autoCompletado();
 };
 

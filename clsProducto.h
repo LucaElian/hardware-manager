@@ -15,15 +15,16 @@ class Producto {
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
         Producto(const char *_nombre, const char *_tipo, int _id, int _stock, float _precio, Fecha _fecha);
+        Producto();
         ~Producto(){}
 
         /// GETTERS
-        const char *getNombre() const {return nombre;}
-        const char *getTipo() const {return tipo;}
-        int getId() const {return id;}
-        float getPrecio() const {return precio;}
-        int getStock() const {return stock;}
-        Fecha getFecha() const {return ingreso;}
+        const char *getNombre();
+        const char *getTipo();
+        int getId();
+        float getPrecio();
+        int getStock();
+        Fecha getFecha();
 
         /// SETTERS
         void setNombre(char n[20]) {strcpy(nombre, n);}
@@ -32,6 +33,10 @@ class Producto {
         void setPrecio(float p) {precio = p;}
         void setStock(int s) {stock = s;}
         void setFecha(int d, int m, int a) {ingreso.setFecha(d, m, a);}
+
+        ///Otros metodos
+        void Cargar();
+        void Mostrar();
 };
 
 #endif // PRODUCTOS_H_INCLUDED
