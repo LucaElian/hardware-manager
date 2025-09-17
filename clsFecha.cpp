@@ -1,8 +1,8 @@
 #include <iostream>
 #include <ctime>
 
-#include "fecha.h"
-#include "producto.h"
+#include "clsFecha.h"
+#include "clsProducto.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #define PRODUCTOS_H_INCLUDED
 #include <cstring>
 
-#include "fecha.h"
+#include "clsFecha.h"
 
 class Producto {
     private:

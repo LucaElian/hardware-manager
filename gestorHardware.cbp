@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="gestor" />
+		<Option title="gestorHardware" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/gestor" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/gestorHardware" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/gestor" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/gestorHardware" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -32,13 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="fecha.cpp" />
-		<Unit filename="fecha.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="producto.cpp" />
-		<Unit filename="producto.h" />
-		<Unit filename="usuario.cpp" />
-		<Unit filename="usuario.h" />
-		<Extensions />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

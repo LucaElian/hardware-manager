@@ -1,16 +1,14 @@
 #include <iostream>
 
-#include "fecha.h"
-#include "producto.h"
-#include "usuario.h"
+#include "clsFecha.h"
+#include "clsProducto.h"
+#include "clsUsuario.h"
 
 using namespace std;
 
 int main(){
-    Fecha fe(3, 10, 2005);
-    cout << fe.toString() << "\n\n";
-    Fecha fe1;
-    cout << fe1.toString() << "\n\n";
+
+    cout << "Ahora si se viene lo chido"<<endl;
 
     return 0;
 }

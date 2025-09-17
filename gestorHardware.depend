@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1758120050 source:c:\users\galla\documents\gestorhardware\clsfecha.cpp
+	<iostream>
+	<ctime>
+	"clsFecha.h"
+	"clsProducto.h"
+
+1758119923 c:\users\galla\documents\gestorhardware\clsfecha.h
+
+1758120063 c:\users\galla\documents\gestorhardware\clsproducto.h
+	<cstring>
+	"clsFecha.h"
+
+1758120050 source:c:\users\galla\documents\gestorhardware\clsproducto.cpp
+	<iostream>
+	"clsProducto.h"
+
+1758120050 source:c:\users\galla\documents\gestorhardware\clsusuario.cpp
+	<iostream>
+	"clsUsuario.h"
+
+1758120063 c:\users\galla\documents\gestorhardware\clsusuario.h
+	<cstring>
+	"clsFecha.h"
+

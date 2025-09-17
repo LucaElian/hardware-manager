@@ -1,7 +1,6 @@
 #include <iostream>
 
-#include "usuario.h"
-
+#include "clsUsuario.h"
 using namespace std;
 
 Usuario::Usuario(char _user[20], char _pass[20], char _rol[20], Fecha _fecha){
