@@ -7,7 +7,7 @@
 using namespace std;
 
 ///Constructor de la clase fecha
-Fecha::Fecha(int _dia, int _mes, int _anio){
+Fecha::Fecha(int _dia = 00, int _mes = 00, int _anio = 0000){
     dia = _dia;
     mes = _mes;
     anio = _anio;
@@ -39,6 +39,17 @@ string Fecha::formatToDate(){
     anioString = to_string(anio);
 
     return diaString + "/" + mesString + "/" + anioString;
+
+}
+
+void Fecha::CargarFechaProducto(){
+cout << "CARGANDO LA FECHA DE INGRESO DE SU PRODUCTO -------------" << endl;
+cout << "Ingrese el dia: ";
+cin >> dia;
+cout << "Ingrese el mes: ";
+cin >> mes;
+cout << "Ingrese el anio: ";
+cin >> anio;
 
 }
 
