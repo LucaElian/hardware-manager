@@ -25,7 +25,7 @@ class Fecha {
         }
 
         /// METODOS
-        std::string toString();
+        std::string formatToDate();
         ///void autoCompletado();
 };
 

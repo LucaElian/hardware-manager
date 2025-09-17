@@ -21,7 +21,7 @@ Fecha::Fecha(){
     anio = ahora->tm_year + 1900;
 }
 
-string Fecha::toString(){
+string Fecha::formatToDate(){
     string d;
     string m;
     string a;
