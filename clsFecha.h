@@ -22,6 +22,9 @@ class Fecha {
         /// METODOS
         std::string formatToDate() const;
         void cargarFechaProducto();
+        void cargarDia();
+        void cargarMes();
+        void cargarAnio();
         void mostrarFechaProducto();
 };
 

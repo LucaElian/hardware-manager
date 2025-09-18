@@ -27,6 +27,7 @@ Fecha::Fecha(int _dia, int _mes, int _anio){
 /// Metodo para normalizar la fecha a dd/mm/aaaa
 string Fecha::formatToDate() const{
     //Crea los 3 al aire, no deberia recibirlos desde un objeto'?
+    // no. los toma de los atributos privados del objeto -abrazo
     string diaString;
     string mesString;
     string anioString;
@@ -43,21 +44,32 @@ string Fecha::formatToDate() const{
     return diaString + "/" + mesString + "/" + anioString;
 }
 
-void Fecha::cargarFechaProducto(){
+void Fecha::cargarDia(){
     cout << "INGRESE EL DIA: "; cin >> dia;
     while(dia < 1 || dia > 31){ 
         cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
     }
+}
 
+void Fecha::cargarMes(){
     cout << "INGRESE EL MES: "; cin >> mes;
-    while(dia < 1 || dia > 12){ 
-        cout << "MES INVALIDO. INGRESE EL DIA: "; cin >> mes;
+    while(mes < 1 || mes > 12){ 
+        cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
     }
+}
 
+void Fecha::cargarAnio(){
     cout << "INGRESE EL ANIO: "; cin >> anio;
-    while(dia < 1){
+    while(anio < 1){
         cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
     }
+}
+
+void Fecha::cargarFechaProducto(){
+    // error solucionadio, bobo, podia poner un mes 69
+    Fecha::cargarDia();
+    Fecha::cargarMes();
+    Fecha::cargarAnio();
 }
 
 void Fecha::mostrarFechaProducto() {

@@ -11,7 +11,14 @@ class Usuario {
         char apellido[20];
         char pass[50];
         char rol[20];
-        Fecha ingresa;
+        Fecha ingresaFecha;
+
+        void cargarId();
+        void cargarNombre();
+        void cargarApellido();
+        void cargarPass();
+        void cargarRol();
+
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
         Usuario(int _id = 0,
@@ -28,17 +35,17 @@ class Usuario {
         char const *getApellido() const {return apellido;}
         char const *getPass() const {return pass;}
         char const *getRol() const {return rol;}
-        std::string getFecha() const {return ingresa.formatToDate();}
+        std::string getFecha() const {return ingresaFecha.formatToDate();}
 
         /// SETTERS
         void setNombre(char n[20]) {strcpy(nombre, n);}
         void setApellido(char a[20]) {strcpy(apellido, a);}
         void setPass(char p[50]) {strcpy(pass, p);}
         void setRol(char r[20]) {strcpy(rol, r);}
-        void setFecha(int d, int m, int a) {ingresa.setFecha(d, m, a);}
+        void setFecha(int d, int m, int a) {ingresaFecha.setFecha(d, m, a);}
 
         /// METODOS
-        void cargar();
+        void cargarDatos();
         void mostrar();
 };
 

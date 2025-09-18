@@ -14,19 +14,45 @@ Usuario::Usuario(int _id, const char *_nombre, const char *_apellido, const char
     strcpy(pass, _pass);
     strcpy(rol, _rol);
     toUpperCase(rol);
-    ingresa = _fecha;
+    ingresaFecha = _fecha;
 }
 
-void Usuario::cargar(){
+void Usuario::cargarId(){
     cout << "INGRESE EL ID: "; cin >> id;
+}
+
+void Usuario::cargarNombre(){
     cout << "INGRESE EL NOMBRE DEL USUARIO: "; cin >> nombre;
     toUpperCase(nombre);
+}
+
+void Usuario::cargarApellido(){
     cout << "INGRESE EL APELLIDO DEL USUARIO: "; cin >> apellido;
     toUpperCase(apellido);
+}
+
+void Usuario::cargarPass(){
     cout << "INGRESE LA CONTRASENIA DEL USUARIO: "; cin >> pass;
+}
+
+void Usuario::cargarRol(){
     cout << "INGRESE ROL DEL USUARIO [ADMIN - USER]: "; cin >> rol;
-    toUpperCase(rol) ;
-    ingresa.cargarFechaProducto();
+    toUpperCase(rol);
+    while (strcmp(rol, "ADMIN") != 0 && strcmp(rol, "USER") != 0) {
+        cout << "ROL INVALIDO. INGRESE ROL DEL USUARIO VALIDO [ADMIN - USER]:\n"; cin >> rol;
+        toUpperCase(rol);
+    }   
+    
+}
+
+void Usuario::cargarDatos(){
+    //mas ordenado
+    Usuario::cargarId();
+    Usuario::cargarNombre();
+    Usuario::cargarApellido();
+    Usuario::cargarPass();
+    Usuario::cargarRol();
+    ingresaFecha.cargarFechaProducto();
 }
 
 
@@ -37,6 +63,6 @@ void Usuario::mostrar(){
             "\nAPELLIDO: " << apellido <<
             "\nCONTRASENIA: " << pass <<
             "\nROL: " << rol <<
-            "\nFECHA DE INGRESO: "; ingresa.mostrarFechaProducto();
+            "\nFECHA DE INGRESO: "; ingresaFecha.mostrarFechaProducto();
     cout << "\n-------------------------------------------------\n";
 }

@@ -3,6 +3,7 @@
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
+#include "gestorArchivo.cpp"
 
 using namespace std;
 
@@ -11,6 +12,11 @@ int main(){
     Fecha fe(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
     Producto p1(1, "TeClAdO", "pErIfErIcO", 10, 299.99f, fe);
     Usuario u1(1, "lUcA", "AbUlaFiA", "profornite", "user", fe);
+
+    // HOLAL
+    GestorArchivos gestor(".env/productos.dat");
+    gestor.escribirProducto(p1);
+    gestor.leerProductos();
 
     fe.mostrarFechaProducto();
     cout << "\n\n";
@@ -27,9 +33,10 @@ int main(){
     /// p2.mostrar();
 
     Usuario u2;
-    u2.cargar();
+    u2.cargarDatos();
     cout << "\n\n";
     u2.mostrar();
+
 
     system("pause");
 
