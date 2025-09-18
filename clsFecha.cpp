@@ -6,33 +6,30 @@
 
 using namespace std;
 
-/// CONSTRUCTOR
+///Constructor de la clase fecha
 Fecha::Fecha(int _dia, int _mes, int _anio){
     dia = _dia;
     mes = _mes;
     anio = _anio;
 }
 
-//Constructor por defecto que crea con la fecha actual
-//Fecha::Fecha(){
-//    time_t t = time(0);
-//    tm* ahora = localtime(&t);
-//
-//    dia = ahora->tm_mday;
-//    mes = ahora->tm_mon + 1;
-//    anio = ahora->tm_year + 1900;
-//
-//}
+///Constructor por defecto que crea con la fecha actual
+void Fecha::setearFechaActual(){
+    time_t t = time(0);
+    tm* ahora = localtime(&t);
 
-/// Metodo para normalizar la fecha a dd/mm/aaaa
-string Fecha::formatToDate() const{
+    dia = ahora->tm_mday;
+    mes = ahora->tm_mon + 1;
+    anio = ahora->tm_year + 1900;
+}
+
+///Metodo para "pasarlo a date", aun no tiene ningun uso objetivo
+string Fecha::formatToDate(){
     //Crea los 3 al aire, no deberia recibirlos desde un objeto'?
-    // no. los toma de los atributos privados del objeto -abrazo
     string diaString;
     string mesString;
     string anioString;
-
-    // CORRECCION DE MUESTREO
+    //Correccion para el muestreo, si el dia es menor a dos cifras, se a�ade un 0 antes, lo mismo con los meses
     if(dia < 10) diaString = "0" + to_string(dia);
     else diaString = to_string(dia);
 
@@ -42,36 +39,35 @@ string Fecha::formatToDate() const{
     anioString = to_string(anio);
 
     return diaString + "/" + mesString + "/" + anioString;
+
 }
 
-void Fecha::cargarDia(){
-    cout << "INGRESE EL DIA: "; cin >> dia;
-    while(dia < 1 || dia > 31){ 
-        cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
-    }
+void Fecha::setFecha(int _dia, int _mes, int _anio){
+            dia = _dia;
+            mes = _mes;
+            anio = _anio;
 }
 
-void Fecha::cargarMes(){
-    cout << "INGRESE EL MES: "; cin >> mes;
-    while(mes < 1 || mes > 12){ 
-        cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
-    }
+int Fecha::getDia(){
+    return dia;
+}
+int Fecha::getMes(){
+    return mes;
+}
+int Fecha::getAnio(){
+    return anio;
 }
 
-void Fecha::cargarAnio(){
-    cout << "INGRESE EL ANIO: "; cin >> anio;
-    while(anio < 1){
-        cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
-    }
+void Fecha::CargarF(){
+cout << "Cargue la fecha del producto ->" << endl;
+cout << "Ingrese el dia: ";
+cin >> dia;
+cout << "Ingrese el mes: ";
+cin >> mes;
+cout << "Ingrese el anio: ";
+cin >> anio;
 }
 
-void Fecha::cargarFechaProducto(){
-    // error solucionadio, bobo, podia poner un mes 69
-    Fecha::cargarDia();
-    Fecha::cargarMes();
-    Fecha::cargarAnio();
-}
-
-void Fecha::mostrarFechaProducto() {
-    cout << formatToDate();
+void Fecha::MostrarF() const {
+    std::cout << dia << "/" << mes << "/" << anio;
 }

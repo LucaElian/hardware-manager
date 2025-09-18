@@ -1,0 +1,121 @@
+# depslib dependency file v1.0
+1758120050 source:c:\users\galla\documents\gestorhardware\clsfecha.cpp
+	<iostream>
+	<ctime>
+	"clsFecha.h"
+	"clsProducto.h"
+
+1758119923 c:\users\galla\documents\gestorhardware\clsfecha.h
+
+1758120063 c:\users\galla\documents\gestorhardware\clsproducto.h
+	<cstring>
+	"clsFecha.h"
+
+1758120050 source:c:\users\galla\documents\gestorhardware\clsproducto.cpp
+	<iostream>
+	"clsProducto.h"
+
+1758120050 source:c:\users\galla\documents\gestorhardware\clsusuario.cpp
+	<iostream>
+	"clsUsuario.h"
+
+1758120063 c:\users\galla\documents\gestorhardware\clsusuario.h
+	<cstring>
+	"clsFecha.h"
+
+1758206184 source:c:\users\galla\documents\github\hardware-manager\clsfecha.cpp
+	<iostream>
+	<ctime>
+	"clsFecha.h"
+	"clsProducto.h"
+
+1758206184 c:\users\galla\documents\github\hardware-manager\clsfecha.h
+
+1758206184 c:\users\galla\documents\github\hardware-manager\clsproducto.h
+	<cstring>
+	"clsFecha.h"
+
+1758206184 source:c:\users\galla\documents\github\hardware-manager\clsproducto.cpp
+	<iostream>
+	"cargarCadena.h"
+	"clsProducto.h"
+
+1758206184 source:c:\users\galla\documents\github\hardware-manager\clsusuario.cpp
+	<iostream>
+	"clsUsuario.h"
+
+1758206184 c:\users\galla\documents\github\hardware-manager\clsusuario.h
+	<cstring>
+	"clsFecha.h"
+
+1758206034 source:c:\users\galla\documents\github\hardware-manager\main.cpp
+	<iostream>
+	"clsFecha.h"
+	"clsProducto.h"
+	"clsUsuario.h"
+	"gestorArchivo.cpp"
+	"menuProducto.h"
+
+1758173232 source:c:\users\lucae\downloads\gestor\clsusuario.cpp
+	<iostream>
+	"clsUsuario.h"
+	"utilidades.h"
+
+1758170117 c:\users\lucae\downloads\gestor\clsusuario.h
+	<cstring>
+	"clsFecha.h"
+
+1758161279 c:\users\lucae\downloads\gestor\clsfecha.h
+
+1758173265 source:c:\users\lucae\downloads\gestor\main.cpp
+	<iostream>
+	"clsFecha.h"
+	"clsProducto.h"
+	"clsUsuario.h"
+
+1758169201 c:\users\lucae\downloads\gestor\clsproducto.h
+	<cstring>
+	"clsFecha.h"
+
+1758169856 source:c:\users\lucae\downloads\gestor\clsfecha.cpp
+	<iostream>
+	<ctime>
+	"clsFecha.h"
+	"clsProducto.h"
+
+1758170206 source:c:\users\lucae\downloads\gestor\clsproducto.cpp
+	<iostream>
+	<cstring>
+	"clsProducto.h"
+
+1758171577 c:\users\lucae\downloads\gestor\utilidades.h
+	<string>
+
+1758172640 source:c:\users\lucae\downloads\gestor\utilidades.cpp
+	<iostream>
+
+1758206184 source:c:\users\galla\documents\github\hardware-manager\cargarcadena.cpp
+	<iostream>
+
+1758206184 c:\users\galla\documents\github\hardware-manager\cargarcadena.h
+
+1758206139 source:c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	"clsProducto.h"
+
+1758206139 c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	"clsProducto.h"
+
+1758206184 c:\users\galla\documents\github\hardware-manager\menuproducto.h
+	"clsProducto.h"
+
+1758206022 source:c:\users\galla\documents\github\hardware-manager\menuproducto.cpp
+	<iostream>
+	"clsProducto.h"
+	"clsFecha.h"
+

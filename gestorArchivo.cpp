@@ -1,3 +1,6 @@
+
+/*
+
 #include <iostream>
 #include <cstdio>
 #include <cstring> // strcpychaval
@@ -29,7 +32,7 @@ public:
             fread(&stock, sizeof(int), 1, archivo);
             fread(&precio, sizeof(float), 1, archivo);
 
-            if (id == producto.getId()) {
+            if (id == producto.getID()) {
                 printf("Error: producto con ID %d ya existe\n", id);
                 fclose(archivo);
                 return false;
@@ -39,7 +42,7 @@ public:
         // Mueve the cursor al final para escribir
         fseek(archivo, 0, SEEK_END);
 
-        int newId = producto.getId();
+        int newId = producto.getID();
         int newStock = producto.getStock();
         float newPrecio = producto.getPrecio();
 

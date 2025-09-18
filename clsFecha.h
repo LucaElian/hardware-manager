@@ -8,24 +8,23 @@ class Fecha {
         int anio;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Fecha(int _dia = 1, int _mes = 1, int _anio = 1);
-        ///Fecha();
+        Fecha(int _dia = 0, int _mes = 0, int _anio = 0);
         ~Fecha(){}
 
-        /// SETTER
-        void setFecha(int d, int m, int a){
-            dia = d;
-            mes = m;
-            anio = a;
-        }
+         /// SETTER
+        void setFecha(int , int , int);
+
+        /// GETTERS
+        int getDia();
+        int getMes();
+        int getAnio();
 
         /// METODOS
-        std::string formatToDate() const;
-        void cargarFechaProducto();
-        void cargarDia();
-        void cargarMes();
-        void cargarAnio();
-        void mostrarFechaProducto();
+        void setearFechaActual();
+        std::string formatToDate();
+        void CargarF();
+        void MostrarF() const;
+        ///void autoCompletado();
 };
 
 #endif // FECHA_H_INCLUDED

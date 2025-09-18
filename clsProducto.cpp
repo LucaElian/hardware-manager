@@ -1,42 +1,108 @@
 #include <iostream>
-#include <cstring>
-
+#include "cargarCadena.h"
 #include "clsProducto.h"
-#include "utilidades.h"
 
 using namespace std;
+/* CLASE PRODUCTO: La clase producto sirve para agregar stock a la tienda, tiene 6 atributos:
+- Id: De tipo autoincrement
+- nombre y tipo: Dos valores de tipo char ingresador por usuario
+- stock y precio: Valores entero y float.
+- fecha: fecha es un objeto de tipo "Fecha", se llama al metodo para cargar la fecha dentro de cargarProducto.
 
-Producto::Producto(int _id, const char _nombre[20], const char _tipo[20], int _stock, float _precio, Fecha _fecha){
+Los objetos producto estan marcados con un id unico, ademas deberian estar asignados al usuario administrador que los añadió a stock,
+y asignados al usuario cliente que lo agrego a su carrito.
+*/
+
+///CONSTRUCTOR
+Producto::Producto(int _id,
+                    const char *_nombre,
+                    const char *_tipo,
+                     int _stock,
+                     float _precio,
+                     Fecha _fecha) {
     id = _id;
     strcpy(nombre, _nombre);
-    toUpperCase(nombre);
     strcpy(tipo, _tipo);
-    toUpperCase(tipo);
     stock = _stock;
     precio = _precio;
-    ingreso = _fecha;
+    ingresoProducto = _fecha;
+}
+//usar fseek, usar la funcion contarRegistro y a partir de ese valor le sumo 1 al id
+///SETTERS
+void Producto::setID(int _id){
+    id = _id;
 }
 
-
-void Producto::cargar(){
-    cout << "INGRESE EL ID: "; cin >> id;
-    cout << "INGRESE EL NOMBRE DEL PRODUCTO: "; cin >> nombre;
-    toUpperCase(nombre);
-    cout << "INGRESE EL TIPO DE PRODUCTO [COMPONENTE - PERIFERICO]: "; cin >> tipo;
-    toUpperCase(tipo);
-    cout << "INGRESE STOCK: "; cin >> stock;
-    cout << "INGRESE PRECIO: "; cin >> precio;
-    ingreso.cargarFechaProducto();
+void Producto::setNombre(char *_nombre){
+    strcpy(nombre, _nombre);
 }
 
-void Producto::mostrar() {
-    cout << "----------------PRODUCTO----------------------\n" <<
-            "ID: " << id <<
-            "\nNOMBRE: " << nombre <<
-            "\nTIPO: " << tipo <<
-            "\nSTOCK: " << stock <<
-            "\nPRECIO: $" << precio <<
-            "\nFECHA DE INGRESO: "; ingreso.mostrarFechaProducto();
-    cout << "\n----------------------------------------------\n";
+void Producto::setTipo(char *_tipo){
+    strcpy(tipo, _tipo);
+}
+
+void Producto::setStock(int _stock){
+    stock = _stock;
+}
+
+void Producto::setPrecio(float _precio){
+    precio = _precio;
+}
+
+///GETTERS
+int Producto::getID(){
+    return id;
+}
+
+const char *Producto::getNombre(){
+    return nombre;
+}
+
+const char *Producto::getTipo(){
+    return tipo;
+}
+int Producto::getStock(){
+    return stock;
+}
+float Producto::getPrecio(){
+    return precio;
+}
+
+///SETEAR IDENTIFICADOR, me quede aca creando esto
+int Producto::setearIdentificador(int _id){
+    cout << "setear identificador" << endl;
+    _id += 1;
+    id = _id;
+}
+
+///METODO CARGAR
+void Producto::CargarP(){
+    /*cout << "VERSION PRELIMINAR, ingrese el id: ";
+    cin >> id;*/
+    cout << "Ingrese el nombre del producto: ";
+    cargarCadena(nombre,29);
+    cout << "Ingrese el tipo del producto: ";
+    cargarCadena(tipo,29);
+    cout << "Ingrese el stock disponible: ";
+    cin >> stock;
+    cout << "Ingrese el precio: ";
+    cin >> precio;
+    //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo cargar de Fecha
+    ingresoProducto.CargarF();
+    setearIdentificador(id);
+}
+
+///METODO MOSTRAR
+void Producto::MostrarP() {
+    cout << "----------------PRODUCTO " << id << "----------------------"<<endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Tipo: " << tipo << endl;
+    //cout << "ID: " << id << endl;
+    cout << "Stock: " << stock << endl;
+    cout << "Precio: $" << precio << endl;
+    cout << "Fecha de ingreso: ";
+    //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo mostrar de Fecha
+    ingresoProducto.MostrarF();
+    cout << endl;
 }
 
