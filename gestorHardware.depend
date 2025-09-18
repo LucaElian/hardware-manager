@@ -23,32 +23,34 @@
 	<cstring>
 	"clsFecha.h"
 
-1758206184 source:c:\users\galla\documents\github\hardware-manager\clsfecha.cpp
+1758211199 source:c:\users\galla\documents\github\hardware-manager\clsfecha.cpp
 	<iostream>
 	<ctime>
 	"clsFecha.h"
 	"clsProducto.h"
 
-1758206184 c:\users\galla\documents\github\hardware-manager\clsfecha.h
+1758211146 c:\users\galla\documents\github\hardware-manager\clsfecha.h
 
-1758206184 c:\users\galla\documents\github\hardware-manager\clsproducto.h
+1758206666 c:\users\galla\documents\github\hardware-manager\clsproducto.h
 	<cstring>
 	"clsFecha.h"
 
-1758206184 source:c:\users\galla\documents\github\hardware-manager\clsproducto.cpp
+1758211336 source:c:\users\galla\documents\github\hardware-manager\clsproducto.cpp
 	<iostream>
 	"cargarCadena.h"
 	"clsProducto.h"
+	<cstring>
+	"utilidades.h"
 
-1758206184 source:c:\users\galla\documents\github\hardware-manager\clsusuario.cpp
+1758206666 source:c:\users\galla\documents\github\hardware-manager\clsusuario.cpp
 	<iostream>
 	"clsUsuario.h"
 
-1758206184 c:\users\galla\documents\github\hardware-manager\clsusuario.h
+1758206666 c:\users\galla\documents\github\hardware-manager\clsusuario.h
 	<cstring>
 	"clsFecha.h"
 
-1758206034 source:c:\users\galla\documents\github\hardware-manager\main.cpp
+1758206666 source:c:\users\galla\documents\github\hardware-manager\main.cpp
 	<iostream>
 	"clsFecha.h"
 	"clsProducto.h"
@@ -94,28 +96,34 @@
 1758172640 source:c:\users\lucae\downloads\gestor\utilidades.cpp
 	<iostream>
 
-1758206184 source:c:\users\galla\documents\github\hardware-manager\cargarcadena.cpp
+1758206666 source:c:\users\galla\documents\github\hardware-manager\cargarcadena.cpp
 	<iostream>
 
-1758206184 c:\users\galla\documents\github\hardware-manager\cargarcadena.h
+1758206666 c:\users\galla\documents\github\hardware-manager\cargarcadena.h
 
-1758206139 source:c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
-	<iostream>
-	<cstdio>
-	<cstring>
-	"clsProducto.h"
-
-1758206139 c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
+1758206666 source:c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
 	<iostream>
 	<cstdio>
 	<cstring>
 	"clsProducto.h"
 
-1758206184 c:\users\galla\documents\github\hardware-manager\menuproducto.h
+1758206666 c:\users\galla\documents\github\hardware-manager\gestorarchivo.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
 	"clsProducto.h"
 
-1758206022 source:c:\users\galla\documents\github\hardware-manager\menuproducto.cpp
+1758206666 c:\users\galla\documents\github\hardware-manager\menuproducto.h
+	"clsProducto.h"
+
+1758206666 source:c:\users\galla\documents\github\hardware-manager\menuproducto.cpp
 	<iostream>
 	"clsProducto.h"
 	"clsFecha.h"
+
+1758205581 c:\users\galla\documents\github\hardware-manager\utilidades.h
+	<string>
+
+1758205581 source:c:\users\galla\documents\github\hardware-manager\utilidades.cpp
+	<iostream>
 

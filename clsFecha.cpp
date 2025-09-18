@@ -23,6 +23,9 @@ void Fecha::setearFechaActual(){
     anio = ahora->tm_year + 1900;
 }
 
+//el metodo q habias hecho es igual al de aca arriba
+
+
 ///Metodo para "pasarlo a date", aun no tiene ningun uso objetivo
 string Fecha::formatToDate(){
     //Crea los 3 al aire, no deberia recibirlos desde un objeto'?
@@ -42,6 +45,29 @@ string Fecha::formatToDate(){
 
 }
 
+void Fecha::cargarDia(){
+    cout << "INGRESE EL DIA: "; cin >> dia;
+    while(dia < 1 || dia > 31){ 
+        cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
+    }
+}
+
+void Fecha::cargarMes(){
+    cout << "INGRESE EL MES: "; cin >> mes;
+    while(mes < 1 || mes > 12){ 
+        cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
+}
+}
+
+void Fecha::cargarAnio(){
+    cout << "INGRESE EL ANIO: "; cin >> anio;
+    while(anio < 1){
+        cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
+}
+}
+
+
+
 void Fecha::setFecha(int _dia, int _mes, int _anio){
             dia = _dia;
             mes = _mes;
@@ -60,14 +86,12 @@ int Fecha::getAnio(){
 
 void Fecha::CargarF(){
 cout << "Cargue la fecha del producto ->" << endl;
-cout << "Ingrese el dia: ";
-cin >> dia;
-cout << "Ingrese el mes: ";
-cin >> mes;
-cout << "Ingrese el anio: ";
-cin >> anio;
+cargarDia();
+cargarMes();
+cargarAnio();
 }
 
 void Fecha::MostrarF() const {
-    std::cout << dia << "/" << mes << "/" << anio;
+cout << dia << "/" << mes << "/" << anio;
+//fijate thiago como hacer que aca reciba el format to date o algo asi
 }

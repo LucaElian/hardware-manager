@@ -53,6 +53,8 @@
 		<Unit filename="menuProducto.cpp" />
 		<Unit filename="menuProducto.h" />
 		<Unit filename="output/main.exe" />
+		<Unit filename="utilidades.cpp" />
+		<Unit filename="utilidades.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

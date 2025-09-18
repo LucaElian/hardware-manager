@@ -1,6 +1,8 @@
 #include <iostream>
 #include "cargarCadena.h"
 #include "clsProducto.h"
+#include <cstring>
+#include "utilidades.h"
 
 using namespace std;
 /* CLASE PRODUCTO: La clase producto sirve para agregar stock a la tienda, tiene 6 atributos:
@@ -35,10 +37,12 @@ void Producto::setID(int _id){
 
 void Producto::setNombre(char *_nombre){
     strcpy(nombre, _nombre);
+    toUpperCase(nombre);
 }
 
 void Producto::setTipo(char *_tipo){
     strcpy(tipo, _tipo);
+    toUpperCase(tipo);
 }
 
 void Producto::setStock(int _stock){
@@ -81,8 +85,10 @@ void Producto::CargarP(){
     cin >> id;*/
     cout << "Ingrese el nombre del producto: ";
     cargarCadena(nombre,29);
+    toUpperCase(nombre);
     cout << "Ingrese el tipo del producto: ";
     cargarCadena(tipo,29);
+    toUpperCase(tipo);
     cout << "Ingrese el stock disponible: ";
     cin >> stock;
     cout << "Ingrese el precio: ";
@@ -103,6 +109,7 @@ void Producto::MostrarP() {
     cout << "Fecha de ingreso: ";
     //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo mostrar de Fecha
     ingresoProducto.MostrarF();
+    cout <<"--------------------------------"<<endl;
     cout << endl;
 }
 

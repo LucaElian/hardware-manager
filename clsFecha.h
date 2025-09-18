@@ -22,6 +22,9 @@ class Fecha {
         /// METODOS
         void setearFechaActual();
         std::string formatToDate();
+        void cargarDia();
+        void cargarMes();
+        void cargarAnio();
         void CargarF();
         void MostrarF() const;
         ///void autoCompletado();
