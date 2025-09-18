@@ -1,35 +1,42 @@
 #include <iostream>
+#include <cstring>
 
 #include "clsProducto.h"
+#include "utilidades.h"
 
 using namespace std;
 
-Producto::Producto(int _id = 0, const char *_nombre = "vacio", const char *_tipo = " vacio", int _stock = 0, float _precio = 0.0, Fecha _fecha = (00,00,0000)){
+Producto::Producto(int _id, const char _nombre[20], const char _tipo[20], int _stock, float _precio, Fecha _fecha){
     id = _id;
     strcpy(nombre, _nombre);
+    toUpperCase(nombre);
     strcpy(tipo, _tipo);
+    toUpperCase(tipo);
     stock = _stock;
     precio = _precio;
     ingreso = _fecha;
 }
 
 
-void Producto::Cargar(){
-    cout << "Ingrese el nombre del producto " << endl;
-    cin >> nombre[20];
-
-
+void Producto::cargar(){
+    cout << "INGRESE EL ID: "; cin >> id;
+    cout << "INGRESE EL NOMBRE DEL PRODUCTO: "; cin >> nombre;
+    toUpperCase(nombre);
+    cout << "INGRESE EL TIPO DE PRODUCTO [COMPONENTE - PERIFERICO]: "; cin >> tipo;
+    toUpperCase(tipo);
+    cout << "INGRESE STOCK: "; cin >> stock;
+    cout << "INGRESE PRECIO: "; cin >> precio;
+    ingreso.cargarFechaProducto();
 }
 
-void Producto::Mostrar() {
-    cout << "----------------PRODUCTO " << id << "----------------------"<<endl;
-    cout << "Nombre:lmñmñlmñlmñlm " << nombre << endl;
-    cout << "Tipo: " << tipo << endl;
-    cout << "ID: " << id << endl;
-    cout << "Stock: " << stock << endl;
-    cout << "Precio: $" << precio << endl;
-    cout << "Fecha de ingreso: ";
-    ingreso.Mostrar(); // Suponiendo que Fecha tiene un método mostrar()
-    cout << endl;
+void Producto::mostrar() {
+    cout << "----------------PRODUCTO----------------------\n" <<
+            "ID: " << id <<
+            "\nNOMBRE: " << nombre <<
+            "\nTIPO: " << tipo <<
+            "\nSTOCK: " << stock <<
+            "\nPRECIO: $" << precio <<
+            "\nFECHA DE INGRESO: "; ingreso.mostrarFechaProducto();
+    cout << "\n----------------------------------------------\n";
 }
 

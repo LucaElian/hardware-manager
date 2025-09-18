@@ -8,21 +8,30 @@ using namespace std;
 
 int main(){
 
-    //Fecha fechaIngreso(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
-    //Producto producto1("Teclado", "Periférico", 1, 10, 299.99, fechaIngreso);
+    Fecha fe(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
+    Producto p1(1, "TeClAdO", "pErIfErIcO", 10, 299.99f, fe);
+    Usuario u1(1, "lUcA", "AbUlaFiA", "profornite", "user", fe);
 
-    //Fecha fechaIngreso2;
-    Producto producto2;
+    fe.mostrarFechaProducto();
+    cout << "\n\n";
 
-    producto2.Mostrar();
-    //Fecha fechaIngresa(1,3,2022);
-    //Usuario usuario1(1,"juan","123","admin",fechaIngresa);
+    p1.mostrar();
+    cout << "\n\n";
 
-    //usuario1.Mostrar();
-    //producto1.Mostrar();
+    u1.mostrar();
+    cout << "\n\n";
 
-    cout << "lol" << endl;
-    cout << "Ahora si se viene lo chido 2222222hkcigpih"<<endl;
+    /// Producto p2;
+    /// p2.cargar();
+    /// cout << "\n\n";
+    /// p2.mostrar();
+
+    Usuario u2;
+    u2.cargar();
+    cout << "\n\n";
+    u2.mostrar();
+
+    system("pause");
 
     return 0;
 }

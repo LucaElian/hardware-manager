@@ -5,41 +5,41 @@
 #include "clsFecha.h"
 
 class Usuario {
-    //Declaro en privado los atributos
     private:
         int id;
-        char user[50];
+        char nombre[20];
+        char apellido[20];
         char pass[50];
         char rol[20];
-        //recibe desde fecha el valor de "ingresa"
         Fecha ingresa;
-    //declaro en publico mis metodos
     public:
-        //Creacion del constructor principal (en el .h), parsea todos los valores para sus nuevos "_"
+        /// CONSTRUCTOR Y DESTRUCTOR
         Usuario(int _id = 0,
-                const char *_user = "vacio",
-                const char *_pass = "vacio",
-                const char *_rol = "vacio",
-                Fecha _fecha);
-
-        //Constructor vacio
-        Usuario();
+                const char *_nombre = "",
+                const char *_apellido = "",
+                const char *_pass = "",
+                const char *_rol = "",
+                Fecha _fecha = Fecha(1,1,1));
         ~Usuario(){}
 
         /// GETTERS
-        char const *getUser();
-        char const *getPass();
-        char const *getRol();
-        Fecha getFecha();
+        int getID() const {return id;};
+        char const *getNombre() const {return nombre;}
+        char const *getApellido() const {return apellido;}
+        char const *getPass() const {return pass;}
+        char const *getRol() const {return rol;}
+        std::string getFecha() const {return ingresa.formatToDate();}
 
         /// SETTERS
-        void setUser(char u[20]) {strcpy(user, u);}
-        void setPass(char p[20]) {strcpy(pass, p);}
+        void setNombre(char n[20]) {strcpy(nombre, n);}
+        void setApellido(char a[20]) {strcpy(apellido, a);}
+        void setPass(char p[50]) {strcpy(pass, p);}
         void setRol(char r[20]) {strcpy(rol, r);}
         void setFecha(int d, int m, int a) {ingresa.setFecha(d, m, a);}
 
-        ///Otros metodos
-        void Mostrar();
+        /// METODOS
+        void cargar();
+        void mostrar();
 };
 
 #endif // USUARIO_H_INCLUDED

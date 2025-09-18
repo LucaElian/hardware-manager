@@ -53,3 +53,41 @@
 	"clsProducto.h"
 	"clsUsuario.h"
 
+1758173232 source:c:\users\lucae\downloads\gestor\clsusuario.cpp
+	<iostream>
+	"clsUsuario.h"
+	"utilidades.h"
+
+1758170117 c:\users\lucae\downloads\gestor\clsusuario.h
+	<cstring>
+	"clsFecha.h"
+
+1758161279 c:\users\lucae\downloads\gestor\clsfecha.h
+
+1758173265 source:c:\users\lucae\downloads\gestor\main.cpp
+	<iostream>
+	"clsFecha.h"
+	"clsProducto.h"
+	"clsUsuario.h"
+
+1758169201 c:\users\lucae\downloads\gestor\clsproducto.h
+	<cstring>
+	"clsFecha.h"
+
+1758169856 source:c:\users\lucae\downloads\gestor\clsfecha.cpp
+	<iostream>
+	<ctime>
+	"clsFecha.h"
+	"clsProducto.h"
+
+1758170206 source:c:\users\lucae\downloads\gestor\clsproducto.cpp
+	<iostream>
+	<cstring>
+	"clsProducto.h"
+
+1758171577 c:\users\lucae\downloads\gestor\utilidades.h
+	<string>
+
+1758172640 source:c:\users\lucae\downloads\gestor\utilidades.cpp
+	<iostream>
+
