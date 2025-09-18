@@ -7,14 +7,14 @@
 using namespace std;
 
 ///Constructor de la clase fecha
-Fecha::Fecha(int _dia = 00, int _mes = 00, int _anio = 0000){
+Fecha::Fecha(int _dia, int _mes, int _anio){
     dia = _dia;
     mes = _mes;
     anio = _anio;
 }
 
 ///Constructor por defecto que crea con la fecha actual
-Fecha::Fecha(){
+void Fecha::setearFechaActual(){
     time_t t = time(0);
     tm* ahora = localtime(&t);
 
@@ -23,7 +23,7 @@ Fecha::Fecha(){
     anio = ahora->tm_year + 1900;
 }
 
-///Metodo para "pasarlo a date"
+///Metodo para "pasarlo a date", aun no tiene ningun uso objetivo
 string Fecha::formatToDate(){
     //Crea los 3 al aire, no deberia recibirlos desde un objeto'?
     string diaString;
@@ -42,17 +42,32 @@ string Fecha::formatToDate(){
 
 }
 
-void Fecha::CargarFechaProducto(){
-cout << "CARGANDO LA FECHA DE INGRESO DE SU PRODUCTO -------------" << endl;
+void Fecha::setFecha(int _dia, int _mes, int _anio){
+            dia = _dia;
+            mes = _mes;
+            anio = _anio;
+}
+
+int Fecha::getDia(){
+    return dia;
+}
+int Fecha::getMes(){
+    return mes;
+}
+int Fecha::getAnio(){
+    return anio;
+}
+
+void Fecha::CargarF(){
+cout << "---------------Cargando la fecha del producto-------------" << endl;
 cout << "Ingrese el dia: ";
 cin >> dia;
 cout << "Ingrese el mes: ";
 cin >> mes;
 cout << "Ingrese el anio: ";
 cin >> anio;
-
 }
 
-void Fecha::Mostrar() const {
+void Fecha::MostrarF() const {
     std::cout << dia << "/" << mes << "/" << anio;
 }

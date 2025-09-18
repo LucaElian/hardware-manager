@@ -9,25 +9,21 @@ class Fecha {
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
         Fecha(int _dia = 0, int _mes = 0, int _anio = 0);
-        Fecha();
         ~Fecha(){}
 
-        /// GETTERS
-        int getDia() const;
-        int getMes() const;
-        int getAnio() const;
+         /// SETTER
+        void setFecha(int , int , int);
 
-        /// SETTER
-        void setFecha(int d, int m, int a){
-            dia = d;
-            mes = m;
-            anio = a;
-        }
+        /// GETTERS
+        int getDia();
+        int getMes();
+        int getAnio();
 
         /// METODOS
+        void setearFechaActual();
         std::string formatToDate();
-        void CargarFechaProducto();
-        void Mostrar() const;
+        void CargarF();
+        void MostrarF() const;
         ///void autoCompletado();
 };
 

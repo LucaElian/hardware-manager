@@ -8,11 +8,11 @@ class Usuario {
     //Declaro en privado los atributos
     private:
         int id;
-        char user[50];
-        char pass[50];
+        char user[30];
+        char pass[30];
         char rol[20];
         //recibe desde fecha el valor de "ingresa"
-        Fecha ingresa;
+        Fecha ingresoUsuario;
     //declaro en publico mis metodos
     public:
         //Creacion del constructor principal (en el .h), parsea todos los valores para sus nuevos "_"
@@ -20,7 +20,7 @@ class Usuario {
                 const char *_user = "vacio",
                 const char *_pass = "vacio",
                 const char *_rol = "vacio",
-                Fecha _fecha);
+                Fecha _fecha = Fecha(0,0,0)); // inicializo ac;
 
         //Constructor vacio
         Usuario();
@@ -32,14 +32,15 @@ class Usuario {
         char const *getRol();
         Fecha getFecha();
 
-        /// SETTERS
-        void setUser(char u[20]) {strcpy(user, u);}
-        void setPass(char p[20]) {strcpy(pass, p);}
-        void setRol(char r[20]) {strcpy(rol, r);}
-        void setFecha(int d, int m, int a) {ingresa.setFecha(d, m, a);}
+        /// SETTERS, Como uso cargar cadena, no hace falta usar strcpy ni nada de eso, queda re lindo
+        void setUser(char);
+        void setPass(char);
+        void setRol(char);
+        void setFecha(int, int, int);
 
         ///Otros metodos
-        void Mostrar();
+        void CargarU();
+        void MostrarU();
 };
 
 #endif // USUARIO_H_INCLUDED

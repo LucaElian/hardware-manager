@@ -12,16 +12,25 @@ Usuario::Usuario(int _id,
     strcpy(user, _user);
     strcpy(pass, _pass);
     strcpy(rol, _rol);
-    ingresa = _fecha;
+    ingresoUsuario = _fecha;
 }
 
+void Usuario::CargarU(){
+    cout << "soy cargar User" << endl;
+}
 
-void Usuario::Mostrar(){
+void Usuario::MostrarU(){
     cout << "-------------------- USUARIO " << id << " ----------------------"<< endl;
     cout << "User: " << user << endl;
     cout << "Pass: " << pass << endl;
     cout << "Rol: " << rol << endl;
     cout << "Fecha de ingreso: ";
-    ingresa.Mostrar(); // Suponiendo que Fecha tiene un método mostrar()
+    //ingresoUsuario.Mostrar(); // Suponiendo que Fecha tiene un método mostrar()
     cout << endl;
 }
+
+
+
+
+
+

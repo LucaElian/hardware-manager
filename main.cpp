@@ -3,26 +3,52 @@
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
+#include "menuProducto.h"
 
 using namespace std;
 
 int main(){
 
-    //Fecha fechaIngreso(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
-    //Producto producto1("Teclado", "Periférico", 1, 10, 299.99, fechaIngreso);
+    //Objetivo 1: Crear un producto con su fecha
+    Producto prod;
 
-    //Fecha fechaIngreso2;
-    Producto producto2;
+    /*prod.CargarP();
+    prod.MostrarP();*/
 
-    producto2.Mostrar();
-    //Fecha fechaIngresa(1,3,2022);
-    //Usuario usuario1(1,"juan","123","admin",fechaIngresa);
+    //Objetivo 2: Crear un usuario con su fecha de login
 
-    //usuario1.Mostrar();
-    //producto1.Mostrar();
+    int opcion;
+    while(true){
+        system("cls");
+        cout << "----------Bienvenido a compra gaymer-----------" << endl;
+        cout << "Ingrese un numero para elegir su opcion:" << endl;
+        cout << "0. Salir del programa"<<endl;
+        cout << "1. Registrarse" << endl;
+        cout << "2. Iniciar sesion " << endl;
+        cout << "3. Administrar productos" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+        switch(opcion){
+            case 0:
+                cout << "Hasta la vista baby"<< endl;
+                system("pause");
+                return 0;
+            break;
+            case 1:
+                cout << "soy la opcion 1"<< endl;
+            break;
+            case 2:
+                cout << "soy la opcion 2"<< endl;
+            break;
+            case 3:
+                cout << "soy la opcion 3"<< endl;
+                menuProducto(prod);
+            break;
+        }
+        system("pause");
+    }
 
-    cout << "lol" << endl;
-    cout << "Ahora si se viene lo chido 2222222hkcigpih"<<endl;
+
 
     return 0;
 }

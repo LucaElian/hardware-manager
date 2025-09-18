@@ -1,7 +1,9 @@
+
+/*
 #include <iostream>
 #include <cstdio>
 #include <cstring> // strcpychaval
-#include "producto.h"
+#include "clsProducto.h"
 
 class GestorArchivos {
 private:
@@ -157,20 +159,23 @@ public:
 
 int main() {
     GestorArchivos gestor("productos.dat");
-    
+
     Producto producto("Manzana", "Fruta", 101, 50, 0.5, Fecha(1, 1, 2023));
 
     gestor.escribirProducto(producto);
     gestor.leerProductos();
-    
+
     gestor.actualizarStock(101, 75);
     gestor.leerProductos();
-    
+
     /*int stock = gestor.obtenerStock(102);
     if (stock != -1) {
         printf("Stock del producto con ID 102: %d\n", stock);
     } else {
         printf("Producto con ID 102 no encontrado\n");
     }
-    return 0;*/
+    return 0;
 }
+
+*/
+
