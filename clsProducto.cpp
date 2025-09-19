@@ -54,26 +54,33 @@ void Producto::setPrecio(float _precio){
 }
 
 ///GETTERS
-int Producto::getID(){
+int Producto::getID() const {
     return id;
 }
 
-const char *Producto::getNombre(){
+const char *Producto::getNombre() const {
     return nombre;
 }
 
-const char *Producto::getTipo(){
+const char *Producto::getTipo() const {
     return tipo;
 }
-int Producto::getStock(){
+
+int Producto::getStock() const {
     return stock;
 }
-float Producto::getPrecio(){
+
+float Producto::getPrecio() const {
     return precio;
 }
 
+Fecha Producto::getFecha() const {
+    return ingresoProducto;
+}
+
+
 ///SETEAR IDENTIFICADOR, me quede aca creando esto
-int Producto::setearIdentificador(int _id){
+void Producto::setearIdentificador(int _id){ // es un void porque no devuelve nada, solo setea el id, sino da error/warning
     cout << "setear identificador" << endl;
     _id += 1;
     id = _id;

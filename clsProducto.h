@@ -17,7 +17,6 @@ class Producto {
         Producto( int _id = 0, const char *_nombre = "vacio", const char *_tipo = "vacio", int _stock = 0, float _precio = 0, Fecha _fecha = Fecha(0,0,0));
         ~Producto(){}
 
-        /// SETTERS
         void setID(int);
         void setNombre(char *);
         void setTipo(char *);
@@ -25,13 +24,13 @@ class Producto {
         void setPrecio(float);
         void setFecha(int, int , int );
 
-        /// GETTERS
-        int getID();
-        const char *getNombre();
-        const char *getTipo();
-        float getPrecio();
-        int getStock();
-        Fecha getFecha();
+        /// GETTERS - MARCADOS COMO CONST
+        int getID() const;  // Agregado const
+        const char *getNombre() const;  // Agregado const
+        const char *getTipo() const;    // Agregado const
+        float getPrecio() const;        // Agregado const
+        int getStock() const;           // Agregado const
+        Fecha getFecha() const; 
 
         ///Otros metodos
         void CargarP();
