@@ -35,7 +35,7 @@ class Producto {
         ///Otros metodos
         void CargarP();
         void MostrarP();
-        int setearIdentificador(int);
+        void setearIdentificador(int); // ?? pq era int y no void??
 };
 
 #endif // PRODUCTOS_H_INCLUDED
