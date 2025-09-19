@@ -47,7 +47,7 @@ int main(){
 
     Fecha fe(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
     Producto p1(2, "TeClAdO", "pErIfErIcO", 10, 299.99f, fe);
-    //Usuario u1(1, "lUcA", "AbUlaFiA", "profornite", "user", fe);
+    Usuario u1(1, "lUcA", "AbUlaFiA", "profornite", fe);
 
     // HOLAL
     SQCopy gestor(".env/productos.dat");
