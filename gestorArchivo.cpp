@@ -4,14 +4,48 @@
 #include <cstring> // strcpychaval
 #include "clsProducto.h"
 
-class GestorArchivos {
+class SQCopy {
 private:
     char nombreArchivo[256];
 
 public:
-    GestorArchivos(const char* archivo) {
+    SQCopy(const char* archivo) {
         strncpy(nombreArchivo, archivo, sizeof(nombreArchivo)-1);
         nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
+    }
+
+    bool escribirProductoTexto(const Producto& producto) {
+        //abre en modo append+ (lectura y escritura al final)
+        FILE* archivo = fopen(nombreArchivo, "a+");
+        if (!archivo) {
+            printf("Error: no se pudo abrir/crear el archivo %s\n", nombreArchivo);
+            return false;
+        }
+
+        // Velve al inicio para verificar si existe el ID
+        rewind(archivo);
+        
+        char linea[256];
+        int id;
+        // Revisa si ya existe el producto
+        while (fgets(linea, sizeof(linea), archivo) != NULL) {
+            if (sscanf(linea, "%d", &id) == 1) {
+                if (id == producto.getID()) {
+                    printf("Erroreishon: producto con ID %d ya existe\n", id);
+                    fclose(archivo);
+                    return false;
+                }
+            }
+        }
+
+        //escribe al final del archivo
+        fprintf(archivo, "%d,%d,%.2f\n", 
+                producto.getID(),
+                producto.getStock(),
+                producto.getPrecio());
+
+        fclose(archivo);
+        return true;
     }
 
     bool escribirProducto(const Producto& producto) {
@@ -157,7 +191,7 @@ public:
 // EJEMPLO
 
 /*int main() {
-    GestorArchivos gestor("productos.dat");
+    SQCopy gestor("productos.dat");
     
     Producto producto("Manzana", "Fruta", 101, 50, 0.5, Fecha(1, 1, 2023));
 
