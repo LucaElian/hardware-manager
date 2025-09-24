@@ -11,7 +11,7 @@ using namespace std;
 - stock y precio: Valores entero y float.
 - fecha: fecha es un objeto de tipo "Fecha", se llama al metodo para cargar la fecha dentro de cargarProducto.
 
-Los objetos producto estan marcados con un id unico, ademas deberian estar asignados al usuario administrador que los aÃ±adiÃ³ a stock,
+Los objetos producto estan marcados con un id unico, ademas deberian estar asignados al usuario administrador que los añadió a stock,
 y asignados al usuario cliente que lo agrego a su carrito.
 */
 
@@ -85,3 +85,5 @@ void Producto::setearIdentificador(int _id){ // es un void porque no devuelve na
     _id += 1;
     id = _id;
 }
+
+

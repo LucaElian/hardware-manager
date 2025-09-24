@@ -19,7 +19,8 @@ public:
     }
 
     // Métodos de gestorArchivos
-    bool escribirProducto(const Producto& producto);
+    bool escribirProductoTEXTO(const Producto& producto);
+    bool escribirProductoBINARIO(const Producto& producto);
     bool leerProductos();
     bool actualizarStock(int idProducto, int nuevoStock);
     int obtenerStock(int idProducto);

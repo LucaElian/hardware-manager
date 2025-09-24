@@ -15,7 +15,8 @@ void menuProducto(Producto producto){
         cin >> opcion;
         switch(opcion){
             case 1:
-                //producto.CargarP();
+
+                producto.CargarP();
                 break;
             break;
             case 2:

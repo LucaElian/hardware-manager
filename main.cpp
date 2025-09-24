@@ -6,22 +6,15 @@
 #include "gestorArchivo.cpp"
 #include "menuProducto.h"
 
-#include "menuGen.cpp"
+#include "menuGen.h"
 
 using namespace std;
 
 int main(){
-    menuGen::mostrarMenuPrincipal();
 
-    Fecha fe(2, 9, 2025); // Ejemplo de fecha (día, mes, año)
-    Producto p1(2, "TeClAdO", "pErIfErIcO", 10, 299.99f, fe);
-    Usuario u1(1, "lUcA", "AbUlaFiA", "profornite", fe);
 
-    // HOLAL
-    SQCopy gestor(".env/productos.dat");
-    // gestor.escribirProductoTexto(p1); // Debug
-    gestor.escribirProducto(p1);
-    gestor.leerProductos();
+
+    MenuGen::mostrarMenuPrincipal();
 
     /*fe.mostrarFechaProducto();
     cout << "\n\n";
