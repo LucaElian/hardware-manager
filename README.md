@@ -1,12 +1,24 @@
 # 💻 Sistema de gestion de una tienda de hardware
 ## Miembros del proyecto:
-# Thiago Núñez  
-# Zadquiel Juan Bautista Gallardo
-# Luca Elian Abulafia
+- Thiago Núñez  
+- Zadquiel Juan Bautista Gallardo
+- Luca Elian Abulafia
  
-Este proyecto es un sistema gestor desarollado completamente en C++, utilizando la manipulacion de archivos para guardar los datos.
+Este proyecto es un sistema gestor desarollado completamente en C++, desarollado principalmente en codeblocks utilizando la manipulacion de archivos para guardar los datos.
 ---
+## 🔄 Navegación del programa
+Al iniciar veras un menu y elegiras con un numero la opcion.
+----------Bienvenido a compra gaymer-----------
+ingresen un numero para elegir su opcion:
+0. Salir del prograna
+1. Registrarse
+2. Iniciar sesion
+3. Administrar productos
+Opcion:
 
+**Si elige la opcion 3**: Sera enviado al menu para los productos
+
+---
 ## 📦 Funcionalidades actuales
 
 - 📄 Carga y escritura de productos en archivo binario.
@@ -18,12 +30,15 @@ Este proyecto es un sistema gestor desarollado completamente en C++, utilizando 
 ---
 
 ## 🧱 Estructura del proyecto
-
+**Clases:**
 - **Producto**: Clase que representa un producto de hardware (ID, nombre, tipo, precio, stock).
 - **Usuario**: Clase que representará usuarios comunes o administradores (en desarrollo).
 - **Fecha**: Manejo básico de fechas (creación de productos, registro, etc).
 - **GestorArchivos**: Maneja la lectura y escritura de productos en un archivo binario.
-
+**Utilidades:**
+- **CargarCadena**: Archivo que recibe caracteres y lo convierte en cadena**
+- **Utilidades**: Asi se llama el archivo que tiene metodos utiles como "toUpperCase".
+- **Menu producto**: Archivo que contiene el menu para manipular los productos
 ---
 
 ## 🚧 Funcionalidades futuras
@@ -49,13 +64,16 @@ bash
 Copiar código
 /tu-proyecto/
 ├── src/
-│   ├── main.cpp
-│   ├── Producto.cpp
-│   ├── Usuario.cpp
-│   ├── Fecha.cpp
+│   ├── cargarCadena.cpp
+|   ├── clsFecha
+│   ├── clsProducto.cpp
+│   ├── clsUsuario.cpp
 │   ├── GestorArchivos.cpp
-├── include/
-│   ├── Producto.h
+|   ├── main.cpp
+|   ├── menuProducto.cpp
+|   ├── utilidades.cpp
+├── headers/
+│   ├── cargarCadena.h
 │   ├── Usuario.h
 │   ├── Fecha.h
 │   ├── GestorArchivos.h
