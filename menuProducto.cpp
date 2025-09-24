@@ -1,11 +1,10 @@
 #include<iostream>
 using namespace std;
 
-#include "gestorArchivo.h"
 #include "clsProducto.h"
 #include "clsFecha.h"
 
-void menuProducto(Producto producto, GestorArchivos gestorProductos){ //ahora tambien recibe el objeto del gestor
+void menuProducto(Producto producto){
     int opcion;
     while(true){
         system("cls");
@@ -16,13 +15,12 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){ //ahora ta
         cin >> opcion;
         switch(opcion){
             case 1:
-                producto.CargarP();
-                gestorProductos.escribirProducto(producto);
+                //producto.CargarP();
+                break;
             break;
             case 2:
                 //producto.MostrarP();
-                //llamo al metodo para leer el archivo atraves del objeto
-                gestorProductos.leerProductos();
+                break;
             break;
         }
         system("pause");

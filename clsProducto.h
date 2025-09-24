@@ -33,9 +33,6 @@ class Producto {
         Fecha getFecha() const; 
 
         ///Otros metodos
-        void CargarP();
-        void MostrarP();
-        void setearIdentificador(int); // ?? pq era int y no void??
+        void setearIdentificador(int);
 };
-
 #endif // PRODUCTOS_H_INCLUDED
