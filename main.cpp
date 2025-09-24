@@ -3,7 +3,7 @@
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
-#include "gestorArchivo.cpp"
+#include "gestorArchivo.h"
 #include "menuProducto.h"
 
 using namespace std;
@@ -13,6 +13,7 @@ int main(){
     //Objetivo 1: Crear un producto con su fecha
     Producto prod;
 
+    GestorArchivos gestorProductos("productos.dat");
     /*prod.CargarP();
     prod.MostrarP();*/
 
@@ -43,7 +44,7 @@ int main(){
             break;
             case 3:
                 cout << "soy la opcion 3"<< endl;
-                menuProducto(prod);
+                menuProducto(prod, gestorProductos);
             break;
         }
         system("pause");
