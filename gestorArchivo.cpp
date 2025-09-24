@@ -89,7 +89,7 @@ public:
     bool leerProductos() {
         FILE* archivo = fopen(nombreArchivo, "rb");
         if (!archivo) {
-            printf("Error: no se pudo leer el archivo ostias%s\n", nombreArchivo);
+            printf("Error: no se pudo leer el archivo ostias %s\n", nombreArchivo);
             return false;
         }
 
