@@ -34,5 +34,5 @@ class Producto {
 
         ///Otros metodos
         void setearIdentificador(int);
-
+};
 #endif // PRODUCTOS_H_INCLUDED

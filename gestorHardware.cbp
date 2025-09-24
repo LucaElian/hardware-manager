@@ -47,6 +47,7 @@
 		<Unit filename="clsUsuario.cpp" />
 		<Unit filename="clsUsuario.h" />
 		<Unit filename="gestorArchivo.cpp" />
+		<Unit filename="gestorArchivo.h" />
 		<Unit filename="gestorHardware.depend" />
 		<Unit filename="gestorHardware.layout" />
 		<Unit filename="main.cpp" />
