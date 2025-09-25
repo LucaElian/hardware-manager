@@ -11,9 +11,6 @@
 using namespace std;
 
 int main(){
-
-
-
     MenuGen::mostrarMenuPrincipal();
 
     /*fe.mostrarFechaProducto();

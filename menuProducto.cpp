@@ -16,11 +16,11 @@ void menuProducto(Producto producto){
         switch(opcion){
             case 1:
 
-                producto.CargarP();
+                //producto.CargarP(); // Da error
                 break;
             break;
             case 2:
-                //producto.MostrarP();
+                //producto.MostrarP(); // Da error
                 break;
             break;
         }

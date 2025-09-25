@@ -7,28 +7,57 @@ using namespace std;
 /*Porque static?
 Porque no necesitamos instanciar un objeto de la clase menuGen para usar sus metodos.
 */
-void MenuGen::mostrarMenuPrincipal()
-{
-    int opcion;
-    Producto producto;
+void MenuGen::mostrarMenuPrincipal() {
+    const int OPCIONES = 3;
+    int opcionSeleccionada = 1;
+    bool salir = false;
+    const string opciones[OPCIONES] = {
+        "Gestionar Productos",
+        "Gestionar Usuarios",
+        "Salir"
+    };
 
-    while(true){
-    rlutil::cls();
-    rlutil::setColor(rlutil::YELLOW);
-    //rlutil::locate(35,1);
-    cout << "===================" << std::endl;
-    //rlutil::locate(35,2);
-    cout << "GESTION DE HARDWARE" << std::endl;
-    //rlutil::locate(35,3);
-    cout << "===================" << std::endl;
-    rlutil::setColor(rlutil::WHITE);
-    cout << "1. Gestionar Productos" << std::endl;
-    cout << "2. Gestionar Usuarios" << std::endl;
-    cout << "3. Salir" << std::endl;
-    cout << "Seleccione una opcion: ";
-    cin >> opcion;
-    MenuGen::seleccionarOpcion(opcion);
+    while(!salir) {
+        rlutil::cls();
+        rlutil::hidecursor();
+        
+        // Tirulo
+        rlutil::setColor(rlutil::YELLOW);
+        rlutil::locate(35,1);
+        cout << "===================" << endl;
+        rlutil::locate(35,2);
+        cout << "GESTION DE HARDWARE" << endl;
+        rlutil::locate(35,3);
+        cout << "===================" << endl;
+        
+        // Opciones del menu
+        for(int i = 0; i < OPCIONES; i++) {
+            rlutil::locate(35, 5+i);
+            if(i + 1 == opcionSeleccionada) {
+                rlutil::setColor(rlutil::GREEN);
+                cout << "> " << opciones[i] << endl;
+            } else {
+                rlutil::setColor(rlutil::WHITE);
+                cout << "  " << opciones[i] << endl;
+            }
+        }
+
+        // Captura de teclas
+        int key = rlutil::getkey();
+        
+        if(key == rlutil::KEY_UP || key == 'w' || key == 'W') {
+            opcionSeleccionada = (opcionSeleccionada > 1) ? opcionSeleccionada - 1 : OPCIONES;
+        }
+        else if(key == rlutil::KEY_DOWN || key == 's' || key == 'S') {
+            opcionSeleccionada = (opcionSeleccionada < OPCIONES) ? opcionSeleccionada + 1 : 1;
+        }
+        else if(key == rlutil::KEY_ENTER || key == '\n') {
+            seleccionarOpcion(opcionSeleccionada);
+            if(opcionSeleccionada == OPCIONES) salir = true;
+        }
     }
+    rlutil::showcursor();
+    rlutil::setColor(rlutil::WHITE);
 }
 
 void MenuGen::seleccionarOpcion(int opcion)
@@ -38,7 +67,7 @@ void MenuGen::seleccionarOpcion(int opcion)
     case 1:
         // Llamar a la funcion para gestionar productos
         cout << "gestionar productos" << endl;
-        menuProducto(producto);
+        //menuProducto(producto);
         system("pause");
         break;
     case 2:
