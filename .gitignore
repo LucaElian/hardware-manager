@@ -48,3 +48,5 @@
 # generated directories
 bin/
 obj/
+
+compile.sh

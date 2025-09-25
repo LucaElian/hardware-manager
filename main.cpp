@@ -1,11 +1,9 @@
 #include <iostream>
-
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
-#include "gestorArchivo.cpp"
+#include "gestorArchivo.h"
 #include "menuProducto.h"
-
 #include "menuGen.h"
 
 using namespace std;
