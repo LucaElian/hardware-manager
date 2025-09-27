@@ -4,7 +4,7 @@
 #include <cstring> // strcpychaval
 #include "clsProducto.h"
 #include "gestorArchivo.h"
-
+#include "clsFecha.h"
 
 GestorArchivos::GestorArchivos(const char* archivo)
 {
@@ -12,12 +12,8 @@ GestorArchivos::GestorArchivos(const char* archivo)
     nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
 }
 
-
-
-
-
 ///Que hace esta funcion?
-bool GestorArchivos::escribirProductoTEXTO(const Producto& producto)
+/*bool GestorArchivos::escribirProductoTEXTO(const Producto& producto)
 {
     //abre en modo append+ (lectura y escritura al final)
     FILE* archivo = fopen(nombreArchivo, "a+");
@@ -53,17 +49,17 @@ bool GestorArchivos::escribirProductoTEXTO(const Producto& producto)
         producto.getNombre(),
         producto.getTipo(),
         producto.getStock(),
-        producto.getPrecio()
+        producto.getPrecio(),
     );
 
     fclose(archivo);
     return true;
 }
+*/
 
 bool GestorArchivos::escribirProductoBINARIO(const Producto& producto)
 {
-
-    //con fopen lo abro, usando el modo read
+//con fopen lo abro, usando el modo read
     FILE* archivo = fopen(nombreArchivo, "r+b");
 
     if (!archivo) //si el archivo no existe, con write creo otro
@@ -115,6 +111,7 @@ bool GestorArchivos::escribirProductoBINARIO(const Producto& producto)
 
     fclose(archivo);
     return true;
+
 }
 
 bool GestorArchivos::leerProductos()
@@ -122,7 +119,7 @@ bool GestorArchivos::leerProductos()
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo)
     {
-        printf("Error: no se pudo leer el archivo ostias %s\n", nombreArchivo);
+        printf("Error: no se pudo leer el archivo ostias%s\n", nombreArchivo);
         return false;
     }
 
@@ -131,24 +128,27 @@ bool GestorArchivos::leerProductos()
     int numeroProducto = 1;
     int id, stock;
     float precio;
+    char nombre[50];
+    char tipo[20];
 
     // Lee los 3 campos por producto. fread devuelve 1 si leyo 1 elemento.
-    while (fread(&id, sizeof(int), 1, archivo) == 1)
+    while (
+        //ahora si leem el stock y precio (si falla tira archivo corrupto/parcial)
+        fread(&id, sizeof(int), 1, archivo) == 1 &&
+        fread(&stock, sizeof(int), 1, archivo) == 1 &&
+        fread(&precio, sizeof(float), 1, archivo) == 1 &&
+        fread(&nombre, sizeof(char), 50, archivo) == 50 &&
+        fread(&tipo, sizeof(char), 20, archivo) == 20
+    )
     {
-        // ahora si leem el stock y precio (si falla tira archivo corrupto/parcial)
-        if (fread(&stock, sizeof(int), 1, archivo) != 1 ||
-                fread(&precio, sizeof(float), 1, archivo) != 1)
-        {
-            printf("Error: archivo corrupto o fallido\n");
-            break;
-        }
-
-        printf("Producto %d: ID=%d, Stock=%d, Precio=%.2f\n",
-               numeroProducto, id, stock, precio);
-        numeroProducto++;
+        printf("Error: archivo corrupto o fallido\n");
+        break;
     }
+
+    printf("Producto %d:  Nombre=%s, Tipo=%s, ID=%d, Stock=%d, Precio=%.2f\n",
+           numeroProducto, nombre, tipo, id, stock, precio);
+    numeroProducto++;
 
     fclose(archivo);
     return true;
 }
-

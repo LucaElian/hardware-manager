@@ -2,14 +2,19 @@
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
-#include "gestorArchivo.h"
 #include "menuProducto.h"
 #include "menuGen.h"
+#include "gestorArchivo.h"
+#include "Contexto.h"
+#include "ContextoGestores.h"
 
 using namespace std;
 
 int main(){
-    MenuGen::mostrarMenuPrincipal();
+    //creo el objeto del gestor para el archivo de productos
+    ContextoGestores gestores;
+    Contexto objetos;
+    MenuGen::mostrarMenuPrincipal(gestores, objetos);
 
     /*fe.mostrarFechaProducto();
     cout << "\n\n";

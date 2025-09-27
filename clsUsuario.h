@@ -21,9 +21,6 @@ class Usuario {
                 const char *_pass = "vacio",
                 const char *_rol = "vacio",
                 Fecha _fecha = Fecha(0,0,0)); // inicializo ac;
-
-        //Constructor vacio
-        Usuario();
         ~Usuario(){}
 
         /// GETTERS

@@ -80,10 +80,51 @@ Fecha Producto::getFecha() const {
 
 
 ///SETEAR IDENTIFICADOR, me quede aca creando esto
-void Producto::setearIdentificador(int _id){ // es un void porque no devuelve nada, solo setea el id, sino da error/warning
-    cout << "setear identificador" << endl;
-    _id += 1;
-    id = _id;
+int setearIdentificador(const string& nombreArchivo) {
+   /* ifstream archivo(nombreArchivo, ios::binary | ios::ate); // Abre y se posiciona al final
+    streamsize tamañoArchivo = archivo.tellg(); // Tamaño total en bytes
+
+    if (tamañoArchivo % sizeof(Producto) != 0) {
+        cerr << "El tamaño del archivo no es múltiplo del tamaño de Producto." << endl;
+        return -1; // Archivo corrupto o estructura incorrecta
+    }
+
+    int cantidad = static_cast<int>(tamañoArchivo / sizeof(Producto)); // Cantidad de registros
+    fclose(archivo);
+    return cantidad;*/
 }
+
+///METODO CARGAR
+void Producto::CargarP(){
+    /*cout << "VERSION PRELIMINAR, ingrese el id: ";
+    cin >> id;*/
+    cout << "Ingrese el nombre del producto: ";
+    cargarCadena(nombre,29);
+    cout << "Ingrese el tipo del producto: ";
+    cargarCadena(tipo,29);
+    cout << "Ingrese el stock disponible: ";
+    cin >> stock;
+    cout << "Ingrese el precio: ";
+    cin >> precio;
+    //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo cargar de Fecha
+    ingresoProducto.CargarF();
+    //setearIdentificador(id);
+}
+
+///METODO MOSTRAR
+void Producto::MostrarP() {
+    cout << "----------------PRODUCTO " << id << "----------------------"<<endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Tipo: " << tipo << endl;
+    //cout << "ID: " << id << endl;
+    cout << "Stock: " << stock << endl;
+    cout << "Precio: $" << precio << endl;
+    cout << "Fecha de ingreso: ";
+    //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo mostrar de Fecha
+    ingresoProducto.MostrarF();
+    cout << endl;
+}
+
+
 
 

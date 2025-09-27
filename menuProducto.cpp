@@ -3,8 +3,9 @@ using namespace std;
 
 #include "clsProducto.h"
 #include "clsFecha.h"
+#include "gestorArchivo.h"
 
-void menuProducto(Producto producto){
+void menuProducto(Producto producto, GestorArchivos gestorProductos){
     int opcion;
     while(true){
         system("cls");
@@ -15,11 +16,12 @@ void menuProducto(Producto producto){
         cin >> opcion;
         switch(opcion){
             case 1:
-
-                //producto.CargarP(); // Da error
+                producto.CargarP(); // Da error
+                gestorProductos.escribirProductoBINARIO(producto);
                 break;
             break;
             case 2:
+                gestorProductos.leerProductos();
                 //producto.MostrarP(); // Da error
                 break;
             break;

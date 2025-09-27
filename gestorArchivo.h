@@ -13,11 +13,6 @@ public:
     // Constructor
     GestorArchivos(const char* archivo);
 
-    // setNombreArchivo(char);
-    // getNombreArchivo(){          ???????
-    // return nombreArchivo[256];
-    // }
-
     // M�todos de gestorArchivos
     bool escribirProductoTEXTO(const Producto& producto);
     bool escribirProductoBINARIO(const Producto& producto);

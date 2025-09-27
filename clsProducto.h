@@ -30,9 +30,11 @@ class Producto {
         const char *getTipo() const;    // Agregado const
         float getPrecio() const;        // Agregado const
         int getStock() const;           // Agregado const
-        Fecha getFecha() const; 
+        Fecha getFecha() const;
 
         ///Otros metodos
+         void CargarP();
+        void MostrarP();
         void setearIdentificador(int);
 };
 #endif // PRODUCTOS_H_INCLUDED

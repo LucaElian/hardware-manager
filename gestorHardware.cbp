@@ -36,10 +36,10 @@
 		<Unit filename=".vscode/c_cpp_properties.json" />
 		<Unit filename=".vscode/launch.json" />
 		<Unit filename=".vscode/settings.json" />
+		<Unit filename="Contexto.h" />
+		<Unit filename="ContextoGestores.h" />
 		<Unit filename="cargarCadena.cpp" />
-		<Unit filename="cargarCadena.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="cargarCadena.h" />
 		<Unit filename="clsFecha.cpp" />
 		<Unit filename="clsFecha.h" />
 		<Unit filename="clsProducto.cpp" />
@@ -51,9 +51,12 @@
 		<Unit filename="gestorHardware.depend" />
 		<Unit filename="gestorHardware.layout" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menuGen.cpp" />
+		<Unit filename="menuGen.h" />
 		<Unit filename="menuProducto.cpp" />
 		<Unit filename="menuProducto.h" />
 		<Unit filename="output/main.exe" />
+		<Unit filename="rlutil.h" />
 		<Unit filename="utilidades.cpp" />
 		<Unit filename="utilidades.h" />
 		<Extensions>

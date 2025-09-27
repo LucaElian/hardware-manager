@@ -1,5 +1,7 @@
 #ifndef FECHA_H_INCLUDED
 #define FECHA_H_INCLUDED
+#include<iostream>
+using namespace std;
 
 class Fecha {
     private:
@@ -21,7 +23,7 @@ class Fecha {
 
         /// METODOS
         void setearFechaActual();
-        std::string formatToDate();
+        string formatToDate();
         void cargarDia();
         void cargarMes();
         void cargarAnio();

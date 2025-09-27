@@ -45,29 +45,6 @@ string Fecha::formatToDate(){
 
 }
 
-void Fecha::cargarDia(){
-    cout << "INGRESE EL DIA: "; cin >> dia;
-    while(dia < 1 || dia > 31){ 
-        cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
-    }
-}
-
-void Fecha::cargarMes(){
-    cout << "INGRESE EL MES: "; cin >> mes;
-    while(mes < 1 || mes > 12){ 
-        cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
-}
-}
-
-void Fecha::cargarAnio(){
-    cout << "INGRESE EL ANIO: "; cin >> anio;
-    while(anio < 1){
-        cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
-}
-}
-
-
-
 void Fecha::setFecha(int _dia, int _mes, int _anio){
             dia = _dia;
             mes = _mes;
@@ -82,6 +59,27 @@ int Fecha::getMes(){
 }
 int Fecha::getAnio(){
     return anio;
+}
+
+void Fecha::cargarDia(){
+    cout << "INGRESE EL DIA: "; cin >> dia;
+    while(dia < 1 || dia > 31){
+        cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
+    }
+}
+
+void Fecha::cargarMes(){
+    cout << "INGRESE EL MES: "; cin >> mes;
+    while(mes < 1 || mes > 12){
+        cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
+}
+}
+
+void Fecha::cargarAnio(){
+    cout << "INGRESE EL ANIO: "; cin >> anio;
+    while(anio < 1){
+        cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
+}
 }
 
 void Fecha::CargarF(){
