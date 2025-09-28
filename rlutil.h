@@ -1,4 +1,5 @@
 #pragma once
+
 /**
  * File: rlutil.h
  *
@@ -536,7 +537,7 @@ RLUTIL_INLINE void cls(void) {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 
 	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	const DWORD dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+	const DWORD dwConSize = static_cast<DWORD>(csbi.dwSize.X) * static_cast<DWORD>(csbi.dwSize.Y);
 	FillConsoleOutputCharacter(hConsole, (TCHAR)' ', dwConSize, coordScreen, &cCharsWritten);
 
 	GetConsoleScreenBufferInfo(hConsole, &csbi);
@@ -574,7 +575,7 @@ RLUTIL_INLINE void locate(int x, int y) {
 #ifdef __cplusplus
 RLUTIL_INLINE void setString(const RLUTIL_STRING_T & str_) {
 	const char * const str = str_.data();
-	unsigned int len = str_.size();
+	std::string::size_type len = str_.size();
 #else // __cplusplus
 RLUTIL_INLINE void setString(RLUTIL_STRING_T str) {
 	unsigned int len = strlen(str);
@@ -585,7 +586,7 @@ RLUTIL_INLINE void setString(RLUTIL_STRING_T str) {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 
 	GetConsoleScreenBufferInfo(hConsoleOutput, &csbi);
-	WriteConsoleOutputCharacterA(hConsoleOutput, str, len, csbi.dwCursorPosition, &numberOfCharsWritten);
+	WriteConsoleOutputCharacterA(hConsoleOutput, str, (DWORD)len, csbi.dwCursorPosition, &numberOfCharsWritten);
 #else // _WIN32 || USE_ANSI
 	RLUTIL_PRINT(str);
 	#ifdef __cplusplus

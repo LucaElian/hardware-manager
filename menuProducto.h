@@ -5,5 +5,4 @@
 
 void menuProducto(Producto, GestorArchivos);
 
-
 #endif // MENUPRODUCTO_H_INCLUDED

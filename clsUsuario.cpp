@@ -1,6 +1,7 @@
 #include <iostream>
-#include "clsUsuario.h"
 using namespace std;
+
+#include "clsUsuario.h"
 
 ///CPP == Implementacion del constructor
 Usuario::Usuario(int _id,
@@ -25,7 +26,7 @@ void Usuario::MostrarU(){
     cout << "Pass: " << pass << endl;
     cout << "Rol: " << rol << endl;
     cout << "Fecha de ingreso: ";
-    //ingresoUsuario.Mostrar(); // Suponiendo que Fecha tiene un método mostrar()
+    //ingresoUsuario.Mostrar(); // Suponiendo que Fecha tiene un mï¿½todo mostrar()
     cout << endl;
 }
 

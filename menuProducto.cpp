@@ -4,30 +4,60 @@ using namespace std;
 #include "clsProducto.h"
 #include "clsFecha.h"
 #include "gestorArchivo.h"
+#include "artworks.h"
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
 
 void menuProducto(Producto producto, GestorArchivos gestorProductos){
-    int opcion;
+    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTO", "SALIR"};
+
     while(true){
+        int opcion = 0;
+        bool curs = true;
         system("cls");
-        cout << "------------------Menu producto---------------" << endl;
-        cout << "1. Agregar producto" << endl;
-        cout << "2. Mostrar producto" << endl;
-        cout << "Opcion: ";
-        cin >> opcion;
-        switch(opcion){
-            case 1:
-                producto.CargarP(); // Da error
-                gestorProductos.escribirProductoBINARIO(producto);
-                break;
-            break;
-            case 2:
-                gestorProductos.leerProductos();
-                //producto.MostrarP(); // Da error
-                break;
-            break;
+
+        menu("M E N U   P R O D U C T O", opciones, 7, 5);
+
+        while(curs == true){
+            rlutil::locate(49, 13 + opcion);
+            cout << (char)175;
+
+            int pos = rlutil::getkey(); // Captura de teclas
+
+            switch(pos){
+                case 14:
+                    rlutil::locate(49, 13 + opcion);
+                    cout << " ";
+                    opcion -= 2;
+                    if(opcion < 0) opcion = 8;
+                    break;
+
+                case 15:
+                    rlutil::locate(49, 13 + opcion);
+                    cout << " ";
+                    opcion += 2;
+                    if(opcion > 8) opcion = 0;
+                    break;
+
+                case 1:
+                    system("cls");
+                    curs = false;
+                    switch(opcion){
+                        case 0: 
+                            producto.CargarP(); // Da error 
+                            gestorProductos.escribirProductoBINARIO(producto);
+                            break;
+                        case 2: break;
+                        case 4: break;
+                        case 6: 
+                            gestorProductos.leerProductos();
+                            producto.MostrarP(); // Da error;
+                            break;
+                        case 8: return;
+                    }
+            }
         }
-        system("pause");
     }
-
-
 }

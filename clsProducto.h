@@ -14,7 +14,7 @@ class Producto {
         Fecha ingresoProducto;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Producto( int _id = 0, const char *_nombre = "vacio", const char *_tipo = "vacio", int _stock = 0, float _precio = 0, Fecha _fecha = Fecha(0,0,0));
+        Producto( int _id = 0, const char *_nombre = "vacio", const char *_tipo = "vacio", int _stock = 0, float _precio = 0, Fecha _fecha = Fecha(1,1,1));
         ~Producto(){}
 
         void setID(int);
@@ -22,7 +22,7 @@ class Producto {
         void setTipo(char *);
         void setStock(int);
         void setPrecio(float);
-        void setFecha(int, int , int );
+        void setFecha(int, int, int);
 
         /// GETTERS - MARCADOS COMO CONST
         int getID() const;  // Agregado const
@@ -33,7 +33,7 @@ class Producto {
         Fecha getFecha() const;
 
         ///Otros metodos
-         void CargarP();
+        void CargarP();
         void MostrarP();
         void setearIdentificador(int);
 };

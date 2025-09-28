@@ -1,4 +1,7 @@
 #include <iostream>
+
+using namespace std;
+
 #include "clsFecha.h"
 #include "clsProducto.h"
 #include "clsUsuario.h"
@@ -7,8 +10,6 @@
 #include "gestorArchivo.h"
 #include "Contexto.h"
 #include "ContextoGestores.h"
-
-using namespace std;
 
 int main(){
     //creo el objeto del gestor para el archivo de productos
@@ -34,9 +35,6 @@ int main(){
     u2.cargarDatos();
     cout << "\n\n";
     u2.mostrar();*/
-
-
-    system("pause");
 
     return 0;
 }

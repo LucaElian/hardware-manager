@@ -13,7 +13,7 @@ public:
     // Constructor
     GestorArchivos(const char* archivo);
 
-    // M�todos de gestorArchivos
+    // Metodos de gestorArchivos
     bool escribirProductoTEXTO(const Producto& producto);
     bool escribirProductoBINARIO(const Producto& producto);
     bool leerProductos();

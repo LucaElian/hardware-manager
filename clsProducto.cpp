@@ -1,17 +1,18 @@
 #include <iostream>
+using namespace std;
+
 #include "cargarCadena.h"
 #include "clsProducto.h"
 #include <cstring>
 #include "utilidades.h"
 
-using namespace std;
 /* CLASE PRODUCTO: La clase producto sirve para agregar stock a la tienda, tiene 6 atributos:
 - Id: De tipo autoincrement
 - nombre y tipo: Dos valores de tipo char ingresador por usuario
 - stock y precio: Valores entero y float.
 - fecha: fecha es un objeto de tipo "Fecha", se llama al metodo para cargar la fecha dentro de cargarProducto.
 
-Los objetos producto estan marcados con un id unico, ademas deberian estar asignados al usuario administrador que los añadió a stock,
+Los objetos producto estan marcados con un id unico, ademas deberian estar asignados al usuario administrador que los aï¿½adiï¿½ a stock,
 y asignados al usuario cliente que lo agrego a su carrito.
 */
 
@@ -19,9 +20,9 @@ y asignados al usuario cliente que lo agrego a su carrito.
 Producto::Producto(int _id,
                     const char *_nombre,
                     const char *_tipo,
-                     int _stock,
-                     float _precio,
-                     Fecha _fecha) {
+                    int _stock,
+                    float _precio,
+                    Fecha _fecha) {
     id = _id;
     strcpy(nombre, _nombre);
     strcpy(tipo, _tipo);
@@ -80,19 +81,20 @@ Fecha Producto::getFecha() const {
 
 
 ///SETEAR IDENTIFICADOR, me quede aca creando esto
-int setearIdentificador(const string& nombreArchivo) {
+//int setearIdentificador(const string& nombreArchivo) {
    /* ifstream archivo(nombreArchivo, ios::binary | ios::ate); // Abre y se posiciona al final
-    streamsize tamañoArchivo = archivo.tellg(); // Tamaño total en bytes
+    streamsize tamaï¿½oArchivo = archivo.tellg(); // Tamaï¿½o total en bytes
 
-    if (tamañoArchivo % sizeof(Producto) != 0) {
-        cerr << "El tamaño del archivo no es múltiplo del tamaño de Producto." << endl;
+    if (tamaï¿½oArchivo % sizeof(Producto) != 0) {
+        cerr << "El tamaï¿½o del archivo no es mï¿½ltiplo del tamaï¿½o de Producto." << endl;
         return -1; // Archivo corrupto o estructura incorrecta
     }
 
-    int cantidad = static_cast<int>(tamañoArchivo / sizeof(Producto)); // Cantidad de registros
+    int cantidad = static_cast<int>(tamaï¿½oArchivo / sizeof(Producto)); // Cantidad de registros
     fclose(archivo);
     return cantidad;*/
-}
+
+//}
 
 ///METODO CARGAR
 void Producto::CargarP(){

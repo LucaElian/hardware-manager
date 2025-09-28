@@ -1,10 +1,9 @@
 #include <iostream>
 #include <ctime>
+using namespace std;
 
 #include "clsFecha.h"
 #include "clsProducto.h"
-
-using namespace std;
 
 ///Constructor de la clase fecha
 Fecha::Fecha(int _dia, int _mes, int _anio){

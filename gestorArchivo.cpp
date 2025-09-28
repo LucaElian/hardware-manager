@@ -1,5 +1,6 @@
 // DEJEN DE COMENTARLO, SOLO COMENTEN LA LINEA 6 EN EL MAIN LA PUTA QUE LO PARIO
 #include <iostream>
+
 #include <cstdio>
 #include <cstring> // strcpychaval
 #include "clsProducto.h"
