@@ -45,18 +45,19 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                     system("cls");
                     curs = false;
                     switch(opcion){
-                        case 0: 
-                            producto.CargarP(); // Da error 
+                        case 0:
+                            producto.CargarP();
                             gestorProductos.escribirProductoBINARIO(producto);
                             break;
                         case 2: break;
                         case 4: break;
-                        case 6: 
+                        case 6:
                             gestorProductos.leerProductos();
-                            producto.MostrarP(); // Da error;
+                            //producto.MostrarP();
                             break;
                         case 8: return;
                     }
+                    system("pause");
             }
         }
     }
