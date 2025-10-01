@@ -17,6 +17,8 @@ public:
     bool escribirProductoTEXTO(const Producto& producto);
     bool escribirProductoBINARIO( Producto& producto);
     bool leerProductos();
+    bool eliminarUltimoP();
+    bool eliminarProductoID();
     int cantidadRegistros();
 };
 

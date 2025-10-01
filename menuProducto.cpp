@@ -52,8 +52,12 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                                 gestorProductos.escribirProductoBINARIO(nuevoProducto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
-                        case 2: break;
-                        case 4: break;
+                        case 2:
+                                cout << "Producto eliminado" << endl;
+                            break;
+                        case 4:
+                                cout << "Producto modificado :v" << endl;
+                            break;
                         case 6:
                             cout << "La cantidad de productos es: " << gestorProductos.cantidadRegistros() << endl;
                             gestorProductos.leerProductos();

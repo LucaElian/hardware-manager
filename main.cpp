@@ -4,7 +4,7 @@ using namespace std;
 
 #include "clsFecha.h"
 #include "clsProducto.h"
-#include "clsUsuario.h"
+#include "clsCliente.h"
 #include "menuProducto.h"
 #include "menuGen.h"
 #include "gestorArchivo.h"

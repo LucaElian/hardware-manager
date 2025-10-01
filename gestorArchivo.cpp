@@ -1,6 +1,6 @@
 // DEJEN DE COMENTARLO, SOLO COMENTEN LA LINEA 6 EN EL MAIN LA PUTA QUE LO PARIO
 #include <iostream>
-
+using namespace std;
 #include <cstdio>
 #include <cstring> // strcpychaval
 #include "clsProducto.h"
@@ -23,21 +23,21 @@ bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
 
     if (!archivo) //si el archivo no existe, error
     {
-        std::cerr << "Error: fallo al escribir el producto" << std::endl;
+        cerr << "Error: fallo al escribir el producto" << endl;
         return false;
     }
 
     int nuevoID = cantidadRegistros() + 1;
-    producto.setID(nuevoID); 
+    producto.setID(nuevoID);
 
     //directamente uso fwrite porque todos los valores de producto son pasables sin problema con esta funcion, le paso el objeto directamente mas facil!!!
     // size_t es para que devuelva un valor sin signo, que es lo que devuelve fwrite
     size_t element = fwrite(&producto, sizeof(Producto), 1, archivo);
     fclose(archivo);
-    
+
     if (element != 1) // si no se escribio bien
     {
-        std::cerr << "Error: fallo al escribir el producto" << std::endl;
+        cerr << "Error: fallo al escribir el producto" << endl;
         return false;
     }
     return true;
@@ -74,3 +74,18 @@ int GestorArchivos::cantidadRegistros() {
 
     return size / sizeof(Producto);    // Cantidad de registros
 }
+
+///Metodo para eliminar el ultimo registro
+bool GestorArchivos::eliminarUltimoP() {
+
+    return true;
+}
+
+///metodo para eliminar el producto ingresando a mano el id
+bool GestorArchivos::eliminarProductoID(){
+
+    return true;
+}
+
+
+

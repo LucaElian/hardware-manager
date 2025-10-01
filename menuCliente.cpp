@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-#include "clsUsuario.h"
+#include "clsCliente.h"
 #include "clsFecha.h"
 #include "gestorArchivo.h"
 #include "artworks.h"
@@ -10,15 +10,15 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-void menuUsuario(Usuario usuario, GestorArchivos gestorUsuario){
-    string opciones[5] = {"AGREGAR USUARIO", "ELIMINAR USUARIO", "MODIFICAR USUARIO", "MOSTRAR USUARIO", "SALIR"};
+void menuCliente(Cliente cliente, GestorArchivos gestor){
+    string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
 
     while(true){
         int opcion = 0;
         bool curs = true;
         system("cls");
 
-        menu("M E N U   U S U A R I O", opciones, 7, 5);
+        menu("M E N U   C L I E N T E S", opciones, 7, 5);
 
         while(curs == true){
             rlutil::locate(49, 13 + opcion);
@@ -45,13 +45,13 @@ void menuUsuario(Usuario usuario, GestorArchivos gestorUsuario){
                     system("cls");
                     curs = false;
                     switch(opcion){
-                        case 0: 
-                            // usuario.CargarP(); // Da error 
+                        case 0:
+                            // usuario.CargarP(); // Da error
                             // gestorUsuario.escribirProductoBINARIO(producto);
                             break;
                         case 2: break;
                         case 4: break;
-                        case 6: 
+                        case 6:
                             // gestorUsuario.leerProductos();
                             // usuario.MostrarP(); // Da error;
                             break;
@@ -61,3 +61,6 @@ void menuUsuario(Usuario usuario, GestorArchivos gestorUsuario){
         }
     }
 }
+
+
+
