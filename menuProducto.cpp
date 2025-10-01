@@ -46,9 +46,12 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                     curs = false;
                     switch(opcion){
                         case 0:
-                            producto.CargarP();
-                            gestorProductos.escribirProductoBINARIO(producto);
-                            break;
+                            {  // abre un bloque para declarar variables locales
+                                Producto nuevoProducto;  //cread un producto NUEVO aca
+                                nuevoProducto.CargarP();
+                                gestorProductos.escribirProductoBINARIO(nuevoProducto);
+                                cout << "Producto agregado exitosamente!" << endl;
+                            }
                         case 2: break;
                         case 4: break;
                         case 6:

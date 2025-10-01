@@ -62,6 +62,7 @@ int Fecha::getAnio(){
 
 void Fecha::cargarDia(){
     cout << "INGRESE EL DIA: "; cin >> dia;
+    cin.ignore(1000, '\n');
     while(dia < 1 || dia > 31){
         cout << "DIA INVALIDO. INGRESE EL DIA: "; cin >> dia;
     }
@@ -69,6 +70,7 @@ void Fecha::cargarDia(){
 
 void Fecha::cargarMes(){
     cout << "INGRESE EL MES: "; cin >> mes;
+    cin.ignore(1000, '\n');
     while(mes < 1 || mes > 12){
         cout << "MES INVALIDO. INGRESE EL MES: "; cin >> mes;
 }
@@ -76,6 +78,7 @@ void Fecha::cargarMes(){
 
 void Fecha::cargarAnio(){
     cout << "INGRESE EL ANIO: "; cin >> anio;
+    cin.ignore(1000, '\n');
     while(anio < 1){
         cout << "ANIO INVALIDO. INGRESE EL ANIO: "; cin >> anio;
 }
