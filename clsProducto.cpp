@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-#include "cargarCadena.h"
 #include "clsProducto.h"
 #include <cstring>
 #include "utilidades.h"

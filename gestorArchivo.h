@@ -15,7 +15,7 @@ public:
 
     // Metodos de gestorArchivos
     bool escribirProductoTEXTO(const Producto& producto);
-    bool escribirProductoBINARIO(const Producto& producto);
+    bool escribirProductoBINARIO( Producto& producto);
     bool leerProductos();
     int cantidadRegistros();
 };

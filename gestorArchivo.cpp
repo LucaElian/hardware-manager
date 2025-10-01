@@ -16,23 +16,31 @@ GestorArchivos::GestorArchivos(const char* archivo)
     nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
 }
 
-bool GestorArchivos::escribirProductoBINARIO(const Producto& producto)
+bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
 {
-//con fopen lo abro, usando el modo read
-    FILE* archivo = fopen(nombreArchivo, "r+b");
+    //con fopen lo abro, usando el modo append*
+    FILE* archivo = fopen(nombreArchivo, "ab"); //ab es append binary, para agregar al final en binario
 
-    if (!archivo) //si el archivo no existe, con write creo otro
+    if (!archivo) //si el archivo no existe, error
     {
-        archivo = fopen(nombreArchivo, "wb");
-        if (!archivo) return false;
+        std::cerr << "Error: fallo al escribir el producto" << std::endl;
+        return false;
     }
 
+    int nuevoID = cantidadRegistros() + 1;
+    producto.setID(nuevoID); 
+
     //directamente uso fwrite porque todos los valores de producto son pasables sin problema con esta funcion, le paso el objeto directamente mas facil!!!
-    fwrite(&producto, sizeof(Producto),1,archivo);
-
+    // size_t es para que devuelva un valor sin signo, que es lo que devuelve fwrite
+    size_t element = fwrite(&producto, sizeof(Producto), 1, archivo);
     fclose(archivo);
+    
+    if (element != 1) // si no se escribio bien
+    {
+        std::cerr << "Error: fallo al escribir el producto" << std::endl;
+        return false;
+    }
     return true;
-
 }
 
 bool GestorArchivos::leerProductos()
@@ -61,7 +69,7 @@ int GestorArchivos::cantidadRegistros() {
     if (!archivo) return 0;
 
     fseek(archivo, 0, SEEK_END);       // Ir al final
-    long size = ftell(archivo);        // Tamaño total en bytes
+    long size = ftell(archivo);        // Tamaï¿½o total en bytes
     fclose(archivo);
 
     return size / sizeof(Producto);    // Cantidad de registros
