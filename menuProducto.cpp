@@ -52,6 +52,7 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                                 gestorProductos.escribirProductoBINARIO(nuevoProducto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
+                            break; // me lo olvide
                         case 2: 
                             {//cod aux
                                 gestorProductos.leerProductos();
