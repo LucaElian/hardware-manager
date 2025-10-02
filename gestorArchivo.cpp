@@ -43,12 +43,45 @@ bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
     return true;
 }
 
+bool GestorArchivos::eliminarProductoPorID(int id) {
+    // Abre el archivo en modo lectura/escritura binario
+    FILE* archivo = fopen(nombreArchivo, "r+b");
+    if (!archivo) {
+        std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+        return false;
+    }
+
+    Producto producto;
+
+    // Buscar producto por su ID
+    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) {
+        if (producto.getID() == id) {
+            // Mover puntero al inicio del registro leído
+            long posActual = ftell(archivo);        // posicion actual en el archivo
+            long posRegistro = posActual - sizeof(Producto); 
+            fseek(archivo, posRegistro, SEEK_SET);  // mover puntero al inicio del registro
+
+            // Narcar como eliminado
+            producto.setID(-1);
+            fwrite(&producto, sizeof(Producto), 1, archivo);
+
+            fclose(archivo);
+            return true; // Producto eliminado con mexito
+        }
+    }
+
+    // si no se encontro
+    std::cerr << "Error: producto con ID " << id << " no encontrado." << std::endl;
+    fclose(archivo);
+    return false;
+}
+
 bool GestorArchivos::leerProductos()
 {
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo)
     {
-        printf("Error: no se pudo leer el archivo ostias%s\n", nombreArchivo);
+        std::cerr << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << std::endl;
         return false;
     }
 
@@ -56,24 +89,16 @@ bool GestorArchivos::leerProductos()
 
     Producto producto;  // creo aca un producto para que no lo reciba la funcion al pedo, solo lo usa para mostrar
     while (fread(&producto, sizeof(Producto), 1, archivo) == 1) { //me falta ver que hace exactamente esta linea y pongo un mejor comentario
-        producto.MostrarP();
-        cout << "---------------------\n";
+        if (producto.getID() == -1) continue; // saltea productos eliminados
+        {    producto.MostrarP();
+            cout << "---------------------\n";
+        }
     }
 
     fclose(archivo);
     return true;
 }
 
-int GestorArchivos::cantidadRegistros() {
-    FILE* archivo = fopen(nombreArchivo, "rb");
-    if (!archivo) return 0;
-
-    fseek(archivo, 0, SEEK_END);       // Ir al final
-    long size = ftell(archivo);        // Tamaño total en bytes
-    fclose(archivo);
-
-    return size / sizeof(Producto);    // Cantidad de registros
-}
 
 ///Metodo para eliminar el ultimo registro
 bool GestorArchivos::eliminarUltimoP() {
