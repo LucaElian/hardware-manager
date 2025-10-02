@@ -5,9 +5,9 @@
 
 struct ContextoGestores {
     GestorArchivos gestorP;
-    GestorArchivos gestorU;
+    GestorArchivos gestorC;
 
-    ContextoGestores() : gestorP("productos.dat"), gestorU("usuarios.dat"){}
+    ContextoGestores() : gestorP("productos.dat"), gestorC("clientes.dat"){}
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED

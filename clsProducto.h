@@ -14,7 +14,12 @@ class Producto {
         Fecha ingresoProducto;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Producto( int _id = 0, const char *_nombre = "vacio", const char *_tipo = "vacio", int _stock = 0, float _precio = 0, Fecha _fecha = Fecha(1,1,1));
+        Producto( int _id = 0,
+                 const char *_nombre = "vacio",
+                 const char *_tipo = "vacio",
+                 int _stock = 0,
+                 float _precio = 0,
+                 Fecha _fecha = Fecha(1,1,1));
         ~Producto(){}
 
         void setID(int);

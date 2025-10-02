@@ -1,14 +1,14 @@
 #ifndef CONTEXTO_H_INCLUDED
 #define CONTEXTO_H_INCLUDED
 
-#include "clsUsuario.h"
+#include "clsCliente.h"
 #include "clsProducto.h"
 #include "gestorArchivo.h"
 
 
 struct Contexto {
     Producto producto;
-    Usuario usuario;
+    Cliente cliente;
     //GestorArchivos gestor;
 };
 
