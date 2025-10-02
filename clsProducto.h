@@ -6,7 +6,7 @@
 
 class Producto {
     private:
-        int id;
+        int idProducto;
         char nombre[30];
         char tipo[20];
         float precio;
@@ -14,7 +14,7 @@ class Producto {
         Fecha ingresoProducto;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Producto( int _id = 0,
+        Producto( int _idProducto = 0,
                  const char *_nombre = "vacio",
                  const char *_tipo = "vacio",
                  int _stock = 0,

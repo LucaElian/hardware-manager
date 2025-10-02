@@ -69,7 +69,7 @@ int GestorArchivos::cantidadRegistros() {
     if (!archivo) return 0;
 
     fseek(archivo, 0, SEEK_END);       // Ir al final
-    long size = ftell(archivo);        // Tama�o total en bytes
+    long size = ftell(archivo);        // Tamaño total en bytes
     fclose(archivo);
 
     return size / sizeof(Producto);    // Cantidad de registros

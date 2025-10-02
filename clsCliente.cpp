@@ -4,13 +4,13 @@ using namespace std;
 #include "clsCliente.h"
 
 ///CPP == Implementacion del constructor
-Cliente::Cliente(int _id,
+Cliente::Cliente(int _idCliente,
                  const char *_nombre,
                  const char *_apellido,
                  int _dni,
                  const char *_email,
                 Fecha _fecha){ //recibe los atributos
-    id = _id;
+    idCliente = _idCliente;
     strcpy(nombre, _nombre);
     strcpy(apellido, _apellido);
     dni = _dni;
@@ -23,7 +23,7 @@ void Cliente::CargarC(){
 }
 
 void Cliente::MostrarC(){
-    cout << "-------------------- CLIENTE " << id << " ----------------------"<< endl;
+    cout << "-------------------- CLIENTE " << idCliente << " ----------------------"<< endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Apellido: " << apellido << endl;
     cout << "dni: " << dni << endl;

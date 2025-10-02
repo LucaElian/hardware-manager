@@ -1,7 +1,6 @@
 
 
 #include <iostream>
-
 #include "menuGen.h"
 #include "menuProducto.h"
 #include "menuCliente.h"
