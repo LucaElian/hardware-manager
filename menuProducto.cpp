@@ -52,7 +52,19 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                                 gestorProductos.escribirProductoBINARIO(nuevoProducto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
-                        case 2: break;
+                        case 2: 
+                            {//cod aux
+                                gestorProductos.leerProductos();
+                                int idEliminar;
+                                cout << "Ingrese el ID del producto a eliminar: ";
+                                cin >> idEliminar;
+                                if (gestorProductos.eliminarProductoPorID(idEliminar)) {
+                                    cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
+                                } else {
+                                    cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
+                                }
+                            }
+                            break;
                         case 4: break;
                         case 6:
                             cout << "La cantidad de productos es: " << gestorProductos.cantidadRegistros() << endl;
