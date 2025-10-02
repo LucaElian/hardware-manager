@@ -58,7 +58,7 @@ bool GestorArchivos::eliminarProductoPorID(int id) {
         if (producto.getID() == id) {
             // Mover puntero al inicio del registro leído
             long posActual = ftell(archivo);        // posicion actual en el archivo
-            long posRegistro = posActual - sizeof(Producto); 
+            long posRegistro = posActual - sizeof(Producto);
             fseek(archivo, posRegistro, SEEK_SET);  // mover puntero al inicio del registro
 
             // Narcar como eliminado
@@ -99,18 +99,27 @@ bool GestorArchivos::leerProductos()
     return true;
 }
 
+int GestorArchivos::cantidadRegistros() {
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return 0;
 
-///Metodo para eliminar el ultimo registro
-bool GestorArchivos::eliminarUltimoP() {
 
-    return true;
+    int contadorRegistrosValidos = 0;
+    Producto producto;
+
+    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) {
+        // Solo cuenta si el ID no es -1
+        if (producto.getID() != -1) {
+            contadorRegistrosValidos++;
+        }
+    }
+
+
+    fseek(archivo, 0, SEEK_END);       // Ir al final
+    long size = ftell(archivo);        // Tamaño total en bytes
+    fclose(archivo);
+
+    return contadorRegistrosValidos;    // Cantidad de registros
 }
-
-///metodo para eliminar el producto ingresando a mano el id
-bool GestorArchivos::eliminarProductoID(){
-
-    return true;
-}
-
 
 
