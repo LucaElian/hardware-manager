@@ -8,7 +8,7 @@ class Cliente
 {
     //Declaro en privado los atributos
 private:
-    int id;
+    int idCliente;
     char nombre[50];
     char apellido[30];
     int dni;
@@ -18,7 +18,7 @@ private:
     //declaro en publico mis metodos
 public:
     //Creacion del constructor principal (en el .h), parsea todos los valores para sus nuevos "_"
-    Cliente( int _id = 0,
+    Cliente( int _idCliente = 0,
             const char *_nombre = "vacio",
              const char *_apellido = "vacio",
              int _dni = 0,
