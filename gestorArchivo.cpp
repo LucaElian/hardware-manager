@@ -99,24 +99,6 @@ bool GestorArchivos::leerProductos()
     return true;
 }
 
-int GestorArchivos::cantidadRegistros() {
-    FILE* archivo = fopen(nombreArchivo, "rb");
-    if (!archivo) return 0;
-
-    int contadorRegistrosValidos = 0;
-    Producto producto;
-
-    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) {
-        // Solo cuenta si el ID no es -1
-        if (producto.getID() != -1) {
-            contadorRegistrosValidos++;
-        }
-    }
-
-    fclose(archivo);
-
-    return contadorRegistrosValidos;    // Cantidad de registros
-}
 
 ///Metodo para eliminar el ultimo registro
 bool GestorArchivos::eliminarUltimoP() {

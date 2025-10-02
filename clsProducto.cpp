@@ -16,13 +16,13 @@ y asignados al usuario cliente que lo agrego a su carrito.
 */
 
 ///CONSTRUCTOR
-Producto::Producto(int _id,
+Producto::Producto(int _idProducto,
                     const char *_nombre,
                     const char *_tipo,
                     int _stock,
                     float _precio,
                     Fecha _fecha) {
-    id = _id;
+    idProducto = _idProducto;
     strcpy(nombre, _nombre);
     strcpy(tipo, _tipo);
     stock = _stock;
@@ -31,8 +31,8 @@ Producto::Producto(int _id,
 }
 //usar fseek, usar la funcion contarRegistro y a partir de ese valor le sumo 1 al id
 ///SETTERS
-void Producto::setID(int _id){
-    id = _id;
+void Producto::setID(int _idProducto){
+    idProducto = _idProducto;
 }
 
 void Producto::setNombre(char *_nombre){
@@ -55,7 +55,7 @@ void Producto::setPrecio(float _precio){
 
 ///GETTERS
 int Producto::getID() const {
-    return id;
+    return idProducto;
 }
 
 const char *Producto::getNombre() const {
@@ -114,7 +114,7 @@ void Producto::CargarP(){
 
 ///METODO MOSTRAR
 void Producto::MostrarP() {
-    cout << "----------------PRODUCTO " << id << "----------------------"<<endl;
+    cout << "----------------PRODUCTO " << idProducto << "----------------------"<<endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Tipo: " << tipo << endl;
     //cout << "ID: " << id << endl;
