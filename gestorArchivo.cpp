@@ -1,14 +1,10 @@
-// DEJEN DE COMENTARLO, SOLO COMENTEN LA LINEA 6 EN EL MAIN LA PUTA QUE LO PARIO
 #include <iostream>
 using namespace std;
 #include <cstdio>
-#include <cstring> // strcpychaval
+#include <cstring>
 #include "clsProducto.h"
 #include "gestorArchivo.h"
 #include "clsFecha.h"
-
-
-//HACER QUE LA FECHA SE ACTUALICE BIEN
 
 GestorArchivos::GestorArchivos(const char* archivo)
 {
@@ -16,6 +12,7 @@ GestorArchivos::GestorArchivos(const char* archivo)
     nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
 }
 
+///Escribir productos en el archivo pasandole el objeto
 bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
 {
     //con fopen lo abro, usando el modo append*
@@ -43,19 +40,73 @@ bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
     return true;
 }
 
-bool GestorArchivos::eliminarProductoPorID(int id) {
+bool GestorArchivos::leerProductos()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo)
+    {
+        std::cerr << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << std::endl;
+        return false;
+    }
+
+    printf("Contenido de %s\n", nombreArchivo);
+
+    Producto producto;  // creo aca un producto para que no lo reciba la funcion al pedo, solo lo usa para mostrar
+    while (fread(&producto, sizeof(Producto), 1, archivo) == 1)   //me falta ver que hace exactamente esta linea y pongo un mejor comentario
+    {
+        if (producto.getID() == -1) continue; // saltea productos eliminados
+        {
+            producto.MostrarP();
+            cout << "---------------------\n";
+        }
+    }
+
+    fclose(archivo);
+    return true;
+}
+
+int GestorArchivos::cantidadRegistros()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return 0;
+
+
+    int contadorRegistrosValidos = 0;
+    Producto producto;
+
+    while (fread(&producto, sizeof(Producto), 1, archivo) == 1)
+    {
+        // Solo cuenta si el ID no es -1
+        if (producto.getID() != -1)
+        {
+            contadorRegistrosValidos++;
+        }
+    }
+
+    fseek(archivo, 0, SEEK_END);       // Ir al final
+    fclose(archivo);
+
+    return contadorRegistrosValidos;    // Cantidad de registros
+}
+
+///Te solicita el id y borras el producto que coincida
+bool GestorArchivos::eliminarProductoPorID(int idProducto)
+{
     // Abre el archivo en modo lectura/escritura binario
     FILE* archivo = fopen(nombreArchivo, "r+b");
-    if (!archivo) {
-        std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+    if (!archivo)
+    {
+        cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << endl;
         return false;
     }
 
     Producto producto;
 
     // Buscar producto por su ID
-    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) {
-        if (producto.getID() == id) {
+    while (fread(&producto, sizeof(Producto), 1, archivo) == 1)
+    {
+        if (producto.getID() == idProducto)
+        {
             // Mover puntero al inicio del registro leído
             long posActual = ftell(archivo);        // posicion actual en el archivo
             long posRegistro = posActual - sizeof(Producto);
@@ -71,54 +122,9 @@ bool GestorArchivos::eliminarProductoPorID(int id) {
     }
 
     // si no se encontro
-    std::cerr << "Error: producto con ID " << id << " no encontrado." << std::endl;
+    cerr << "Error: producto con ID " << idProducto << " no encontrado." << endl;
     fclose(archivo);
     return false;
-}
-
-bool GestorArchivos::leerProductos()
-{
-    FILE* archivo = fopen(nombreArchivo, "rb");
-    if (!archivo)
-    {
-        std::cerr << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << std::endl;
-        return false;
-    }
-
-    printf("Contenido de %s\n", nombreArchivo);
-
-    Producto producto;  // creo aca un producto para que no lo reciba la funcion al pedo, solo lo usa para mostrar
-    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) { //me falta ver que hace exactamente esta linea y pongo un mejor comentario
-        if (producto.getID() == -1) continue; // saltea productos eliminados
-        {    producto.MostrarP();
-            cout << "---------------------\n";
-        }
-    }
-
-    fclose(archivo);
-    return true;
-}
-
-int GestorArchivos::cantidadRegistros() {
-    FILE* archivo = fopen(nombreArchivo, "rb");
-    if (!archivo) return 0;
-
-
-    int contadorRegistrosValidos = 0;
-    Producto producto;
-
-    while (fread(&producto, sizeof(Producto), 1, archivo) == 1) {
-        // Solo cuenta si el ID no es -1
-        if (producto.getID() != -1) {
-            contadorRegistrosValidos++;
-        }
-    }
-
-
-    fseek(archivo, 0, SEEK_END);       // Ir al final
-    fclose(archivo);
-
-    return contadorRegistrosValidos;    // Cantidad de registros
 }
 
 

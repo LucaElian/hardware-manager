@@ -47,12 +47,12 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                     switch(opcion){
                         case 0:
                             {  // abre un bloque para declarar variables locales
-                                Producto nuevoProducto;  //cread un producto NUEVO aca
-                                nuevoProducto.CargarP();
-                                gestorProductos.escribirProductoBINARIO(nuevoProducto);
+                                //thiago aca habias creado un objeto producto, pero la funcion ya lo recibe asi q es lo mismo
+                                producto.CargarP();
+                                gestorProductos.escribirProductoBINARIO(producto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
-                            break; // me lo olvide
+                            break;
                         case 2: 
                             {//cod aux
                                 gestorProductos.leerProductos();
