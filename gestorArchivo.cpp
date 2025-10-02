@@ -84,7 +84,6 @@ int GestorArchivos::cantidadRegistros()
     }
 
     fseek(archivo, 0, SEEK_END);       // Ir al final
-    long size = ftell(archivo);        // Tamaño total en bytes
     fclose(archivo);
 
     return contadorRegistrosValidos;    // Cantidad de registros

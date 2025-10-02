@@ -53,8 +53,8 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
-                        case 2:
-                            {
+                        case 2: 
+                            {//cod aux
                                 gestorProductos.leerProductos();
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
