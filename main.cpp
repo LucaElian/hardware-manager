@@ -11,7 +11,8 @@ using namespace std;
 #include "Contexto.h"
 #include "ContextoGestores.h"
 
-int main(){
+int main()
+{
     //creo el objeto del gestor para el archivo de productos
     ContextoGestores gestores;
     Contexto objetos;
