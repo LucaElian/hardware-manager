@@ -11,7 +11,7 @@ using namespace std;
 #undef byte
 
 void menuProducto(Producto producto, GestorArchivos gestorProductos){
-    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTO", "SALIR"};
+    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true){
         int opcion = 0;
@@ -46,8 +46,7 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                     curs = false;
                     switch(opcion){
                         case 0:
-                            {  // abre un bloque para declarar variables locales
-                                //thiago aca habias creado un objeto producto, pero la funcion ya lo recibe asi q es lo mismo
+                            {
                                 producto.CargarP();
                                 gestorProductos.escribirProductoBINARIO(producto);
                                 cout << "Producto agregado exitosamente!" << endl;

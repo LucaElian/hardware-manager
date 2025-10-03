@@ -6,40 +6,44 @@
 
 class Producto {
     private:
-        int idProducto;
+        unsigned int idProducto;
         char nombre[30];
         char tipo[20];
         float precio;
         int stock;
+        bool estado;
         Fecha ingresoProducto;
     public:
         /// CONSTRUCTOR Y DESTRUCTOR
-        Producto( int _idProducto = 0,
-                 const char *_nombre = "vacio",
-                 const char *_tipo = "vacio",
-                 int _stock = 0,
-                 float _precio = 0,
-                 Fecha _fecha = Fecha(1,1,1));
+        Producto(unsigned int _idProducto = 0,
+                const char *_nombre = "vacio",
+                const char *_tipo = "vacio",
+                int _stock = 0,
+                float _precio = 0,
+                bool estado = true, /// SUPONGO QUE 0 PARA INACTIVO, 1 PARA ACTIVO.
+                Fecha _fecha = Fecha(1,1,1));
         ~Producto(){}
 
-        void setID(int);
+        /// SETTERS  
+        void setID(unsigned int);
         void setNombre(char *);
         void setTipo(char *);
         void setStock(int);
         void setPrecio(float);
+        void setEstado(bool);
         void setFecha(int, int, int);
 
-        /// GETTERS - MARCADOS COMO CONST
-        int getID() const;  // Agregado const
-        const char *getNombre() const;  // Agregado const
-        const char *getTipo() const;    // Agregado const
-        float getPrecio() const;        // Agregado const
-        int getStock() const;           // Agregado const
+        /// GETTERS 
+        unsigned int getID() const; 
+        const char *getNombre() const;  
+        const char *getTipo() const;    
+        float getPrecio() const;        
+        int getStock() const;           
+        bool getEstado() const;
         Fecha getFecha() const;
 
         ///Otros metodos
         void CargarP();
         void MostrarP();
-        void setearIdentificador(int);
 };
 #endif // PRODUCTOS_H_INCLUDED

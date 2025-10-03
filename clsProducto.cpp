@@ -16,22 +16,24 @@ y asignados al usuario cliente que lo agrego a su carrito.
 */
 
 ///CONSTRUCTOR
-Producto::Producto(int _idProducto,
+Producto::Producto(unsigned int _idProducto,
                     const char *_nombre,
                     const char *_tipo,
                     int _stock,
                     float _precio,
+                    bool _estado,
                     Fecha _fecha) {
     idProducto = _idProducto;
     strcpy(nombre, _nombre);
     strcpy(tipo, _tipo);
     stock = _stock;
     precio = _precio;
+    estado = _estado;
     ingresoProducto = _fecha;
 }
 //usar fseek, usar la funcion contarRegistro y a partir de ese valor le sumo 1 al id
 ///SETTERS
-void Producto::setID(int _idProducto){
+void Producto::setID(unsigned int _idProducto){
     idProducto = _idProducto;
 }
 
@@ -53,8 +55,12 @@ void Producto::setPrecio(float _precio){
     precio = _precio;
 }
 
+void Producto::setEstado(bool _estado){
+    estado = _estado;
+}
+
 ///GETTERS
-int Producto::getID() const {
+unsigned int Producto::getID() const {
     return idProducto;
 }
 
@@ -74,31 +80,16 @@ float Producto::getPrecio() const {
     return precio;
 }
 
+bool Producto::getEstado() const {
+    return estado;
+}
+
 Fecha Producto::getFecha() const {
     return ingresoProducto;
 }
 
-
-///SETEAR IDENTIFICADOR, me quede aca creando esto
-//int setearIdentificador(const string& nombreArchivo) {
-   /* ifstream archivo(nombreArchivo, ios::binary | ios::ate); // Abre y se posiciona al final
-    streamsize tama�oArchivo = archivo.tellg(); // Tama�o total en bytes
-
-    if (tama�oArchivo % sizeof(Producto) != 0) {
-        cerr << "El tama�o del archivo no es m�ltiplo del tama�o de Producto." << endl;
-        return -1; // Archivo corrupto o estructura incorrecta
-    }
-
-    int cantidad = static_cast<int>(tama�oArchivo / sizeof(Producto)); // Cantidad de registros
-    fclose(archivo);
-    return cantidad;*/
-
-//}
-
 ///METODO CARGAR
 void Producto::CargarP(){
-    /*cout << "VERSION PRELIMINAR, ingrese el id: ";
-    cin >> id;*/
     cout << "Ingrese el nombre del producto: ";
     cargarCadena(nombre,29);
     cout << "Ingrese el tipo del producto: ";
@@ -107,9 +98,8 @@ void Producto::CargarP(){
     cin >> stock;
     cout << "Ingrese el precio: ";
     cin >> precio;
-    //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo cargar de Fecha
+    estado = true;
     ingresoProducto.CargarF();
-    //setearIdentificador(id);
 }
 
 ///METODO MOSTRAR
@@ -120,12 +110,9 @@ void Producto::MostrarP() {
     //cout << "ID: " << id << endl;
     cout << "Stock: " << stock << endl;
     cout << "Precio: $" << precio << endl;
+    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
     cout << "Fecha de ingreso: ";
     //Recibo el objeto de tipo fecha de la clase producto "ingresoProducto" y llamo al metodo mostrar de Fecha
     ingresoProducto.MostrarF();
     cout << endl;
 }
-
-
-
-
