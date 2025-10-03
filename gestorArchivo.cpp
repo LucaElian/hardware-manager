@@ -3,6 +3,7 @@ using namespace std;
 #include <cstdio>
 #include <cstring>
 #include "clsProducto.h"
+#include "clsCliente.h"
 #include "gestorArchivo.h"
 #include "clsFecha.h"
 
@@ -12,8 +13,10 @@ GestorArchivos::GestorArchivos(const char* archivo)
     nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
 }
 
+/// =================== PRODUCTOS ===================
+
 ///Escribir productos en el archivo pasandole el objeto
-bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
+bool GestorArchivos::escribirProducto(Producto& producto)
 {
     //con fopen lo abro, usando el modo append*
     FILE* archivo = fopen(nombreArchivo, "ab"); //ab es append binary, para agregar al final en binario
@@ -24,7 +27,7 @@ bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
         return false;
     }
 
-    int nuevoID = cantidadRegistros() + 1;
+    int nuevoID = cantidadRegistrosP() + 1;
     producto.setID(nuevoID);
 
     //directamente uso fwrite porque todos los valores de producto son pasables sin problema con esta funcion, le paso el objeto directamente mas facil!!!
@@ -45,11 +48,11 @@ bool GestorArchivos::leerProductos()
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo)
     {
-        std::cerr << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << std::endl;
+        cerr << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << endl;
         return false;
     }
 
-    printf("Contenido de %s\n", nombreArchivo);
+    cout << "Contenido de %s\n" << nombreArchivo << endl;
 
     Producto producto;  // creo aca un producto para que no lo reciba la funcion al pedo, solo lo usa para mostrar
     while (fread(&producto, sizeof(Producto), 1, archivo) == 1)   //me falta ver que hace exactamente esta linea y pongo un mejor comentario
@@ -65,7 +68,7 @@ bool GestorArchivos::leerProductos()
     return true;
 }
 
-int GestorArchivos::cantidadRegistros()
+int GestorArchivos::cantidadRegistrosP()
 {
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo) return 0;
@@ -123,6 +126,81 @@ bool GestorArchivos::eliminarProductoPorID(int idProducto)
 
     // si no se encontro
     cerr << "Error: producto con ID " << idProducto << " no encontrado." << endl;
+    fclose(archivo);
+    return false;
+}
+
+
+/// =================== CLIENTES ===================
+
+bool GestorArchivos::escribirCliente(Cliente& cliente)
+{
+    cout << "soyu gestor escribir cliente" << endl;
+    FILE* archivo = fopen(nombreArchivo, "ab");
+    if (!archivo) return false;
+
+    int nuevoID = cantidadRegistrosC() + 1;
+    cliente.setID(nuevoID);
+
+    size_t ok = fwrite(&cliente, sizeof(Cliente), 1, archivo);
+    fclose(archivo);
+    return ok == 1;
+}
+
+bool GestorArchivos::leerClientes()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return false;
+    if (!archivo)
+    {
+        cout << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << endl;
+        return false;
+    }
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() == -1) continue;
+        cliente.MostrarC();
+        cout << "---------------------\n";
+    }
+    fclose(archivo);
+    return true;
+}
+
+int GestorArchivos::cantidadRegistrosC()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return 0;
+
+    int contador = 0;
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() != -1) contador++;
+    }
+    fclose(archivo);
+    return contador;
+}
+
+bool GestorArchivos::eliminarClientePorID(int id)
+{
+    FILE* archivo = fopen(nombreArchivo, "r+b");
+    if (!archivo) return false;
+
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() == id)
+        {
+            long pos = ftell(archivo) - sizeof(Cliente);
+            fseek(archivo, pos, SEEK_SET);
+
+            cliente.setID(-1);
+            fwrite(&cliente, sizeof(Cliente), 1, archivo);
+            fclose(archivo);
+            return true;
+        }
+    }
     fclose(archivo);
     return false;
 }
