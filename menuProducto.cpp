@@ -1,19 +1,17 @@
 #include<iostream>
 using namespace std;
-
 #include "clsProducto.h"
 #include "clsFecha.h"
 #include "gestorArchivo.h"
 #include "artworks.h"
-
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-void menuProducto(Producto producto, GestorArchivos gestorProductos){
+void menuProducto(Producto producto, GestorArchivos gestor){
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
-    while(true){
+    while(true) {
         int opcion = 0;
         bool curs = true;
         system("cls");
@@ -26,7 +24,7 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
 
             int pos = rlutil::getkey(); // Captura de teclas
 
-            switch(pos){
+            switch(pos) {
                 case 14:
                     rlutil::locate(49, 13 + opcion);
                     cout << " ";
@@ -44,31 +42,32 @@ void menuProducto(Producto producto, GestorArchivos gestorProductos){
                 case 1:
                     system("cls");
                     curs = false;
-                    switch(opcion){
-                        case 0:
-                            {
+                    switch(opcion) {
+                        case 0: {  // abre un bloque para declarar variables locales
+                                //thiago aca habias creado un objeto producto, pero la funcion ya lo recibe asi q es lo mismo
                                 producto.CargarP();
-                                gestorProductos.escribirProductoBINARIO(producto);
+                                gestor.escribirProducto(producto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
-                        case 2: 
-                            {//cod aux
-                                gestorProductos.leerProductos();
+                        case 2: {
+                                cout << "La cantidad de productos es: " << gestor.cantidadRegistrosP() << endl;
+                                gestor.leerProductos();
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
                                 cin >> idEliminar;
-                                if (gestorProductos.eliminarProductoPorID(idEliminar)) {
+                                if (gestor.eliminarProductoPorID(idEliminar)) {
                                     cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
-                                } else {
+                                } 
+                                else {
                                     cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
                                 }
                             }
                             break;
                         case 4: break;
                         case 6:
-                            cout << "La cantidad de productos es: " << gestorProductos.cantidadRegistros() << endl;
-                            gestorProductos.leerProductos();
+                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosP() << endl;
+                            gestor.leerProductos();
                             //producto.MostrarP();
                             break;
                         case 8: return;

@@ -68,11 +68,13 @@ const char *Producto::getNombre() const {
     return nombre;
 }
 
-const char *Producto::getTipo() const {
+const char *Producto::getTipo() const
+{
     return tipo;
 }
 
-int Producto::getStock() const {
+int Producto::getStock() const
+{
     return stock;
 }
 
@@ -116,3 +118,7 @@ void Producto::MostrarP() {
     ingresoProducto.MostrarF();
     cout << endl;
 }
+
+
+
+

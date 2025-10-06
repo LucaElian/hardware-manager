@@ -20,11 +20,11 @@ class Producto {
                 const char *_tipo = "vacio",
                 int _stock = 0,
                 float _precio = 0,
-                bool estado = true, /// SUPONGO QUE 0 PARA INACTIVO, 1 PARA ACTIVO.
+                bool estado = true,
                 Fecha _fecha = Fecha(1,1,1));
         ~Producto(){}
 
-        /// SETTERS  
+        /// SETTERS
         void setID(unsigned int);
         void setNombre(char *);
         void setTipo(char *);
@@ -33,12 +33,12 @@ class Producto {
         void setEstado(bool);
         void setFecha(int, int, int);
 
-        /// GETTERS 
-        unsigned int getID() const; 
-        const char *getNombre() const;  
-        const char *getTipo() const;    
-        float getPrecio() const;        
-        int getStock() const;           
+        /// GETTERS
+        unsigned int getID() const;
+        const char *getNombre() const;
+        const char *getTipo() const;
+        float getPrecio() const;
+        int getStock() const;
         bool getEstado() const;
         Fecha getFecha() const;
 

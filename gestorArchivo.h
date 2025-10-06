@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstring>
 #include "clsProducto.h"
+#include "clsCliente.h"
 
 class GestorArchivos {
 private:
@@ -13,13 +14,17 @@ public:
     // Constructor
     GestorArchivos(const char* archivo);
 
-    // Metodos de gestorArchivos
-    bool escribirProductoTEXTO(const Producto& producto);
-    bool escribirProductoBINARIO( Producto& producto);
+   bool escribirProducto(Producto& producto);
     bool leerProductos();
-    //bool leerProductoPorID(int id, Producto& producto); //es buena?
-    bool eliminarProductoPorID(int id);
-    int cantidadRegistros();
+    bool eliminarProductoPorID(int idProducto);
+    int cantidadRegistrosP();
+
+    // Métodos para CLIENTES
+    bool escribirCliente(Cliente& cliente);
+    bool leerClientes();
+    bool eliminarClientePorID(int idCliente);
+    int cantidadRegistrosC();
+
 };
 
 #endif // GESTORARCHIVOS_H

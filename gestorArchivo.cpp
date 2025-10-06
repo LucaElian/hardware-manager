@@ -3,26 +3,28 @@ using namespace std;
 #include <cstdio>
 #include <cstring>
 #include "clsProducto.h"
+#include "clsCliente.h"
 #include "gestorArchivo.h"
 #include "clsFecha.h"
 
-GestorArchivos::GestorArchivos(const char* archivo){
+GestorArchivos::GestorArchivos(const char* archivo) {
     strncpy(nombreArchivo, archivo, sizeof(nombreArchivo)-1);
     nombreArchivo[sizeof(nombreArchivo)-1] = '\0';
 }
 
+/// =================== PRODUCTOS ===================
+
 ///Escribir productos en el archivo pasandole el objeto
-bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
-{
+bool GestorArchivos::escribirProducto(Producto& producto) {
     //con fopen lo abro, usando el modo append*
     FILE* archivo = fopen(nombreArchivo, "ab"); //ab es append binary, para agregar al final en binario
 
-    if (!archivo){ //si el archivo no existe, error
+    if (!archivo) {//si el archivo no existe, error
         cerr << "ERROR: FALLO AL ESCRIBIR EL PRODUCTO." << endl;
         return false;
     }
 
-    int nuevoID = cantidadRegistros() + 1;
+    int nuevoID = cantidadRegistrosP() + 1;
     producto.setID(static_cast<unsigned int>(nuevoID));
     producto.setEstado(true);
 
@@ -31,24 +33,22 @@ bool GestorArchivos::escribirProductoBINARIO(Producto& producto)
     size_t element = fwrite(&producto, sizeof(Producto), 1, archivo);
     fclose(archivo);
 
-    if (element != 1) // si no se escribio bien
-    {
+    if (element != 1) { // si no se escribio bien
         cerr << "ERROR: FALLO AL ESCRIBIR EL PRODUCTO." << endl;
         return false;
     }
     return true;
 }
 
-bool GestorArchivos::leerProductos()
-{
+bool GestorArchivos::leerProductos() {
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo)
     {
-        cerr << "ERROR: NO SE PUDO LEER EL ARCHIVO OSTIAS%s\n" << nombreArchivo << std::endl;
+        cerr << "ERROR: NO SE PUDO LEER EL ARCHIVO OSTIAS%s\n" << nombreArchivo << endl;
         return false;
     }
 
-    printf("CONTENIDO DE %s\n", nombreArchivo);
+    cout << "CONTENIDO DE %s\n" << nombreArchivo << endl;
 
     Producto producto;  // creo aca un producto para que no lo reciba la funcion al pedo, solo lo usa para mostrar
     bool activos = false;
@@ -68,8 +68,7 @@ bool GestorArchivos::leerProductos()
     return true;
 }
 
-int GestorArchivos::cantidadRegistros()
-{
+int GestorArchivos::cantidadRegistrosP() {
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo) return 0;
 
@@ -84,10 +83,10 @@ int GestorArchivos::cantidadRegistros()
 }
 
 ///Te solicita el id y borras el producto que coincida
-bool GestorArchivos::eliminarProductoPorID(int idProducto){
+bool GestorArchivos::eliminarProductoPorID(int idProducto) {
     // Abre el archivo en modo lectura/escritura binario
     FILE* archivo = fopen(nombreArchivo, "r+b");
-    if (!archivo){
+    if (!archivo) {
         cerr << "ERROR: NO SE PUDO ABRIR EL ARCHIVO " << nombreArchivo << endl;
         return false;
     }
@@ -116,8 +115,84 @@ bool GestorArchivos::eliminarProductoPorID(int idProducto){
         posRegistro = ftell(archivo);
     }
 
+
     // si no se encontro
     cerr << "ERROR: PRODUCTO CON ID " << idProducto << " NO ENCONTRADO." << endl;
+    fclose(archivo);
+    return false;
+}
+
+
+/// =================== CLIENTES ===================
+
+bool GestorArchivos::escribirCliente(Cliente& cliente)
+{
+    cout << "soyu gestor escribir cliente" << endl;
+    FILE* archivo = fopen(nombreArchivo, "ab");
+    if (!archivo) return false;
+
+    int nuevoID = cantidadRegistrosC() + 1;
+    cliente.setID(nuevoID);
+
+    size_t ok = fwrite(&cliente, sizeof(Cliente), 1, archivo);
+    fclose(archivo);
+    return ok == 1;
+}
+
+bool GestorArchivos::leerClientes()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return false;
+    if (!archivo)
+    {
+        cout << "Error: no se pudo leer el archivo ostias%s\n" << nombreArchivo << endl;
+        return false;
+    }
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() == -1) continue;
+        cliente.MostrarC();
+        cout << "---------------------\n";
+    }
+    fclose(archivo);
+    return true;
+}
+
+int GestorArchivos::cantidadRegistrosC()
+{
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo) return 0;
+
+    int contador = 0;
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() != -1) contador++;
+    }
+    fclose(archivo);
+    return contador;
+}
+
+bool GestorArchivos::eliminarClientePorID(int id)
+{
+    FILE* archivo = fopen(nombreArchivo, "r+b");
+    if (!archivo) return false;
+
+    Cliente cliente;
+    while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
+    {
+        if (cliente.getID() == id)
+        {
+            long pos = ftell(archivo) - sizeof(Cliente);
+            fseek(archivo, pos, SEEK_SET);
+
+            cliente.setID(-1);
+            fwrite(&cliente, sizeof(Cliente), 1, archivo);
+            fclose(archivo);
+            return true;
+        }
+    }
     fclose(archivo);
     return false;
 }
