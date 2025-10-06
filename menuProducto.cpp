@@ -9,7 +9,11 @@ using namespace std;
 #undef byte
 
 void menuProducto(Producto producto, GestorArchivos gestor){
+<<<<<<< HEAD
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
+=======
+    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTO", "SALIR"};
+>>>>>>> f33bb5de07063265a7f9d952ac53fcc7951314da
 
     while(true) {
         int opcion = 0;
@@ -50,7 +54,12 @@ void menuProducto(Producto producto, GestorArchivos gestor){
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
+<<<<<<< HEAD
                         case 2: {
+=======
+                        case 2:
+                            {
+>>>>>>> f33bb5de07063265a7f9d952ac53fcc7951314da
                                 cout << "La cantidad de productos es: " << gestor.cantidadRegistrosP() << endl;
                                 gestor.leerProductos();
                                 int idEliminar;

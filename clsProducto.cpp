@@ -60,11 +60,17 @@ void Producto::setEstado(bool _estado){
 }
 
 ///GETTERS
+<<<<<<< HEAD
 unsigned int Producto::getID() const {
+=======
+int Producto::getID() const
+{
+>>>>>>> f33bb5de07063265a7f9d952ac53fcc7951314da
     return idProducto;
 }
 
-const char *Producto::getNombre() const {
+const char *Producto::getNombre() const
+{
     return nombre;
 }
 
