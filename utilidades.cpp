@@ -24,12 +24,7 @@ void cargarCadena(char* palabra, int maxLen)
     palabra[i] = '\0';  // Null-terminate the string
 }
 
-<<<<<<< HEAD
 void toUpperCase(char *texto) {
-=======
-void toUpperCase(char *texto)
-{
->>>>>>> f33bb5de07063265a7f9d952ac53fcc7951314da
     for(int x = 0; texto[x] != '\0'; ++x)
     {
         if(texto[x] >= 'a' && texto[x] <= 'z')
@@ -39,12 +34,7 @@ void toUpperCase(char *texto)
     }
 }
 
-<<<<<<< HEAD
 void centrar_texto(string palabra, char dato, size_t cantidad) {
-=======
-void centrar_texto(string palabra, char dato, size_t cantidad)
-{
->>>>>>> f33bb5de07063265a7f9d952ac53fcc7951314da
     size_t espacios_izq = (cantidad - palabra.length()) / 2;
     size_t espacios_der = cantidad - palabra.length() - espacios_izq;
 

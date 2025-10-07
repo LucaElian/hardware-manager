@@ -50,3 +50,6 @@ bin/
 obj/
 
 compile.sh
+clientes.dat
+productos.dat
+ventas.dat
