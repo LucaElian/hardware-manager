@@ -3,14 +3,14 @@ using namespace std;
 
 #include "clsCliente.h"
 #include "clsFecha.h"
-#include "gestorArchivo.h"
+#include "archivoManager.h"
 #include "artworks.h"
 
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-void menuCliente(Cliente cliente, GestorArchivos gestor) {
+void menuCliente(Cliente cliente, ArchivoManager gestor) {
     string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
 
     while(true) {
@@ -46,17 +46,17 @@ void menuCliente(Cliente cliente, GestorArchivos gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0:
-                            cliente.CargarC();
-                            gestor.escribirCliente(cliente);
+                            cliente.cargar();
+                            gestor.escribir(&cliente);
                             break;
 
                         case 2: {
-                            cout << "La cantidad de clientes es: " << gestor.cantidadRegistrosC() << endl;
-                            gestor.leerClientes();
+                            cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
+                            gestor.leer();
                             int idEliminar;
                             cout << "Ingrese el ID del producto a eliminar: ";
                             cin >> idEliminar;
-                            if (gestor.eliminarClientePorID(idEliminar)) {
+                            if (gestor.eliminarPorID(idEliminar)) {
                                 cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
                             }
                             else {
@@ -70,8 +70,8 @@ void menuCliente(Cliente cliente, GestorArchivos gestor) {
                             break;
 
                         case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosC() << endl;
-                            gestor.leerClientes();
+                            cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
+                            gestor.leer();
                             break;
 
                         case 8: return;

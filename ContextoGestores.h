@@ -1,13 +1,16 @@
 #ifndef CONTEXTOGESTORES_H_INCLUDED
 #define CONTEXTOGESTORES_H_INCLUDED
 
-#include "gestorArchivo.h"
+#include "archivoManager.h"
+#include "clsProducto.h"
+#include "clsCliente.h"
 
 struct ContextoGestores {
-    GestorArchivos gestorP;
-    GestorArchivos gestorC;
+    ArchivoManager gestorP;
+    ArchivoManager gestorC;
 
-    ContextoGestores() : gestorP("productos.dat"), gestorC("clientes.dat"){}
+    ContextoGestores() : gestorP("productos.dat", 'p', sizeof(Producto)), 
+    gestorC("clientes.dat", 'c', sizeof(Cliente)){}
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED

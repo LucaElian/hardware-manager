@@ -62,7 +62,7 @@ const char *Cliente::getEmail() const
 
 /// ================ METODO CARGAR =============
 ///METODO CARGAR
-void Cliente::CargarC(){
+void Cliente::cargar(){
     cout << "Ingrese el nombre del cliente: ";
     cargarCadena(nombre,49);
     cout << "Ingrese el apellido del cliente: ";
@@ -72,7 +72,7 @@ void Cliente::CargarC(){
     ingresoC.CargarF();
 }
 
-void Cliente::MostrarC()
+void Cliente::mostrar()
 {
     cout << "-------------------- CLIENTE " << idCliente << " ----------------------"<< endl;
     cout << "Nombre: " << nombre << endl;

@@ -152,7 +152,7 @@ bool GestorArchivos::leerClientes()
     while (fread(&cliente, sizeof(Cliente), 1, archivo) == 1)
     {
         if (cliente.getID() == -1) continue;
-        cliente.MostrarC();
+        cliente.mostrar();
         cout << "---------------------\n";
     }
     fclose(archivo);

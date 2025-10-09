@@ -40,8 +40,8 @@ public:
     Fecha getFecha() const;
 
     ///Otros metodos
-    void CargarC();
-    void MostrarC();
+    void cargar();
+    void mostrar();
     void setearIdentificador(int);
 };
 

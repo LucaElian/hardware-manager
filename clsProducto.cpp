@@ -4,6 +4,7 @@ using namespace std;
 #include "clsProducto.h"
 #include <cstring>
 #include "utilidades.h"
+#include "ContextoGestores.h"
 
 /* CLASE PRODUCTO: La clase producto sirve para agregar stock a la tienda, tiene 6 atributos:
 - Id: De tipo autoincrement
@@ -101,8 +102,11 @@ void Producto::CargarP(){
     cin >> stock;
     cout << "Ingrese el precio: ";
     cin >> precio;
-    estado = true;
     ingresoProducto.CargarF();
+    Producto::setEstado(true); // por defecto el producto se crea como activo
+    ContextoGestores contexto; // creo un objeto del struct ContextoGestores
+    int cantidad = contexto.gestorP.cantidadRegistros(); // cuento la cantidad de registros
+    setID(cantidad+1); // asigna un id autoincremental al producto
 }
 
 ///METODO MOSTRAR
@@ -119,7 +123,3 @@ void Producto::MostrarP() {
     ingresoProducto.MostrarF();
     cout << endl;
 }
-
-
-
-
