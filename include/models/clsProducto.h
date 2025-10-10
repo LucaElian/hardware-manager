@@ -1,7 +1,7 @@
 #ifndef PRODUCTOS_H_INCLUDED
 #define PRODUCTOS_H_INCLUDED
 #include <cstring>
-#include "clsEntidad.h"
+//#include "clsEntidad.h"
 
 class Producto : public Entidad {
 private:
@@ -29,11 +29,11 @@ public:
     ~Producto() {}
 
     // Setters especificos
-    void setNombre(const char *_nombre) { 
-        strcpy(nombre, _nombre); 
+    void setNombre(const char *_nombre) {
+        strcpy(nombre, _nombre);
     }
-    void setTipo(const char *_tipo) { 
-        strcpy(tipo, _tipo); 
+    void setTipo(const char *_tipo) {
+        strcpy(tipo, _tipo);
     }
     void setStock(int _stock) { stock = _stock; }
     void setPrecio(float _precio) { precio = _precio; }
