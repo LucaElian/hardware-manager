@@ -31,36 +31,59 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+
+			<Add directory="include" />
+			<Add directory="include/models" />
+			<Add directory="include/managers" />
+			<Add directory="include/ui" />
+
 		</Compiler>
+		<!-- Archivos de configuración -->
 		<Unit filename=".gitignore" />
-		<Unit filename=".vscode/c_cpp_properties.json" />
-		<Unit filename=".vscode/launch.json" />
-		<Unit filename=".vscode/settings.json" />
-		<Unit filename="Contexto.h" />
-		<Unit filename="ContextoGestores.h" />
-		<Unit filename="artworks.cpp" />
-		<Unit filename="artworks.h" />
-		<Unit filename="clsCliente.cpp" />
-		<Unit filename="clsCliente.h" />
-		<Unit filename="clsFecha.cpp" />
-		<Unit filename="clsFecha.h" />
-		<Unit filename="clsProducto.cpp" />
-		<Unit filename="clsProducto.h" />
-		<Unit filename="gestorArchivo.cpp" />
-		<Unit filename="gestorArchivo.h" />
 		<Unit filename="gestorHardware.depend" />
 		<Unit filename="gestorHardware.layout" />
+
+		<!-- Documentación -->
+		<Unit filename="README.md" />
+
+		<!-- Archivo principal -->
 		<Unit filename="main.cpp" />
-		<Unit filename="menuCliente.cpp" />
-		<Unit filename="menuCliente.h" />
-		<Unit filename="menuGen.cpp" />
-		<Unit filename="menuGen.h" />
-		<Unit filename="menuProducto.cpp" />
-		<Unit filename="menuProducto.h" />
-		<Unit filename="output/main.exe" />
-		<Unit filename="rlutil.h" />
+
+		<!-- Headers principales -->
+		<Unit filename="include/Contexto.h" />
+		<Unit filename="include/ContextoGestores.h" />
+		<Unit filename="include/rlutil.h" />
+		<Unit filename="include/utilidades.h" />
+
+		<!-- Models -->
+		<Unit filename="include/models/clsCliente.h" />
+		<Unit filename="include/models/clsFecha.h" />
+		<Unit filename="include/models/clsProducto.h" />
+		<Unit filename="src/models/clsCliente.cpp" />
+		<Unit filename="include/models/clsEntidad.h" />
+		<Unit filename="src/models/clsFecha.cpp" />
+		<Unit filename="src/models/clsProducto.cpp" />
+
+		<!-- Managers -->
+		<Unit filename="include/managers/archivoManager.h" />
+		<Unit filename="include/managers/gestorArchivo.h" />
+		<Unit filename="src/managers/gestorArchivo.cpp" />
+
+		<!-- UI -->
+		<Unit filename="include/ui/artworks.h" />
+		<Unit filename="include/ui/menuCliente.h" />
+		<Unit filename="include/ui/menuGen.h" />
+		<Unit filename="include/ui/menuProducto.h" />
+		<Unit filename="src/ui/artworks.cpp" />
+		<Unit filename="src/ui/menuCliente.cpp" />
+		<Unit filename="src/ui/menuGen.cpp" />
+		<Unit filename="src/ui/menuProducto.cpp" />
+
+		<!-- Utilidades -->
 		<Unit filename="utilidades.cpp" />
-		<Unit filename="utilidades.h" />
+
+		<!-- Output -->
+		<Unit filename="output/main.exe" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
