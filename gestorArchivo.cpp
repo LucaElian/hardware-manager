@@ -56,7 +56,7 @@ bool GestorArchivos::leerProductos() {
     {
         if (producto.getEstado() == true) // saltea productos eliminados
         {
-            producto.MostrarP();
+            producto.mostrar();
             cout << "---------------------\n";
             activos = true;
         }

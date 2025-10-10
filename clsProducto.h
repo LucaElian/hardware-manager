@@ -43,7 +43,7 @@ class Producto {
         Fecha getFecha() const;
 
         ///Otros metodos
-        void CargarP();
-        void MostrarP();
+        void cargar();
+        void mostrar();
 };
 #endif // PRODUCTOS_H_INCLUDED

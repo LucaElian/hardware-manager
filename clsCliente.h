@@ -31,12 +31,14 @@ public:
     void setApellido(char *);
     void setEmail(char *);
     void setFecha(int, int, int);
+    void setEstado(bool) {};
 
     /// GETTERS
     int getID() const;
     const char *getNombre() const;
     const char *getApellido() const;
     const char *getEmail() const;
+    const bool getEstado() const {return true;}
     Fecha getFecha() const;
 
     ///Otros metodos

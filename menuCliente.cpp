@@ -10,7 +10,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-void menuCliente(Cliente cliente, ArchivoManager gestor) {
+void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
     string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
 
     while(true) {

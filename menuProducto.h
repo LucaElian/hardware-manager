@@ -3,6 +3,6 @@
 #include "clsProducto.h"
 #include "archivoManager.h"
 
-void menuProducto(Producto, ArchivoManager);
+void menuProducto(Producto, ArchivoManager<Producto>);
 
 #endif // MENUPRODUCTO_H_INCLUDED

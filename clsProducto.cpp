@@ -93,7 +93,7 @@ Fecha Producto::getFecha() const {
 }
 
 ///METODO CARGAR
-void Producto::CargarP(){
+void Producto::cargar(){
     cout << "Ingrese el nombre del producto: ";
     cargarCadena(nombre,29);
     cout << "Ingrese el tipo del producto: ";
@@ -110,7 +110,7 @@ void Producto::CargarP(){
 }
 
 ///METODO MOSTRAR
-void Producto::MostrarP() {
+void Producto::mostrar() {
     cout << "----------------PRODUCTO " << idProducto << "----------------------"<<endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Tipo: " << tipo << endl;

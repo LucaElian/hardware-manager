@@ -8,7 +8,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-void menuProducto(Producto producto, ArchivoManager gestor){
+void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true) {
@@ -45,7 +45,7 @@ void menuProducto(Producto producto, ArchivoManager gestor){
                     switch(opcion) {
                         case 0: {  // abre un bloque para declarar variables locales
                                 //thiago aca habias creado un objeto producto, pero la funcion ya lo recibe asi q es lo mismo
-                                producto.CargarP();
+                                producto.cargar();
                                 gestor.escribir(&producto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }

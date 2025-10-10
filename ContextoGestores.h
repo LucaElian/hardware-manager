@@ -6,11 +6,11 @@
 #include "clsCliente.h"
 
 struct ContextoGestores {
-    ArchivoManager gestorP;
-    ArchivoManager gestorC;
+    ArchivoManager<Producto> gestorP;
+    ArchivoManager<Cliente> gestorC;
 
-    ContextoGestores() : gestorP("productos.dat", 'p', sizeof(Producto)), 
-    gestorC("clientes.dat", 'c', sizeof(Cliente)){}
+    ContextoGestores() : gestorP("productos.dat"), 
+    gestorC("clientes.dat"){}
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED
