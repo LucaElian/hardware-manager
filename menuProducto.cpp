@@ -2,13 +2,13 @@
 using namespace std;
 #include "clsProducto.h"
 #include "clsFecha.h"
-#include "gestorArchivo.h"
+#include "archivoManager.h"
 #include "artworks.h"
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-void menuProducto(Producto producto, GestorArchivos gestor){
+void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true) {
@@ -45,18 +45,18 @@ void menuProducto(Producto producto, GestorArchivos gestor){
                     switch(opcion) {
                         case 0: {  // abre un bloque para declarar variables locales
                                 //thiago aca habias creado un objeto producto, pero la funcion ya lo recibe asi q es lo mismo
-                                producto.CargarP();
-                                gestor.escribirProducto(producto);
+                                producto.cargar();
+                                gestor.escribir(&producto);
                                 cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
                         case 2: {
-                                cout << "La cantidad de productos es: " << gestor.cantidadRegistrosP() << endl;
-                                gestor.leerProductos();
+                                cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
+                                gestor.leer();
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
                                 cin >> idEliminar;
-                                if (gestor.eliminarProductoPorID(idEliminar)) {
+                                if (gestor.eliminarPorID(idEliminar)) {
                                     cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
                                 } 
                                 else {
@@ -66,8 +66,8 @@ void menuProducto(Producto producto, GestorArchivos gestor){
                             break;
                         case 4: break;
                         case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosP() << endl;
-                            gestor.leerProductos();
+                            cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
+                            gestor.leer();
                             //producto.MostrarP();
                             break;
                         case 8: return;

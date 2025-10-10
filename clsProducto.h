@@ -1,49 +1,52 @@
 #ifndef PRODUCTOS_H_INCLUDED
 #define PRODUCTOS_H_INCLUDED
 #include <cstring>
+#include "clsEntidad.h"
 
-#include "clsFecha.h"
+class Producto : public Entidad {
+private:
+    char nombre[30];
+    char tipo[20];
+    float precio;
+    int stock;
 
-class Producto {
-    private:
-        unsigned int idProducto;
-        char nombre[30];
-        char tipo[20];
-        float precio;
-        int stock;
-        bool estado;
-        Fecha ingresoProducto;
-    public:
-        /// CONSTRUCTOR Y DESTRUCTOR
-        Producto(unsigned int _idProducto = 0,
-                const char *_nombre = "vacio",
-                const char *_tipo = "vacio",
-                int _stock = 0,
-                float _precio = 0,
-                bool estado = true,
-                Fecha _fecha = Fecha(1,1,1));
-        ~Producto(){}
+public:
+    // Constructor
+    Producto(int _id = 0,
+            const char *_nombre = "vacio",
+            const char *_tipo = "vacio",
+            int _stock = 0,
+            float _precio = 0,
+            bool _estado = true,
+            Fecha _fecha = Fecha(1,1,1))
+        : Entidad(_id, _estado, _fecha) {
+        strcpy(nombre, _nombre);
+        strcpy(tipo, _tipo);
+        stock = _stock;
+        precio = _precio;
+    }
 
-        /// SETTERS
-        void setID(unsigned int);
-        void setNombre(char *);
-        void setTipo(char *);
-        void setStock(int);
-        void setPrecio(float);
-        void setEstado(bool);
-        void setFecha(int, int, int);
+    ~Producto() {}
 
-        /// GETTERS
-        unsigned int getID() const;
-        const char *getNombre() const;
-        const char *getTipo() const;
-        float getPrecio() const;
-        int getStock() const;
-        bool getEstado() const;
-        Fecha getFecha() const;
+    // Setters especificos
+    void setNombre(const char *_nombre) { 
+        strcpy(nombre, _nombre); 
+    }
+    void setTipo(const char *_tipo) { 
+        strcpy(tipo, _tipo); 
+    }
+    void setStock(int _stock) { stock = _stock; }
+    void setPrecio(float _precio) { precio = _precio; }
 
-        ///Otros metodos
-        void CargarP();
-        void MostrarP();
+    // Getters especificos
+    const char *getNombre() const { return nombre; }
+    const char *getTipo() const { return tipo; }
+    float getPrecio() const { return precio; }
+    int getStock() const { return stock; }
+
+    // Implementacion con los metodos virtuales
+    void cargar() override;
+    void mostrar() override;
 };
+
 #endif // PRODUCTOS_H_INCLUDED
