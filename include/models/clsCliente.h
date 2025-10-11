@@ -1,6 +1,7 @@
 #ifndef CLIENTE_H_INCLUDED
 #define CLIENTE_H_INCLUDED
 #include <cstring>
+#include "clsFecha.h"
 #include "clsEntidad.h"
 
 class Cliente : public Entidad {

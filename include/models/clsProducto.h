@@ -1,7 +1,8 @@
 #ifndef PRODUCTOS_H_INCLUDED
 #define PRODUCTOS_H_INCLUDED
 #include <cstring>
-//#include "clsEntidad.h"
+#include "clsFecha.h"
+#include "clsEntidad.h"
 
 class Producto : public Entidad {
 private:
