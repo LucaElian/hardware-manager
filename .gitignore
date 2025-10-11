@@ -47,6 +47,7 @@
 *.depend
 # generated directories
 bin/
+obj/
 
 compile.sh
 clientes.dat
