@@ -9,8 +9,8 @@ struct ContextoGestores {
     ArchivoManager<Producto> gestorP;
     ArchivoManager<Cliente> gestorC;
 
-    ContextoGestores() : gestorP("productos.dat"), 
-    gestorC("clientes.dat"){}
+    ContextoGestores() : gestorP("data/productos.dat"), 
+    gestorC("data/clientes.dat"){}
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED
