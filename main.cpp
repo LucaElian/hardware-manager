@@ -7,7 +7,6 @@ using namespace std;
 #include "clsCliente.h"
 #include "menuProducto.h"
 #include "menuGen.h"
-#include "gestorArchivo.h"
 #include "Contexto.h"
 #include "ContextoGestores.h"
 
