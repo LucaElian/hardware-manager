@@ -104,6 +104,27 @@ public:
         if (sizeof(T) == 0) return 0;
         return bytes / sizeof(T);
     }
+
+    // Doc rapida: pasas la direccion de memoria de el objeto 't' y
+    // si lo encuentra lo carga en 't' y devuelve true, sino false
+    bool leerPorID(int id, T& objeto) {
+        FILE* archivo = fopen(nombreArchivo, "rb");
+        if (!archivo) {
+            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            return false;
+        }
+
+        while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
+            if (objeto.getID() == id) {
+                fclose(archivo);
+                return true;
+            }
+        }
+
+        std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
+        fclose(archivo);
+        return false;
+    }
 };
 
 #endif // ARCHIVOMANAGER_H

@@ -3,7 +3,6 @@
 
 #include "clsCliente.h"
 #include "clsProducto.h"
-#include "gestorArchivo.h"
 
 
 struct Contexto {
