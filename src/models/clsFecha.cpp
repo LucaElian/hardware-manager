@@ -105,7 +105,7 @@ void Fecha::cargarAnio()
 
 void Fecha::CargarF()
 {
-    cout << "Cargue la fecha del producto ->" << endl;
+    cout << "INGRESE LOS VALORES ->" << endl;
     cargarDia();
     cargarMes();
     cargarAnio();

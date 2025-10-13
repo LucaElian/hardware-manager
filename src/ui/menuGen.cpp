@@ -4,6 +4,7 @@
 #include "menuGen.h"
 #include "menuProducto.h"
 #include "menuCliente.h"
+#include "menuVendedor.h"
 #include "Contexto.h"
 #include "utilidades.h"
 #include "artworks.h"
@@ -16,7 +17,7 @@ using namespace std;
 ///ESTA FUNCION MUESTRA EL MENU Y CONTROLA CON RLUTIL EL MOVIMIENTO DE LAS FLECHAS ---------------------------
 //recibe el archivo del gestor para pasarselo a todos los menues, y el struct contexto con todos los objetos, tambien para pasarle a los menues
 void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) {
-    string opciones[4] = {"GESTIONAR PRODUCTOS", "GESTIONAR CLIENTE", "VENTAS", "SALIR"};
+    string opciones[4] = {"GESTIONAR PRODUCTOS", "GESTIONAR CLIENTE", "GESTIONAR VENDEDORES", "SALIR"};
 
     while(true) {
         rlutil::hidecursor();
@@ -54,7 +55,7 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
                     switch(opcion) {
                         case 0: menuProducto(objetos.producto, gestores.gestorP); break;
                         case 2: menuCliente(objetos.cliente, gestores.gestorC); break;
-                        case 4: break;
+                        case 4: menuVendedor(objetos.vendedor, gestores.gestorV); break;
                         case 6: return;
                     }
             }

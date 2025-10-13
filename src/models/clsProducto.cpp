@@ -7,20 +7,20 @@ void Producto::cargar() {
     cout << "Ingrese el nombre del producto: ";
     cargarCadena(nombre, 29);
     toUpperCase(nombre);
-    
+
     cout << "Ingrese el tipo del producto: ";
     cargarCadena(tipo, 29);
     toUpperCase(tipo);
-    
+
     cout << "Ingrese el stock disponible: ";
     cin >> stock;
-    
+
     cout << "Ingrese el precio: ";
     cin >> precio;
-    
+
     fechaIngreso.CargarF();
-    setEstado(true);
-    
+    //setEstado(true);
+
     ContextoGestores contexto;
     int cantidad = contexto.gestorP.cantidadRegistros();
     setID(cantidad + 1);
