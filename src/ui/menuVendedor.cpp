@@ -1,22 +1,21 @@
 #include<iostream>
 using namespace std;
-#include "clsProducto.h"
-#include "clsFecha.h"
+#include "clsVendedor.h"
 #include "archivoManager.h"
 #include "artworks.h"
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
-    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
+void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
+    string opciones[5] = {"AGREGAR VENDEDOR", "ELIMINAR VENDEDOR", "MODIFICAR VENDEDOR", "LISTAR VENDEDORES", "SALIR"};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
         system("cls");
 
-        menu("M E N U   P R O D U C T O", opciones, 7, 5);
+        menu("M E N U   V E N D E D O R", opciones, 7, 5);
 
         while(curs == true){
             rlutil::locate(49, 13 + opcion);
@@ -44,28 +43,28 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
                     curs = false;
                     switch(opcion) {
                         case 0: {
-                                producto.cargar();
-                                gestor.escribir(&producto);
-                                cout << "Producto agregado exitosamente!" << endl;
+                                vendedor.cargar();
+                                gestor.escribir(&vendedor);
+                                cout << "Vendedor agregado exitosamente!" << endl;
                             }
                             break;
                         case 2: {
-                                cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
+                                cout << "La cantidad de vendedores es: " << gestor.cantidadRegistros() << endl;
                                 gestor.leer();
                                 int idEliminar;
-                                cout << "Ingrese el ID del producto a eliminar: ";
+                                cout << "Ingrese el ID del vendedor a eliminar: ";
                                 cin >> idEliminar;
                                 if (gestor.eliminarPorID(idEliminar)) {
-                                    cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
+                                    cout << "Vendedor con ID " << idEliminar << " eliminado exitosamente." << endl;
                                 }
                                 else {
-                                    cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
+                                    cout << "No se pudo eliminar el vendedor con ID " << idEliminar << "." << endl;
                                 }
                             }
                             break;
                         case 4: break;
                         case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosActivos() << endl;
+                            cout << "La cantidad de vendedores es: " << gestor.cantidadRegistrosActivos() << endl;
                             gestor.leer();
                             break;
                         case 8: return;

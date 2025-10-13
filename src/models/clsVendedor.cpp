@@ -1,0 +1,30 @@
+#include <iostream>
+#include "clsVendedor.h"
+#include "utilidades.h"
+#include "ContextoGestores.h"
+void Vendedor::cargar() {
+    cout << "Ingrese el nombre del vendedor: ";
+    cargarCadena(nombre, 29);
+    toUpperCase(nombre);
+
+    cout << "Ingrese el telefono del vendedor: ";
+    cargarCadena(telefonoVendedor, 14);
+
+    cout << "Ingrese el dni del vendedor: ";
+    cargarCadena(dni, 8);
+
+    //fechaIngreso.CargarF();
+
+    ContextoGestores contexto;
+    int cantidad = contexto.gestorV.cantidadRegistros();
+    setLegajo(cantidad +1);
+}
+
+void Vendedor::mostrar() {
+    cout << "----------------VENDEDOR NUMERO " << legajo << "----------------------" << endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Numero telefonico: " << telefonoVendedor << endl;
+    cout << "DNI: " << dni << endl;
+    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
+    cout << endl;
+}

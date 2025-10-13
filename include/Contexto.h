@@ -3,12 +3,13 @@
 
 #include "clsCliente.h"
 #include "clsProducto.h"
+#include "clsVendedor.h"
 
 
 struct Contexto {
     Producto producto;
     Cliente cliente;
-    //GestorArchivos gestor;
+    Vendedor vendedor;
 };
 
 

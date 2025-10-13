@@ -49,28 +49,25 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                             cliente.cargar();
                             gestor.escribir(&cliente);
                             break;
-
                         case 2: {
                             cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
                             gestor.leer();
                             int idEliminar;
-                            cout << "Ingrese el ID del producto a eliminar: ";
+                            cout << "Ingrese el ID del cliente a eliminar: ";
                             cin >> idEliminar;
                             if (gestor.eliminarPorID(idEliminar)) {
-                                cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
+                                cout << "Cliente con ID " << idEliminar << " eliminado exitosamente." << endl;
                             }
                             else {
-                                cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
+                                cout << "No se pudo eliminar el cliente con ID " << idEliminar << "." << endl;
                             }
                         }
                         break;
-
                         case 4:
                             cout << "soy el metodo modificar" << endl;
                             break;
-
                         case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
+                            cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
                             gestor.leer();
                             break;
 
