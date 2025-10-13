@@ -11,7 +11,7 @@ void Vendedor::cargar() {
     cargarCadena(telefonoVendedor, 14);
 
     cout << "Ingrese el dni del vendedor: ";
-    cargarCadena(dni, 8);
+    cargarCadena(dni, 9);
 
     //fechaIngreso.CargarF();
 
