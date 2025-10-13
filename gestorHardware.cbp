@@ -66,8 +66,6 @@
 
 		<!-- Managers -->
 		<Unit filename="include/managers/archivoManager.h" />
-		<Unit filename="include/managers/gestorArchivo.h" />
-		<Unit filename="src/managers/gestorArchivo.cpp" />
 
 		<!-- UI -->
 		<Unit filename="include/ui/artworks.h" />
