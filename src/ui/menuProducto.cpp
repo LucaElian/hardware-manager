@@ -1,14 +1,16 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
+
 #include "clsProducto.h"
 #include "clsFecha.h"
 #include "archivoManager.h"
 #include "artworks.h"
+
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
+void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true) {
@@ -18,7 +20,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
 
         menu("M E N U   P R O D U C T O", opciones, 7, 5);
 
-        while(curs == true){
+        while(curs == true) {
             rlutil::locate(49, 13 + opcion);
             cout << (char)175;
 
@@ -46,7 +48,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor){
                         case 0: {
                                 producto.cargar();
                                 gestor.escribir(&producto);
-                                cout << "Producto agregado exitosamente!" << endl;
+//                                cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
                         case 2: {
