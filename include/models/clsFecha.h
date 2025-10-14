@@ -13,23 +13,18 @@ class Fecha {
         Fecha(int _dia = 0, int _mes = 0, int _anio = 0);
         ~Fecha(){}
 
-         /// SETTER
-        void setFecha(int , int , int);
+        /// SETTERS
+        void setDia();
+        void setMes();
+        void setAnio();
 
         /// GETTERS
-        int getDia();
-        int getMes();
-        int getAnio();
+        int getDia() { return dia; }
+        int getMes() { return mes; }
+        int getAnio() { return anio; }
 
         /// METODOS
-        void setearFechaActual();
-        string formatToDate();
-        void cargarDia();
-        void cargarMes();
-        void cargarAnio();
-        void CargarF();
         void MostrarF() const;
-        ///void autoCompletado();
 };
 
 #endif // FECHA_H_INCLUDED

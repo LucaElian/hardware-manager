@@ -4,4 +4,7 @@
 void titulo();
 void menu(string title, string opciones[], int inicio, int can);
 
+void agregar(string title, int inicio, int can);
+void agregar_opciones(string opciones[], int inicio, int can, string id);
+
 #endif // ARTWORKS_H_INCLUDED

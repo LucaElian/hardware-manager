@@ -8,8 +8,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-void titulo()
-{
+void titulo() {
     const string title[5] =
     {
         ",--.   ,--. ,------. ,--.   ,--. ,--.   ,--.  ",
@@ -21,15 +20,14 @@ void titulo()
 
     rlutil::setColor(rlutil::GREEN);
 
-    for(int x = 0; x < 5; x++)
-    {
+    for(int x = 0; x < 5; x++) {
         rlutil::locate(40, 3+x);
         cout << title[x] << "\n";
     }
 }
 
-void menu(string title, string opciones[], int inicio, int can)
-{
+void menu(string title, string opciones[], int inicio, int can) {
+    rlutil::setColor(rlutil::GREEN);
     rlutil::locate(40, inicio);
     cout << (char)201;
     centrar_texto("", (char)205, 41);
@@ -62,8 +60,7 @@ void menu(string title, string opciones[], int inicio, int can)
     centrar_texto("", ' ', 41);
     cout << (char)186;
 
-    for(int x = 0; x < can; x++)
-    {
+    for(int x = 0; x < can; x++) {
         rlutil::locate(40, (inicio+6) + (x * 2));
         cout << (char)186;
         rlutil::setColor(rlutil::WHITE);
@@ -81,4 +78,57 @@ void menu(string title, string opciones[], int inicio, int can)
     cout << (char)200;
     centrar_texto("", (char)205, 41);
     cout << (char)188;
+}
+
+void agregar(string title, int inicio, int can){
+    rlutil::locate(30, inicio);
+    cout << (char)201;
+    centrar_texto("", (char)205, 61);
+    cout << (char)187;
+
+    rlutil::locate(30, inicio + 1);
+    cout << (char)186;
+    centrar_texto("", ' ', 61);
+    cout << (char)186;
+
+    rlutil::locate(30, inicio + 2);
+    cout << (char)186;
+    rlutil::setColor(rlutil::WHITE);
+    centrar_texto(title, ' ', 61);
+    rlutil::setColor(rlutil::GREEN);
+    cout << (char)186;
+
+    rlutil::locate(30, inicio + 3);
+    cout << (char)186;
+    centrar_texto("", ' ', 61);
+    cout << (char)186;
+
+    rlutil::locate(30, inicio + 4);
+    cout << (char)204;
+    centrar_texto("", (char)205, 61);
+    cout << (char)185;
+
+    for (int fila = inicio + 5; fila < inicio + 5 + (can * 2); fila++) {
+        rlutil::locate(30, fila);
+        cout << (char)186;
+        centrar_texto("", ' ', 61);
+        cout << (char)186;
+    }
+
+    rlutil::locate(30, inicio + 5 + (can * 2));
+    cout << (char)200;
+    centrar_texto("", (char)205, 61);
+    cout << (char)188;
+}
+
+void agregar_opciones(string opciones[], int inicio, int can, string id){
+    rlutil::setColor(rlutil::GREY);
+    for(int x = 0; x < can-1; x++){
+        rlutil::locate(32, inicio + (2 * x));
+        cout << opciones[x];
+        if(x == 0){
+            rlutil::locate(75, inicio);
+            cout << id;
+        }
+    }
 }
