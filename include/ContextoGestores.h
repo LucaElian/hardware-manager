@@ -5,6 +5,7 @@
 #include "clsProducto.h"
 #include "clsCliente.h"
 #include "clsVendedor.h"
+#include "gestorVenta.h"
 
 struct ContextoGestores {
     ArchivoManager<Producto> gestorP;
@@ -13,6 +14,8 @@ struct ContextoGestores {
 
     ContextoGestores() : gestorP("productos.dat"),
     gestorC("clientes.dat"), gestorV("vendedores.dat"){}
+
+    GestorVenta gestorVenta;
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED

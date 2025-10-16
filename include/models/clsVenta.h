@@ -29,13 +29,26 @@ public:
     // Destructor
     ~Venta() {}
 
+    // Implementing pure virtual functions
+    void cargar() override {}
+    void mostrar() override {
+        std::cout << "Venta #" << idVenta << std::endl;
+        std::cout << "Cliente: " << idCliente << std::endl;
+        std::cout << "Vendedor: " << legajoVendedor << std::endl;
+        std::cout << "Total: $" << total << std::endl;
+        std::cout << "Fecha: ";
+        fechaVenta.MostrarF();
+        std::cout << std::endl;
+    }
+
     // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }
     void setIdCliente(int _idCliente) { idCliente = _idCliente; }
     void setLegajoVendedor(int _legajoVendedor) { legajoVendedor = _legajoVendedor; }
     void setTotal(double _total) { total = _total; }
+    void setFechaVenta(Fecha _fechaVenta) { fechaVenta = _fechaVenta; }
 
-    // Getters
+    // Getters 
     int getIdVenta() const { return idVenta; }
     int getIdCliente() const { return idCliente; }
     int getLegajoVendedor() const { return legajoVendedor; }
