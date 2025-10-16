@@ -30,17 +30,30 @@ public:
 
     ~DetalleVenta() {}
 
-    // Setters especificos
+    // Implementing pure virtual functions
+    void cargar() override {}
+    void mostrar() override {
+        std::cout << "Detalle de Venta " << id << std::endl;
+        std::cout << "ID Venta: " << idVenta << std::endl;
+        std::cout << "ID Producto: " << idProducto << std::endl; 
+        std::cout << "Cantidad: " << cantidad << std::endl;
+        std::cout << "Precio: $" << precioVenta << std::endl;
+        std::cout << "Subtotal: $" << subtotal << std::endl;
+    }
+
+    // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }
     void setIdProducto(int _idProducto) { idProducto = _idProducto; }
     void setCantidad(int _cantidad) { cantidad = _cantidad; }
     void setPrecioVenta(double _precioVenta) { precioVenta = _precioVenta; }
     void setSubtotal(double _subtotal) { subtotal = _subtotal; }
-    // Getters especificos
+
+    // Getters
     int getIdVenta() const { return idVenta; }
     int getIdProducto() const { return idProducto; }
     int getCantidad() const { return cantidad; }
     double getPrecioVenta() const { return precioVenta; }
     double getSubtotal() const { return subtotal; }
+};
 
 #endif

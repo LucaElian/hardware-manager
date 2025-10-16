@@ -58,7 +58,7 @@ public:
         DetalleVenta detalle;
         detalle.setIdProducto(idProducto);
         detalle.setCantidad(cantidad);
-        detalle.setPrecioUnitario(precio);
+        detalle.setPrecioVenta(precio);
         detalle.setSubtotal(precio * cantidad);
 
         _carrito.push_back(detalle);
@@ -81,12 +81,12 @@ public:
         if (_carrito.empty()) return false;
 
         //crea la venta
-        Venta nuevaVenta;
+        Venta* nuevaVenta = new Venta();
         int idVenta = generarIdVenta();
-        nuevaVenta.setId(idVenta);
-        nuevaVenta.setIdCliente(_idCliente);
-        nuevaVenta.setLegajoVendedor(_legajoVendedor);
-        nuevaVenta.setFechaVenta(Fecha());
+        nuevaVenta->setIdVenta(idVenta);
+        nuevaVenta->setIdCliente(_idCliente);
+        nuevaVenta->setLegajoVendedor(_legajoVendedor);
+        nuevaVenta->setFechaVenta(Fecha());
 
         //calcula el total
         double total = 0;
@@ -96,16 +96,22 @@ public:
             
             actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
             
+            DetalleVenta* pDetalle = new DetalleVenta(detalle);
             //registra detalle
-            if (!_gestorDetalle.escribir(detalle)) {
+            if (!_gestorDetalle.escribir(pDetalle)) {
+                delete nuevaVenta;
+                delete pDetalle;
                 return false;
             }
+            delete pDetalle;
         }
 
-        nuevaVenta.setPrecioTotal(total);
+        nuevaVenta->setTotal(total);
         
         // Registrar venta
         bool exito = _gestorVenta.escribir(nuevaVenta);
+        delete nuevaVenta;
+        
         if (exito) {
             _carrito.clear();
             _idCliente = 0;
@@ -123,32 +129,30 @@ public:
 
 private:
     int generarIdVenta() {
-        return _gestorVenta.contarRegistros() + 1;
+        return _gestorVenta.cantidadRegistros() + 1;
     }
 
     bool validarStock(int idProducto, int cantidad) {
         Producto producto;
-        int pos = _gestorProducto.buscarPorId(idProducto);
-        if (pos >= 0) {
-            _gestorProducto.leer(pos, producto);
+        if (_gestorProducto.leerPorID(idProducto, producto)) {
             return producto.getStock() >= cantidad;
         }
         return false;
     }
 
     bool validarCliente(int idCliente) {
-        return _gestorCliente.buscarPorId(idCliente) >= 0;
+        Cliente cliente;
+        return _gestorCliente.leerPorID(idCliente, cliente);
     }
 
     bool validarVendedor(int legajoVendedor) {
-        return _gestorVendedor.buscarPorId(legajoVendedor) >= 0;
+        Vendedor vendedor; 
+        return _gestorVendedor.leerPorID(legajoVendedor, vendedor);
     }
 
     double obtenerPrecioProducto(int idProducto) {
         Producto producto;
-        int pos = _gestorProducto.buscarPorId(idProducto);
-        if (pos >= 0) {
-            _gestorProducto.leer(pos, producto);
+        if (_gestorProducto.leerPorID(idProducto, producto)) {
             return producto.getPrecio();
         }
         return 0;
@@ -156,11 +160,9 @@ private:
 
     bool actualizarStock(int idProducto, int cantidad) {
         Producto producto;
-        int pos = _gestorProducto.buscarPorId(idProducto);
-        if (pos >= 0) {
-            _gestorProducto.leer(pos, producto);
+        if (_gestorProducto.leerPorID(idProducto, producto)) {
             producto.setStock(producto.getStock() - cantidad);
-            return _gestorProducto.modificar(pos, producto);
+            return _gestorProducto.modificarPorId(idProducto, producto);
         }
         return false;
     }
