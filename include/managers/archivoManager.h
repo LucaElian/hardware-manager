@@ -219,6 +219,46 @@ public:
         fclose(archivo);
         return false;
     }
+
+    /**
+     * @brief Modifica un objeto en el archivo por su ID
+     * 
+     * @param id El ID del objeto a modificar
+     * @param objeto Referencia al objeto que contiene los nuevos datos
+     * @return bool True si la modificación fue exitosa, false en caso contrario
+     * 
+     * @details Abre el archivo en modo binario de actualización (rb+) y busca un objeto
+     * con el ID especificado. Si lo encuentra, actualiza los datos del objeto en el archivo
+     * con los nuevos datos proporcionados. El archivo se cierra automáticamente después de la operación.
+     * 
+     * @throws Muestra mensaje de error en cerr si:
+     *         - No se puede abrir el archivo
+     *         - No se encuentra el objeto con el ID especificado
+     */
+
+    bool modificarPorId(int id, T& objeto){
+        FILE* archivo = fopen(nombreArchivo, "rb+"); // abre en modo update
+        if (!archivo){
+            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            return false;
+        }
+        T temp;
+        bool encontrado = false;
+        while (fread(&temp, sizeof(T), 1, archivo) == 1){
+            if (temp.getID() == id){
+                //SEEK_CUR: Desplazamiento desde la posición actual del puntero.
+                fseek(archivo, -sizeof(T), SEEK_CUR); // mueve el puntero al inicio del registro encontrado
+                fwrite(&objeto, sizeof(T), 1, archivo); // escribe el nuevo objeto
+                encontrado = true;
+                break;
+            }
+        }
+        fclose(archivo);
+        if (!encontrado){
+            std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
+            return false;
+        }return true;
+    }
 };
 
 #endif // ARCHIVOMANAGER_H
