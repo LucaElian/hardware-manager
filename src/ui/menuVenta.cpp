@@ -51,11 +51,9 @@ void menuVenta(Venta enta, GestorVenta gestor){
                             cout << "Ingrese el legajo del vendedor: " << endl;
                             cin >> legajoCreado;
 
-                            gestor.iniciarNuevaVenta(identificadorCliente, legajoCreado);}break;
-
-
-
-
+                            if (gestor.iniciarNuevaVenta(identificadorCliente, 
+                                legajoCreado))cout << "SE INICIO VENTA" << endl;
+                        }break;
                         case 2:
                         case 4: return;
                     }

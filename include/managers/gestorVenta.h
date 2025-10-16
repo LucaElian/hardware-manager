@@ -36,10 +36,17 @@ public:
         _idCliente(0),
         _legajoVendedor(0) {}
 
-    // Metodos para manejar el carrito
+    /**
+     * @brief Constructor que inicializa los gestores de archivos
+     * 
+     * Inicializa los manejadores de archivos para ventas, detalles,
+     * productos, clientes y vendedores.
+     */
     bool iniciarNuevaVenta(int idCliente, int legajoVendedor) {
 
-        if (validarCliente(idCliente) || validarVendedor(legajoVendedor)) {
+        //si no se encuentran el cliente o vendedor retornaria false
+        if (!validarCliente(idCliente) || !validarVendedor(legajoVendedor)) {
+            std::cout << "Error: Vendedor/Cliente no valido" << std::endl;
             return false;
         }
         _carrito.clear();
@@ -48,6 +55,14 @@ public:
         return true;
     }
 
+    /**
+     * @brief Agrega un producto al carrito de compras
+     * 
+     * @param idProducto ID del producto a agregar
+     * @param cantidad Cantidad del producto
+     * @return true Si el producto se agregó correctamente
+     * @return false Si no hay stock suficiente o el producto no existe
+     */
     bool agregarProducto(int idProducto, int cantidad) {
         if (!validarStock(idProducto, cantidad)) {
             return false;
@@ -66,6 +81,12 @@ public:
         return true;
     }
 
+    /**
+     * @brief Muestra el contenido actual del carrito
+     * 
+     * Imprime una lista de los productos en el carrito con sus
+     * cantidades, precios y el total de la compra.
+     */
     void mostrarCarrito() {
         double total = 0;
         std::cout << "\n=== Carrito Actual ===\n";
@@ -78,6 +99,15 @@ public:
         std::cout << "Total: $" << total << "\n";
     }
 
+    /**
+     * @brief Finaliza la venta actual
+     * 
+     * Registra la venta en el archivo, actualiza el stock de productos
+     * y limpia el carrito.
+     * 
+     * @return true Si la venta se completó exitosamente
+     * @return false Si hubo error o el carrito está vacío
+     */
     bool finalizarVenta() {
         if (_carrito.empty()) return false;
 
@@ -122,6 +152,11 @@ public:
         return exito;
     }
 
+    /**
+     * @brief Cancela la venta actual
+     * 
+     * Limpia el carrito y reinicia los datos del cliente y vendedor
+     */
     void cancelarVenta() {
         _carrito.clear();
         _idCliente = 0;
@@ -129,10 +164,22 @@ public:
     }
 
 private:
+    /**
+     * @brief Genera un nuevo ID para la venta
+     * @return int Nuevo ID generado
+     */
     int generarIdVenta() {
         return _gestorVenta.cantidadRegistros() + 1;
     }
 
+    /**
+     * @brief Valida si hay stock suficiente de un producto
+     * 
+     * @param idProducto ID del producto a validar
+     * @param cantidad Cantidad requerida
+     * @return true Si hay stock suficiente
+     * @return false Si no hay stock suficiente o el producto no existe
+     */
     bool validarStock(int idProducto, int cantidad) {
         Producto producto;
         if (_gestorProducto.leerPorID(idProducto, producto)) {
@@ -141,16 +188,36 @@ private:
         return false;
     }
 
+    /**
+     * @brief Valida si existe un cliente
+     * 
+     * @param idCliente ID del cliente a validar
+     * @return true Si el cliente existe
+     * @return false Si el cliente no existe
+     */
     bool validarCliente(int idCliente) {
         Cliente cliente;
         return _gestorCliente.leerPorID(idCliente, cliente);
     }
 
+    /**
+     * @brief Valida si existe un vendedor
+     * 
+     * @param legajoVendedor Legajo del vendedor a validar
+     * @return true Si el vendedor existe
+     * @return false Si el vendedor no existe
+     */
     bool validarVendedor(int legajoVendedor) {
         Vendedor vendedor;
         return _gestorVendedor.leerPorID(legajoVendedor, vendedor);
     }
 
+    /**
+     * @brief Obtiene el precio de un producto
+     * 
+     * @param idProducto ID del producto
+     * @return double Precio del producto, 0 si no existe
+     */
     double obtenerPrecioProducto(int idProducto) {
         Producto producto;
         if (_gestorProducto.leerPorID(idProducto, producto)) {
@@ -159,6 +226,14 @@ private:
         return 0;
     }
 
+    /**
+     * @brief Actualiza el stock de un producto
+     * 
+     * @param idProducto ID del producto
+     * @param cantidad Cantidad a restar del stock
+     * @return true Si el stock se actualizó correctamente
+     * @return false Si hubo error o el producto no existe
+     */
     bool actualizarStock(int idProducto, int cantidad) {
         Producto producto;
         if (_gestorProducto.leerPorID(idProducto, producto)) {

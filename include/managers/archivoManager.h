@@ -210,7 +210,6 @@ public:
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
             if (objeto.getID() == id)
             {
-                cout << "Lo lei" << objeto.getID() << endl;
                 fclose(archivo);
                 return true;
             }
