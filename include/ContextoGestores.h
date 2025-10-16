@@ -12,10 +12,11 @@ struct ContextoGestores {
     ArchivoManager<Cliente> gestorC;
     ArchivoManager<Vendedor> gestorV;
 
+    GestorVenta gestorVenta;
+
     ContextoGestores() : gestorP("productos.dat"),
     gestorC("clientes.dat"), gestorV("vendedores.dat"){}
 
-    GestorVenta gestorVenta;
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED

@@ -20,14 +20,14 @@ private:
     ArchivoManager<Producto> _gestorProducto;
     ArchivoManager<Cliente> _gestorCliente;
     ArchivoManager<Vendedor> _gestorVendedor;
-    
+
     // el carrito temporal robado de un carrefour
     std::vector<DetalleVenta> _carrito;
     int _idCliente;
     int _legajoVendedor;
 
 public:
-    GestorVenta() : 
+    GestorVenta() :
         _gestorVenta("ventas.dat"),
         _gestorDetalle("detalles_venta.dat"),
         _gestorProducto("productos.dat"),
@@ -38,7 +38,8 @@ public:
 
     // Metodos para manejar el carrito
     bool iniciarNuevaVenta(int idCliente, int legajoVendedor) {
-        if (!validarCliente(idCliente) || !validarVendedor(legajoVendedor)) {
+
+        if (validarCliente(idCliente) || validarVendedor(legajoVendedor)) {
             return false;
         }
         _carrito.clear();
@@ -69,7 +70,7 @@ public:
         double total = 0;
         std::cout << "\n=== Carrito Actual ===\n";
         for (const auto& detalle : _carrito) {
-            std::cout << "Producto ID: " << detalle.getIdProducto() 
+            std::cout << "Producto ID: " << detalle.getIdProducto()
                       << " - Cantidad: " << detalle.getCantidad()
                       << " - Subtotal: $" << detalle.getSubtotal() << std::endl;
             total += detalle.getSubtotal();
@@ -93,9 +94,9 @@ public:
         for (auto& detalle : _carrito) {
             detalle.setIdVenta(idVenta);
             total += detalle.getSubtotal();
-            
+
             actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
-            
+
             DetalleVenta* pDetalle = new DetalleVenta(detalle);
             //registra detalle
             if (!_gestorDetalle.escribir(pDetalle)) {
@@ -107,17 +108,17 @@ public:
         }
 
         nuevaVenta->setTotal(total);
-        
+
         // Registrar venta
         bool exito = _gestorVenta.escribir(nuevaVenta);
         delete nuevaVenta;
-        
+
         if (exito) {
             _carrito.clear();
             _idCliente = 0;
             _legajoVendedor = 0;
         }
-        
+
         return exito;
     }
 
@@ -146,7 +147,7 @@ private:
     }
 
     bool validarVendedor(int legajoVendedor) {
-        Vendedor vendedor; 
+        Vendedor vendedor;
         return _gestorVendedor.leerPorID(legajoVendedor, vendedor);
     }
 
