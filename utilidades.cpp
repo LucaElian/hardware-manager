@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cstring>
 #include <limits>
+#include <conio.h>
 using namespace std;
 
 #include "utilidades.h"
 
-void cargarCadena(char *cadena, int maxi) {
+void cargarCadena(char *cadena, int maxDigits) {
     int i = 0;
     char c;
     while (true) {
@@ -21,14 +22,14 @@ void cargarCadena(char *cadena, int maxi) {
             cout << "\b \b"; /// BORRA CARACTER EN PANTALLA
         }
 
-        else if (i < maxi - 1 && c >= 32 && c <= 126) { /// CARACTERES IMPRIMIBLES
+        else if (i < maxDigits - 1 && c >= 32 && c <= 126) { /// CARACTERES IMPRIMIBLES
             cadena[i++] = c;
             cout << c;
         }
     }
 }
 
-int cargarInt(int maxi) {
+int cargarInt(int maxDigits) {
     char buffer[10] = {0};
     int i = 0;
     char c;
@@ -44,7 +45,7 @@ int cargarInt(int maxi) {
             cout << "\b \b";
         }
 
-        else if (i < maxi && c >= '0' && c <= '9') {
+        else if (i < maxDigits && c >= '0' && c <= '9') {
             buffer[i++] = c;
             cout << c;
         }
@@ -52,7 +53,7 @@ int cargarInt(int maxi) {
     return atoi(buffer);
 }
 
-double cargarDouble(int maxi, int maxi_dec) {
+double cargarDouble(int maxDigits, int maxDecimals) {
     char buffer[16] = {0};
     int i = 0, decimales = 0;
     bool punto = false;
@@ -73,19 +74,19 @@ double cargarDouble(int maxi, int maxi_dec) {
             cout << "\b \b";
         }
 
-        else if ((c == '.' || c == ',') && !punto && i > 0 && i < maxi - 1) {
+        else if ((c == '.' || c == ',') && !punto && i > 0 && i < maxDigits - 1) {
             buffer[i++] = '.';
             punto = true;
             cout << c;
         }
 
-        else if ((c >= '0' && c <= '9') && i < maxi) {
+        else if ((c >= '0' && c <= '9') && i < maxDigits) {
             if (!punto) {
                 buffer[i++] = c;
                 cout << c;
             }
             else {
-                if (decimales < maxi_dec) {
+                if (decimales < maxDecimals) {
                     buffer[i++] = c;
                     decimales++;
                     cout << c;
