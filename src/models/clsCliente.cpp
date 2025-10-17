@@ -4,21 +4,101 @@
 #include "ContextoGestores.h"
 
 void Cliente::cargar() {
-    cout << "Ingrese el nombre del cliente: ";
-    cargarCadena(nombre, 49);
-    toUpperCase(nombre);
+    string datos[3] = {
+                    "NOMBRE: [                                ]",
+                    "TELEFONO: [                 ]",
+                    "ID: [          ]"
+                    };
 
-    cout << "Ingrese el telefono del cliente: ";
-    cargarCadena(telefono, 14);
+    agregar("A G R E G A R  C L I E N T E", 3, 2);
+    agregar_opciones(datos, 8, 3, datos[2]);
+
+    rlutil::setColor(rlutil::GREEN);
+    rlutil::showcursor();
 
     ContextoGestores contexto;
     int cantidad = contexto.gestorC.cantidadRegistros();
     setID(cantidad + 1);
+    rlutil::locate(81, 8);
+    cout << id;
+
+    rlutil::locate(42, 8);
+    cargarCadena(nombre, 31);
+
+    while (true){
+        bool cor = true;
+        for (int x = 0; nombre[x] != '\0'; x++){
+            if (!isalpha(nombre[x]) && nombre[x] != ' ') cor = false;
+        }
+        if (!cor) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(49, 16);
+            cout << "ERROR: ESCRIBA SOLO LETRAS";
+
+            rlutil::setColor(rlutil::GREEN);
+            rlutil::locate(42, 8);
+            cout << "                              ";
+            rlutil::locate(42, 8);
+
+            cargarCadena(nombre, 31);
+        }
+        else break;
+    }
+    rlutil::locate(49, 16);
+    cout << "                          ";
+    toUpperCase(nombre);
+
+    rlutil::locate(44, 10);
+    cargarCadena(telefono, 16);
+
+    /// ERROR DE INGRESAR LETRAS
+    while (true){
+        bool cor = true;
+        for (int x = 0; telefono[x] != '\0'; x++){
+            if (!isdigit(telefono[x]) && telefono[x] != ' ') cor = false;
+        }
+        if (!cor) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(49, 16);
+            cout << "ERROR: ESCRIBA SOLO NUMEROS";
+
+            rlutil::setColor(rlutil::GREEN);
+            rlutil::locate(44, 10);
+            cout << "               ";
+            rlutil::locate(44, 10);
+
+            cargarCadena(telefono, 31);
+        }
+        else break;
+    }
+
+
+    rlutil::locate(49, 16);
+    cout << "                        ";
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(47,16);
+    cout << "CLIENTE AGREGADO EXITOSAMENTE";
+
+    rlutil::hidecursor();
 }
 
-void Cliente::mostrar() {
-    cout << "-------------------- CLIENTE " << id << " ----------------------" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Telefono: " << telefono << endl;
-    cout << endl;
+void Cliente::mostrar(int posx, int posy) {
+    rlutil::setColor(rlutil::RED);
+
+    rlutil::locate(posx, posy);
+    cout << char(186) << "          " << /// ID
+    char(186) << "                                " << /// NOMBRE
+    char(186) << "                 " << /// TELEFONO
+    char(186);
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(posx+2, posy);
+    cout << id;
+
+    rlutil::locate(posx+13, posy);
+    cout << nombre;
+
+    rlutil::locate(posx+46, posy);
+    cout << telefono;
 }

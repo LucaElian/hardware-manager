@@ -31,7 +31,7 @@ public:
 
     // Implementing pure virtual functions
     void cargar() override {}
-    void mostrar() override {
+    void mostrar(int x, int y) override {
         std::cout << "Venta #" << idVenta << std::endl;
         std::cout << "Cliente: " << idCliente << std::endl;
         std::cout << "Vendedor: " << legajoVendedor << std::endl;
@@ -48,7 +48,7 @@ public:
     void setTotal(double _total) { total = _total; }
     void setFechaVenta(Fecha _fechaVenta) { fechaVenta = _fechaVenta; }
 
-    // Getters 
+    // Getters
     int getIdVenta() const { return idVenta; }
     int getIdCliente() const { return idCliente; }
     int getLegajoVendedor() const { return legajoVendedor; }

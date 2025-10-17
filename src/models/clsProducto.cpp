@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -14,12 +15,13 @@ using namespace std;
 
 void Producto::cargar() {
     string datos[6] = {
-                "NOMBRE: [                                ]",
-                "TIPO: [   ]"                               ,
-                "STOCK: [           ]"                      ,
-                "PRECIO: [                 ]"               ,
-                "FECHA: [ __/__/____ ]"                     ,
-                "ID: [          ]"                          };
+                    "NOMBRE: [                                ]",
+                    "TIPO: [   ]"                               ,
+                    "STOCK: [           ]"                      ,
+                    "PRECIO: [                 ]"               ,
+                    "FECHA: [ __/__/____ ]"                     ,
+                    "ID: [          ]"
+                    };
 
     agregar("A G R E G A R  P R O D U C T O", 3, 5);
     agregar_opciones(datos, 8, 6, datos[5]);
@@ -122,20 +124,44 @@ void Producto::cargar() {
 
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(47,22);
-    cout << "PRODUCTO AGREGADO EXITOSAMENTE\n\n\n\n\n\n\n\n";
+    cout << "PRODUCTO AGREGADO EXITOSAMENTE";
 
     rlutil::hidecursor();
-    rlutil::setColor(rlutil::BLACK);
 }
 
-void Producto::mostrar() {
-    cout << "----------------PRODUCTO " << id << "----------------------" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Tipo: " << tipo << endl;
-    cout << "Stock: " << stock << endl;
-    cout << "Precio: $" << precio << endl;
-    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
-    cout << "Fecha de ingreso: ";
+void Producto::mostrar(int posx, int posy) {
+    rlutil::setColor(rlutil::RED);
+
+    rlutil::locate(posx, posy);
+    cout << char(186) << "          " << /// ID
+    char(186) << "                                " << /// NOMBRE
+    char(186) << "            " << /// TIPO
+    char(186) << "           " << /// STOCK
+    char(186) << "                    " << /// PRECIO
+    char(186) << "   /  /     " << /// FECHA
+    char(186) << "          " << /// ESTADO
+    char(186);
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(posx+2, posy);
+    cout << id;
+
+    rlutil::locate(posx+13, posy);
+    cout << nombre;
+
+    rlutil::locate(posx+46, posy);
+    if (tipo == 'A') cout << "PERIFERICO";
+    else if (tipo == 'B') cout << "COMPONENTE";
+
+    rlutil::locate(posx+59, posy);
+    cout << stock;
+
+    rlutil::locate(posx+71, posy);
+    cout << fixed << setprecision(2) << precio;
+
+    rlutil::locate(posx+92, posy);
     fechaIngreso.MostrarF();
-    cout << endl;
+
+    rlutil::locate(posx+105, posy);
+    cout << (estado ? "ACTIVO" : "INACTIVO");
 }
