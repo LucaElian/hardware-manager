@@ -54,7 +54,9 @@ void menuVenta(Venta enta, GestorVenta gestor){
                             if (gestor.iniciarNuevaVenta(identificadorCliente, 
                                 legajoCreado))cout << "SE INICIO VENTA" << endl;
                         }break;
-                        case 2:
+                        case 2:{
+                            gestor.listarVentas();
+                        }break;
                         case 4: return;
                     }
                     system("pause");

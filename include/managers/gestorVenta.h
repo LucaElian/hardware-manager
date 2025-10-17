@@ -163,6 +163,15 @@ public:
         _legajoVendedor = 0;
     }
 
+    /** 
+     * @brief Lista las ventas del archivo
+     * 
+     * Lee y muestra las ventas registradas en el archivo.
+    */
+    void listarVentas() {
+        _gestorVenta.leer();
+    }
+
 private:
     /**
      * @brief Genera un nuevo ID para la venta
