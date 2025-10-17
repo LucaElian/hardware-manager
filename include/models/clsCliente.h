@@ -35,7 +35,7 @@ public:
 
     // Implementacion de metodos virtuales
     void cargar() override;
-    void mostrar(int fila) override;
+    void mostrar(int x, int y) override;
 };
 #endif // CLIENTE_H_INCLUDED
 //si, copypasteo una banda el mismo codigo que existe

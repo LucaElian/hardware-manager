@@ -13,8 +13,7 @@
 #undef byte
 
 template <typename T>
-class ArchivoManager
-{
+class ArchivoManager {
 private:
     char nombreArchivo[100];
 
@@ -64,66 +63,47 @@ public:
      *
      * @return bool True si la lectura fue exitosa, False si hubo error al abrir el archivo
      */
-    bool leer(string opciones[], int inicio, int can, int datos[], int cantidad_total){
+    bool leer(string opciones[], int posx, int posy, int can, int datos[]){
         FILE* archivo = fopen(nombreArchivo, "rb");
 
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            rlutil::locate(40, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return false;
         }
 
         T objeto;
         bool activos = false;
-        int x = 0;
-        const int PAGINADO = 20;
+        int con = 0;
+        const int PAGINADO = 15;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
             if (objeto.getEstado() == true) {
-                    if(x > 0 && x % PAGINADO == 0) {
+                    if(con > 0 && con % PAGINADO == 0) {
                         rlutil::setColor(rlutil::RED);
-                        rlutil::locate(3, 6 + x);
-                        std::cout << (char)200; centrar_texto("", (char)205, 10); /// ID
-                        std::cout << (char)202; centrar_texto("", (char)205, 32); /// NOMBRE
-                        std::cout << (char)202; centrar_texto("", (char)205, 12); /// TIPO
-                        std::cout << (char)202; centrar_texto("", (char)205, 11); /// STOCK
-                        std::cout << (char)202; centrar_texto("", (char)205, 20); /// PRECIO
-                        std::cout << (char)202; centrar_texto("", (char)205, 12); /// FECHA
-                        std::cout << (char)202; centrar_texto("", (char)205, 10); /// ESTADO
-                        std::cout << (char)188;
-                        rlutil::locate(102, 27);
+                        mostrar_linea_final(datos, can, posx, 6+con);
+                        rlutil::locate(102, 6+PAGINADO+1);
                         std::cout << "SIGUIENTE PAGINA";
                         std::cin.ignore();
-                        rlutil::cls();
-                        mostrar_encabezado(opciones, inicio, can, datos);
-                        x = 0;
+                        system("cls");
+                        mostrar_encabezado(opciones, posx, posy, can, datos);
+                        con = 0;
                     }
-                objeto.mostrar(x);
+                objeto.mostrar(posx, 6+con);
                 activos = true;
-                x++;
+                con++;
             }
         }
+        fclose(archivo);
+
         if (activos) {
             rlutil::setColor(rlutil::RED);
-            rlutil::locate(3, 6 + x);
-            std::cout << (char)200; centrar_texto("", (char)205, 10); /// ID
-            std::cout << (char)202; centrar_texto("", (char)205, 32); /// NOMBRE
-            std::cout << (char)202; centrar_texto("", (char)205, 12); /// TIPO
-            std::cout << (char)202; centrar_texto("", (char)205, 11); /// STOCK
-            std::cout << (char)202; centrar_texto("", (char)205, 20); /// PRECIO
-            std::cout << (char)202; centrar_texto("", (char)205, 12); /// FECHA
-            std::cout << (char)202; centrar_texto("", (char)205, 10); /// ESTADO
-            std::cout << (char)188;
+            mostrar_linea_final(datos, can, posx, 6+con);
 
-            rlutil::locate(102, 27);
+            rlutil::locate(101, 6+PAGINADO+1);
             std::cout << "FIN DE PAGINACION";
         }
 
-        else {
-            std::cout << "No se encontraron registros activos." << std::endl;
-        }
-
-        rlutil::setColor(rlutil::BLACK);
-
-        fclose(archivo);
         return true;
     }
 
@@ -140,8 +120,11 @@ public:
      */
     bool eliminarPorID(int id){
         FILE* archivo = fopen(nombreArchivo, "rb+");
+
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            rlutil::locate(40, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return false;
         }
 
@@ -149,7 +132,7 @@ public:
         bool encontrado = false;
 
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getID() == id){
+            if (objeto.getID() == id) {
                 objeto.setEstado(false);
                 fseek(archivo, -sizeof(T), SEEK_CUR);
                 fwrite(&objeto, sizeof(T), 1, archivo);
@@ -160,10 +143,7 @@ public:
 
         fclose(archivo);
 
-        if (!encontrado){
-            std::cerr << "Error: no se encontró el registro con ID " << id << std::endl;
-            return false;
-        }
+        if (!encontrado) return false;
 
         return true;
     }
@@ -203,8 +183,11 @@ public:
 
     int cantidadRegistrosActivos(){
         FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+
+        if (!archivo) {
+            rlutil::locate(47, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cerr << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return 0;
         }
 
@@ -243,7 +226,7 @@ public:
     bool leerPorID(int id, T& objeto){
         FILE* archivo = fopen(nombreArchivo, "rb");
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            std::cout << "Error: no se pudo abrir el archivo " << std::endl;
             return false;
         }
 

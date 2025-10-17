@@ -25,7 +25,6 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
 
     int datos[7] = {10, 32, 12, 11, 20, 12, 10};
 
-
     while(true) {
         int opcion = 0;
         bool curs = true;
@@ -59,38 +58,72 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0: {
-                                producto.cargar();
-                                gestor.escribir(&producto);
+                            producto.cargar();
+                            gestor.escribir(&producto);
                             }
                             break;
                         case 2: {
-                                cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
-                                gestor.leer(opciones, 3, 7, datos, gestor.cantidadRegistrosActivos());
-                                int idEliminar;
-                                cout << "Ingrese el ID del producto a eliminar: ";
-                                cin >> idEliminar;
+                            if (gestor.cantidadRegistrosActivos() > 0) {
+                                rlutil::locate(54, 1);
+                                rlutil::setColor(rlutil::RED);
+                                cout << "CANTIDAD DE PRODUCTOS: " << gestor.cantidadRegistrosActivos();
+
+                                mostrar_encabezado(opcioness, 3, 3, 7, datos);
+                                gestor.leer(opcioness, 3, 3, 7, datos);
+                                rlutil::locate(52, 24);
+                                cout << (char)201; centrar_texto("", (char)205, 4); cout << (char)203;
+                                centrar_texto("", (char)205, 10); cout << (char)187;
+
+                                rlutil::locate(52, 25);
+                                cout << (char)186; rlutil::setColor(rlutil::GREY); cout << " ID ";
+                                rlutil::setColor(rlutil::RED); cout << (char)186;
+                                cout << "          " << (char)186;
+
+                                rlutil::locate(52, 26);
+                                cout << (char)200; centrar_texto("", (char)205, 4); cout << (char)202;
+                                centrar_texto("", (char)205, 10); cout << (char)188;
+
+                                rlutil::locate(59, 25);
+                                rlutil::showcursor();
+                                rlutil::setColor(rlutil::WHITE);
+                                int idEliminar = cargarInt(8);
+                                rlutil::hidecursor();
+
+                                rlutil::locate(41, 27);
                                 if (gestor.eliminarPorID(idEliminar)) {
-                                    cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
+                                    rlutil::setColor(rlutil::WHITE);
+                                    cout << "PRODUCTO CON ID " << idEliminar << " ELIMINADO EXITOSAMENTE";
                                 }
+
                                 else {
-                                    cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
+                                    rlutil::locate(41, 27);
+                                    rlutil::setColor(rlutil::RED);
+                                    cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
                                 }
+                            }
                             }
                             break;
                         case 4: break;
                         case 6: {
-                            rlutil::locate(50, 1);
-                            rlutil::setColor(rlutil::RED);
-                            cout << "CANTIDAD DE PRODUCTOS: " << gestor.cantidadRegistrosActivos();
+                            if (gestor.cantidadRegistrosActivos() > 0) {
+                                rlutil::locate(50, 1);
+                                rlutil::setColor(rlutil::RED);
+                                cout << "CANTIDAD DE PRODUCTOS: " << gestor.cantidadRegistrosActivos();
 
-                            mostrar_encabezado(opcioness, 3, 7, datos);
-
-                            gestor.leer(opcioness, 3, 7, datos, gestor.cantidadRegistrosActivos());
+                                mostrar_encabezado(opcioness, 3, 3, 7, datos);
+                                gestor.leer(opcioness, 3, 3, 7, datos);
+                            }
+                            else {
+                                rlutil::locate(40, 15);
+                                rlutil::setColor(rlutil::RED);
+                                cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+                            }
+                            }
                             break;
-                        }
                         case 8: return;
                     }
-                    system("pause");
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
             }
         }
     }

@@ -15,12 +15,13 @@ using namespace std;
 
 void Producto::cargar() {
     string datos[6] = {
-                "NOMBRE: [                                ]",
-                "TIPO: [   ]"                               ,
-                "STOCK: [           ]"                      ,
-                "PRECIO: [                 ]"               ,
-                "FECHA: [ __/__/____ ]"                     ,
-                "ID: [          ]"                          };
+                    "NOMBRE: [                                ]",
+                    "TIPO: [   ]"                               ,
+                    "STOCK: [           ]"                      ,
+                    "PRECIO: [                 ]"               ,
+                    "FECHA: [ __/__/____ ]"                     ,
+                    "ID: [          ]"
+                    };
 
     agregar("A G R E G A R  P R O D U C T O", 3, 5);
     agregar_opciones(datos, 8, 6, datos[5]);
@@ -126,13 +127,12 @@ void Producto::cargar() {
     cout << "PRODUCTO AGREGADO EXITOSAMENTE";
 
     rlutil::hidecursor();
-    rlutil::setColor(rlutil::BLACK);
 }
 
-void Producto::mostrar(int fila) {
+void Producto::mostrar(int posx, int posy) {
     rlutil::setColor(rlutil::RED);
 
-    rlutil::locate(3, 6+fila);
+    rlutil::locate(posx, posy);
     cout << char(186) << "          " << /// ID
     char(186) << "                                " << /// NOMBRE
     char(186) << "            " << /// TIPO
@@ -143,25 +143,25 @@ void Producto::mostrar(int fila) {
     char(186);
 
     rlutil::setColor(rlutil::WHITE);
-    rlutil::locate(5, 6+fila);
+    rlutil::locate(posx+2, posy);
     cout << id;
 
-    rlutil::locate(16, 6+fila);
+    rlutil::locate(posx+13, posy);
     cout << nombre;
 
-    rlutil::locate(49, 6+fila);
-    if(tipo == 'A') cout << "PERIFERICO";
+    rlutil::locate(posx+46, posy);
+    if (tipo == 'A') cout << "PERIFERICO";
     else if (tipo == 'B') cout << "COMPONENTE";
 
-    rlutil::locate(62, 6+fila);
+    rlutil::locate(posx+59, posy);
     cout << stock;
 
-    rlutil::locate(74, 6+fila);
+    rlutil::locate(posx+71, posy);
     cout << fixed << setprecision(2) << precio;
 
-    rlutil::locate(95, 6+fila);
+    rlutil::locate(posx+92, posy);
     fechaIngreso.MostrarF();
 
-    rlutil::locate(108, 6+fila);
+    rlutil::locate(posx+105, posy);
     cout << (estado ? "ACTIVO" : "INACTIVO");
 }

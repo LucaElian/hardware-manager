@@ -52,7 +52,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                             break;
                         case 2: {
                                 cout << "La cantidad de vendedores es: " << gestor.cantidadRegistros() << endl;
-                                gestor.leer(opcioness, 3, 6, datos, gestor.cantidadRegistrosActivos());
+                                gestor.leer(opcioness, 3, 3, 6, datos);
                                 int idEliminar;
                                 cout << "Ingrese el ID del vendedor a eliminar: ";
                                 cin >> idEliminar;
@@ -67,7 +67,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                         case 4: break;
                         case 6:
                             cout << "La cantidad de vendedores es: " << gestor.cantidadRegistrosActivos() << endl;
-                            gestor.leer(opcioness, 3, 6, datos, gestor.cantidadRegistrosActivos());
+                            gestor.leer(opcioness, 3, 3, 6, datos);
                             break;
                         case 8: return;
                     }

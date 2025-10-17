@@ -133,8 +133,8 @@ void agregar_opciones(string opciones[], int inicio, int can, string id){
     }
 }
 
-void mostrar_encabezado(string opciones[], int inicio, int can, int datos[]) {
-    rlutil::locate(3, inicio);
+void mostrar_encabezado(string opciones[], int posx, int posy, int can, int datos[]) {
+    rlutil::locate(posx, posy);
     cout << (char)201;
     for(int x = 0; x < can; x++) {
         centrar_texto("", (char)205, datos[x]); /// ID
@@ -142,7 +142,7 @@ void mostrar_encabezado(string opciones[], int inicio, int can, int datos[]) {
     }
     cout << (char)187;
 
-    rlutil::locate(3, inicio+1);
+    rlutil::locate(posx, posy+1);
     for(int x = 0; x < can; x++){
         rlutil::setColor(rlutil::RED);
         cout << (char)186;
@@ -151,11 +151,21 @@ void mostrar_encabezado(string opciones[], int inicio, int can, int datos[]) {
     }
     rlutil::setColor(rlutil::RED); cout << char(186);
 
-    rlutil::locate(3, inicio+2);
+    rlutil::locate(posx, posy+2);
     cout << (char)204;
     for(int x = 0; x < can; x++) {
         centrar_texto("", (char)205, datos[x]); /// ID
         if(x+1 != can) cout << (char)206;
     }
     cout << (char)185;
+}
+
+void mostrar_linea_final(int datos[], int can, int posx, int posy) {
+    rlutil::locate(posx, posy);
+    cout << (char)200;
+    for(int x = 0; x < can; x++) {
+        centrar_texto("", (char)205, datos[x]);
+        if(x+1 != can) cout << (char)202;
+    }
+    cout << (char)188;
 }

@@ -43,7 +43,7 @@ public:
 
     // Implementacion con los metodos virtuales
     void cargar() override;
-    void mostrar(int fila) override;
+    void mostrar(int x, int y) override;
 };
 
 #endif // PRODUCTOS_H_INCLUDED

@@ -31,7 +31,7 @@ public:
 
     // Metodos virtuales puros - cada clase debe implementarlos
     virtual void cargar() = 0;
-    virtual void mostrar(int fila) = 0;
+    virtual void mostrar(int x, int y) = 0;
 };
 
 #endif // ENTIDAD_H_INCLUDED
