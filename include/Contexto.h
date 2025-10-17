@@ -4,12 +4,13 @@
 #include "clsCliente.h"
 #include "clsProducto.h"
 #include "clsVendedor.h"
-
+#include "clsVenta.h"
 
 struct Contexto {
     Producto producto;
     Cliente cliente;
     Vendedor vendedor;
+    Venta venta;
 };
 
 

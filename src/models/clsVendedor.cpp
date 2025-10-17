@@ -18,6 +18,7 @@ void Vendedor::cargar() {
     ContextoGestores contexto;
     int cantidad = contexto.gestorV.cantidadRegistros();
     setLegajo(cantidad +1);
+    setID(cantidad +1); // Asignar ID igual al legajo pq trabajamos con id a nivel codigo, no legajos
 }
 
 void Vendedor::mostrar() {
@@ -26,5 +27,6 @@ void Vendedor::mostrar() {
     cout << "Numero telefonico: " << telefonoVendedor << endl;
     cout << "DNI: " << dni << endl;
     cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
+    cout << "ID: " << id << endl;
     cout << endl;
 }
