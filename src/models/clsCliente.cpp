@@ -16,7 +16,7 @@ void Cliente::cargar() {
     setID(cantidad + 1);
 }
 
-void Cliente::mostrar() {
+void Cliente::mostrar(int fila) {
     cout << "-------------------- CLIENTE " << id << " ----------------------" << endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Telefono: " << telefono << endl;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -122,20 +123,45 @@ void Producto::cargar() {
 
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(47,22);
-    cout << "PRODUCTO AGREGADO EXITOSAMENTE\n\n\n\n\n\n\n\n";
+    cout << "PRODUCTO AGREGADO EXITOSAMENTE";
 
     rlutil::hidecursor();
     rlutil::setColor(rlutil::BLACK);
 }
 
-void Producto::mostrar() {
-    cout << "----------------PRODUCTO " << id << "----------------------" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Tipo: " << tipo << endl;
-    cout << "Stock: " << stock << endl;
-    cout << "Precio: $" << precio << endl;
-    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
-    cout << "Fecha de ingreso: ";
+void Producto::mostrar(int fila) {
+    rlutil::setColor(rlutil::RED);
+
+    rlutil::locate(3, 6+fila);
+    cout << char(186) << "          " << /// ID
+    char(186) << "                                " << /// NOMBRE
+    char(186) << "            " << /// TIPO
+    char(186) << "           " << /// STOCK
+    char(186) << "                    " << /// PRECIO
+    char(186) << "   /  /     " << /// FECHA
+    char(186) << "          " << /// ESTADO
+    char(186);
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(5, 6+fila);
+    cout << id;
+
+    rlutil::locate(16, 6+fila);
+    cout << nombre;
+
+    rlutil::locate(49, 6+fila);
+    if(tipo == 'A') cout << "PERIFERICO";
+    else if (tipo == 'B') cout << "COMPONENTE";
+
+    rlutil::locate(62, 6+fila);
+    cout << stock;
+
+    rlutil::locate(74, 6+fila);
+    cout << fixed << setprecision(2) << precio;
+
+    rlutil::locate(95, 6+fila);
     fechaIngreso.MostrarF();
-    cout << endl;
+
+    rlutil::locate(108, 6+fila);
+    cout << (estado ? "ACTIVO" : "INACTIVO");
 }

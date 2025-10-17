@@ -5,6 +5,7 @@ using namespace std;
 #include "clsFecha.h"
 #include "archivoManager.h"
 #include "artworks.h"
+#include "utilidades.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -12,6 +13,18 @@ using namespace std;
 
 void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
+    string opcioness[7] = {
+                            "    ID    ",
+                            "          N O M B R E           ",
+                            "    TIPO    ",
+                            "   STOCK   ",
+                            "       PRECIO       ",
+                            "   FECHA    ",
+                            "  ESTADO  "
+                            };
+
+    int datos[7] = {10, 32, 12, 11, 20, 12, 10};
+
 
     while(true) {
         int opcion = 0;
@@ -48,12 +61,11 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                         case 0: {
                                 producto.cargar();
                                 gestor.escribir(&producto);
-//                                cout << "Producto agregado exitosamente!" << endl;
                             }
                             break;
                         case 2: {
                                 cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
-                                gestor.leer();
+                                gestor.leer(opciones, 3, 7, datos, gestor.cantidadRegistrosActivos());
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
                                 cin >> idEliminar;
@@ -66,10 +78,16 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                             }
                             break;
                         case 4: break;
-                        case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosActivos() << endl;
-                            gestor.leer();
+                        case 6: {
+                            rlutil::locate(50, 1);
+                            rlutil::setColor(rlutil::RED);
+                            cout << "CANTIDAD DE PRODUCTOS: " << gestor.cantidadRegistrosActivos();
+
+                            mostrar_encabezado(opcioness, 3, 7, datos);
+
+                            gestor.leer(opcioness, 3, 7, datos, gestor.cantidadRegistrosActivos());
                             break;
+                        }
                         case 8: return;
                     }
                     system("pause");

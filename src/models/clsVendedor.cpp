@@ -21,7 +21,7 @@ void Vendedor::cargar() {
     setID(cantidad +1); // Asignar ID igual al legajo pq trabajamos con id a nivel codigo, no legajos
 }
 
-void Vendedor::mostrar() {
+void Vendedor::mostrar(int fila) {
     cout << "----------------VENDEDOR NUMERO " << legajo << "----------------------" << endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Numero telefonico: " << telefonoVendedor << endl;

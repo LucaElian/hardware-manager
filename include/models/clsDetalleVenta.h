@@ -32,10 +32,10 @@ public:
 
     // Implementing pure virtual functions
     void cargar() override {}
-    void mostrar() override {
+    void mostrar(int fila) override {
         std::cout << "Detalle de Venta " << id << std::endl;
         std::cout << "ID Venta: " << idVenta << std::endl;
-        std::cout << "ID Producto: " << idProducto << std::endl; 
+        std::cout << "ID Producto: " << idProducto << std::endl;
         std::cout << "Cantidad: " << cantidad << std::endl;
         std::cout << "Precio: $" << precioVenta << std::endl;
         std::cout << "Subtotal: $" << subtotal << std::endl;

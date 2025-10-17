@@ -7,9 +7,9 @@
 class Vendedor : public Entidad {
 private:
     int legajo;
-    char nombre[25];
-    char telefonoVendedor[15];
-    char dni[9];
+    char nombre[31];
+    char telefonoVendedor[16];
+    char dni[10];
 
 public:
     // Constructor
@@ -47,7 +47,7 @@ public:
     const char *getDni() const { return dni; }
     // Implementacion con los metodos virtuales
     void cargar() override;
-    void mostrar() override;
+    void mostrar(int fila) override;
 };
 
 #endif // CLSVENDEDOR_H_INCLUDED

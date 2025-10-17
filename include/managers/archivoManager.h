@@ -5,6 +5,12 @@
 #include <cstring>
 #include <iostream>
 
+#include "utilidades.h"
+#include "artworks.h"
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
 
 template <typename T>
 class ArchivoManager
@@ -58,7 +64,7 @@ public:
      *
      * @return bool True si la lectura fue exitosa, False si hubo error al abrir el archivo
      */
-    bool leer(){
+    bool leer(string opciones[], int inicio, int can, int datos[], int cantidad_total){
         FILE* archivo = fopen(nombreArchivo, "rb");
 
         if (!archivo){
@@ -66,22 +72,56 @@ public:
             return false;
         }
 
-        std::cout << "Contenido del archivo " << nombreArchivo << std::endl;
-
         T objeto;
         bool activos = false;
-
-        while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getEstado() == true){
-                objeto.mostrar();
-                std::cout << "---------------------\n";
+        int x = 0;
+        const int PAGINADO = 20;
+        while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
+            if (objeto.getEstado() == true) {
+                    if(x > 0 && x % PAGINADO == 0) {
+                        rlutil::setColor(rlutil::RED);
+                        rlutil::locate(3, 6 + x);
+                        std::cout << (char)200; centrar_texto("", (char)205, 10); /// ID
+                        std::cout << (char)202; centrar_texto("", (char)205, 32); /// NOMBRE
+                        std::cout << (char)202; centrar_texto("", (char)205, 12); /// TIPO
+                        std::cout << (char)202; centrar_texto("", (char)205, 11); /// STOCK
+                        std::cout << (char)202; centrar_texto("", (char)205, 20); /// PRECIO
+                        std::cout << (char)202; centrar_texto("", (char)205, 12); /// FECHA
+                        std::cout << (char)202; centrar_texto("", (char)205, 10); /// ESTADO
+                        std::cout << (char)188;
+                        rlutil::locate(102, 27);
+                        std::cout << "SIGUIENTE PAGINA";
+                        std::cin.ignore();
+                        rlutil::cls();
+                        mostrar_encabezado(opciones, inicio, can, datos);
+                        x = 0;
+                    }
+                objeto.mostrar(x);
                 activos = true;
+                x++;
             }
         }
+        if (activos) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(3, 6 + x);
+            std::cout << (char)200; centrar_texto("", (char)205, 10); /// ID
+            std::cout << (char)202; centrar_texto("", (char)205, 32); /// NOMBRE
+            std::cout << (char)202; centrar_texto("", (char)205, 12); /// TIPO
+            std::cout << (char)202; centrar_texto("", (char)205, 11); /// STOCK
+            std::cout << (char)202; centrar_texto("", (char)205, 20); /// PRECIO
+            std::cout << (char)202; centrar_texto("", (char)205, 12); /// FECHA
+            std::cout << (char)202; centrar_texto("", (char)205, 10); /// ESTADO
+            std::cout << (char)188;
 
-        if (!activos){
+            rlutil::locate(102, 27);
+            std::cout << "FIN DE PAGINACION";
+        }
+
+        else {
             std::cout << "No se encontraron registros activos." << std::endl;
         }
+
+        rlutil::setColor(rlutil::BLACK);
 
         fclose(archivo);
         return true;
