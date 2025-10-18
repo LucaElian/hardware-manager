@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
-
+#include <vector>
 
 template <typename T>
 class ArchivoManager
@@ -48,39 +48,25 @@ public:
         return true;
     }
 
-    /// ----------------------------METODO LEER---------------------------------
     /**
-     * @brief Lee y muestra los registros activos de un archivo binario
-     *
-     * Este método abre un archivo binario especificado por nombreArchivo y lee objetos de tipo T.
-     * Muestra solo los registros que tienen su estado configurado como verdadero.
-     * Cada registro activo se muestra seguido de una línea separadora.
-     *
-     * @return bool True si la lectura fue exitosa, False si hubo error al abrir el archivo
+     * @brief Obtiene todos los registros activos del archivo
+     * 
+     * @param objetos Vector donde se almacenarán los objetos activos leídos
+     * @return true Si la lectura fue exitosa
+     * @return false Si hubo un error al abrir el archivo
      */
-    bool leer(){
+    bool leer(std::vector<T>& objetos) {
         FILE* archivo = fopen(nombreArchivo, "rb");
-
-        if (!archivo){
+        if (!archivo) {
             std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
             return false;
         }
-
-        std::cout << "Contenido del archivo " << nombreArchivo << std::endl;
-
+        objetos.reserve(cantidadRegistrosActivos());
         T objeto;
-        bool activos = false;
-
-        while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getEstado() == true){
-                objeto.mostrar();
-                std::cout << "---------------------\n";
-                activos = true;
+        while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
+            if (objeto.getEstado()) {
+                objetos.push_back(objeto);
             }
-        }
-
-        if (!activos){
-            std::cout << "No se encontraron registros activos." << std::endl;
         }
 
         fclose(archivo);
@@ -258,6 +244,33 @@ public:
             std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
             return false;
         }return true;
+    }
+
+    /**
+     * @brief Lee todos los registros activos del archivo y los almacena en un vector
+     *
+     * @param objetos Referencia al vector donde se almacenarán los registros activos
+     * @return true Si la lectura fue exitosa
+     * @return false Si hubo un error al abrir el archivo
+     *
+     * Este método lee todos los registros del archivo y almacena aquellos que están activos
+     * (getEstado() retorna verdadero) en el vector proporcionado.
+     */
+    bool leerTodos(std::vector<T>& objetos){
+        FILE* archivo = fopen(nombreArchivo, "rb");
+        if (!archivo){
+            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            return false;
+        }
+        objetos.reserve(cantidadRegistrosActivos());
+
+        T objeto;
+        while (fread(&objeto, sizeof(T), 1, archivo) == 1){
+            if (objeto.getEstado()) objetos.push_back(objeto);
+        }
+
+        fclose(archivo);
+        return true;
     }
 };
 

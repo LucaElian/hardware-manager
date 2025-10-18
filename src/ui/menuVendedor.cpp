@@ -7,6 +7,8 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+#include "uiManager.h"
+
 void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
     string opciones[5] = {"AGREGAR VENDEDOR", "ELIMINAR VENDEDOR", "MODIFICAR VENDEDOR", "LISTAR VENDEDORES", "SALIR"};
 
@@ -50,7 +52,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                             break;
                         case 2: {
                                 cout << "La cantidad de vendedores es: " << gestor.cantidadRegistros() << endl;
-                                gestor.leer();
+                                mostrarRegistros(gestor);
                                 int idEliminar;
                                 cout << "Ingrese el ID del vendedor a eliminar: ";
                                 cin >> idEliminar;
@@ -65,7 +67,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                         case 4: break;
                         case 6:
                             cout << "La cantidad de vendedores es: " << gestor.cantidadRegistrosActivos() << endl;
-                            gestor.leer();
+                            mostrarRegistros(gestor);
                             break;
                         case 8: return;
                     }
