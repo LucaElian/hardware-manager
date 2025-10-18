@@ -43,7 +43,7 @@ public:
 
     // Implementacion con los metodos virtuales
     void cargar() override;
-    void mostrar() override;
+    void mostrar() const override;
 };
 
 #endif // PRODUCTOS_H_INCLUDED

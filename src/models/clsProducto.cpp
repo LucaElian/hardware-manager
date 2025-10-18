@@ -128,7 +128,7 @@ void Producto::cargar() {
     rlutil::setColor(rlutil::BLACK);
 }
 
-void Producto::mostrar() {
+void Producto::mostrar() const{
     cout << "----------------PRODUCTO " << id << "----------------------" << endl;
     cout << "Nombre: " << nombre << endl;
     cout << "Tipo: " << tipo << endl;

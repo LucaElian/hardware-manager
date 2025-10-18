@@ -31,7 +31,7 @@ public:
 
     // Implementing pure virtual functions
     void cargar() override {}
-    void mostrar() override {
+    void mostrar() const override {
         std::cout << "Venta #" << idVenta << std::endl;
         std::cout << "Cliente: " << idCliente << std::endl;
         std::cout << "Vendedor: " << legajoVendedor << std::endl;

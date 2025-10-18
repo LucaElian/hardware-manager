@@ -10,6 +10,8 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+#include "uiManager.h"
+
 void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
@@ -53,7 +55,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                             break;
                         case 2: {
                                 cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
-                                gestor.leer();
+                                mostrarRegistros(gestor);
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
                                 cin >> idEliminar;
@@ -68,7 +70,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                         case 4: break;
                         case 6:
                             cout << "La cantidad de productos es: " << gestor.cantidadRegistrosActivos() << endl;
-                            gestor.leer();
+                            mostrarRegistros(gestor);
                             break;
                         case 8: return;
                     }
