@@ -6,8 +6,8 @@
 
 class Cliente : public Entidad {
 private:
-    char nombre[50];
-    char telefono[15];
+    char nombre[31];
+    char telefono[16];
 
 public:
     // Constructor

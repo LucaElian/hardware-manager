@@ -5,6 +5,7 @@ using namespace std;
 #include "clsFecha.h"
 #include "archivoManager.h"
 #include "artworks.h"
+#include "utilidades.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -14,6 +15,17 @@ using namespace std;
 
 void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
+    string opcioness[7] = {
+                            "    ID    ",
+                            "          N O M B R E           ",
+                            "    TIPO    ",
+                            "   STOCK   ",
+                            "       PRECIO       ",
+                            "   FECHA    ",
+                            "  ESTADO  "
+                            };
+
+    int datos[7] = {10, 32, 12, 11, 20, 12, 10};
 
     while(true) {
         int opcion = 0;
@@ -48,9 +60,8 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0: {
-                                producto.cargar();
-                                gestor.escribir(&producto);
-//                                cout << "Producto agregado exitosamente!" << endl;
+                            producto.cargar();
+                            gestor.escribir(&producto);
                             }
                             break;
                         case 2: {
@@ -60,11 +71,16 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                                 cout << "Ingrese el ID del producto a eliminar: ";
                                 cin >> idEliminar;
                                 if (gestor.eliminarPorID(idEliminar)) {
-                                    cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
+                                    rlutil::setColor(rlutil::WHITE);
+                                    cout << "PRODUCTO CON ID " << idEliminar << " ELIMINADO EXITOSAMENTE";
                                 }
+
                                 else {
-                                    cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
+                                    rlutil::locate(41, 27);
+                                    rlutil::setColor(rlutil::RED);
+                                    cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
                                 }
+                            }
                             }
                             break;
                         case 4: break;
@@ -74,7 +90,8 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                             break;
                         case 8: return;
                     }
-                    system("pause");
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
             }
         }
     }

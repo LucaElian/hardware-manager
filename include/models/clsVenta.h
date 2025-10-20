@@ -48,7 +48,7 @@ public:
     void setTotal(double _total) { total = _total; }
     void setFechaVenta(Fecha _fechaVenta) { fechaVenta = _fechaVenta; }
 
-    // Getters 
+    // Getters
     int getIdVenta() const { return idVenta; }
     int getIdCliente() const { return idCliente; }
     int getLegajoVendedor() const { return legajoVendedor; }

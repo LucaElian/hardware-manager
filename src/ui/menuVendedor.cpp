@@ -11,6 +11,8 @@ using namespace std;
 
 void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
     string opciones[5] = {"AGREGAR VENDEDOR", "ELIMINAR VENDEDOR", "MODIFICAR VENDEDOR", "LISTAR VENDEDORES", "SALIR"};
+    string opcioness[6] = {"LEGAJO", "NOMBRE", "DNI", "TELEFONO", "FECHA", "ESTADO"};
+    int datos[6] = {10, 32, 11, 17, 12, 12};
 
     while(true) {
         int opcion = 0;

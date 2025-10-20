@@ -20,8 +20,8 @@ public:
     // Setters comunes
     void setID(int _id) { id = _id; }
     void setEstado(bool _estado) { estado = _estado; }
-    void setFecha(int dia, int mes, int anio) { 
-        fechaIngreso = Fecha(dia, mes, anio); 
+    void setFecha(int dia, int mes, int anio) {
+        fechaIngreso = Fecha(dia, mes, anio);
     }
 
     // Getters comunes

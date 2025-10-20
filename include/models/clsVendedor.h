@@ -7,9 +7,9 @@
 class Vendedor : public Entidad {
 private:
     int legajo;
-    char nombre[25];
-    char telefonoVendedor[15];
-    char dni[9];
+    char nombre[31];
+    char telefonoVendedor[16];
+    char dni[10];
 
 public:
     // Constructor

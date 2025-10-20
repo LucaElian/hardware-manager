@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -14,12 +15,13 @@ using namespace std;
 
 void Producto::cargar() {
     string datos[6] = {
-                "NOMBRE: [                                ]",
-                "TIPO: [   ]"                               ,
-                "STOCK: [           ]"                      ,
-                "PRECIO: [                 ]"               ,
-                "FECHA: [ __/__/____ ]"                     ,
-                "ID: [          ]"                          };
+                    "NOMBRE: [                                ]",
+                    "TIPO: [   ]"                               ,
+                    "STOCK: [           ]"                      ,
+                    "PRECIO: [                 ]"               ,
+                    "FECHA: [ __/__/____ ]"                     ,
+                    "ID: [          ]"
+                    };
 
     agregar("A G R E G A R  P R O D U C T O", 3, 5);
     agregar_opciones(datos, 8, 6, datos[5]);
@@ -122,10 +124,9 @@ void Producto::cargar() {
 
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(47,22);
-    cout << "PRODUCTO AGREGADO EXITOSAMENTE\n\n\n\n\n\n\n\n";
+    cout << "PRODUCTO AGREGADO EXITOSAMENTE";
 
     rlutil::hidecursor();
-    rlutil::setColor(rlutil::BLACK);
 }
 
 void Producto::mostrar() const{
@@ -137,5 +138,7 @@ void Producto::mostrar() const{
     cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
     cout << "Fecha de ingreso: ";
     fechaIngreso.MostrarF();
-    cout << endl;
+
+    rlutil::locate(posx+105, posy);
+    cout << (estado ? "ACTIVO" : "INACTIVO");
 }
