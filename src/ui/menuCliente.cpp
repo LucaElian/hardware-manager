@@ -5,20 +5,29 @@ using namespace std;
 #include "clsFecha.h"
 #include "archivoManager.h"
 #include "artworks.h"
+#include "utilidades.h"
 
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
 void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
-    string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
+    string opciones[4] = {"AGREGAR CLIENTE", "MODIFICAR CLIENTE", "MOSTRAR CLIENTES", "SALIR"};
+    string opcioness[3] = {
+                        "    ID    ",
+                        "          N O M B R E           ",
+                        "    TELEFONO     "
+                        };
+
+    int datos[3] = {10, 32, 17};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
         system("cls");
 
-        menu("M E N U   C L I E N T E S", opciones, 7, 5);
+        menu("M E N U   C L I E N T E S", opciones, 7, 4);
+
 
         while(curs == true) {
             rlutil::locate(49, 13 + opcion);
@@ -31,48 +40,45 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                     rlutil::locate(49, 13 + opcion);
                     cout << " ";
                     opcion -= 2;
-                    if(opcion < 0) opcion = 8;
+                    if(opcion < 0) opcion = 6;
                     break;
 
             case 15:
                 rlutil::locate(49, 13 + opcion);
                 cout << " ";
                 opcion += 2;
-                if(opcion > 8) opcion = 0;
+                if(opcion > 6) opcion = 0;
                 break;
 
                 case 1:
                     system("cls");
                     curs = false;
                     switch(opcion) {
-                        case 0:
+                        case 0: {
                             cliente.cargar();
                             gestor.escribir(&cliente);
+                            }
                             break;
-                        case 2: {
-                            cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
-                            gestor.leer();
-                            int idEliminar;
-                            cout << "Ingrese el ID del cliente a eliminar: ";
-                            cin >> idEliminar;
-                            if (gestor.eliminarPorID(idEliminar)) {
-                                cout << "Cliente con ID " << idEliminar << " eliminado exitosamente." << endl;
+                        case 2: break;
+                        case 4: {
+                            if (gestor.cantidadRegistros() > 0) {
+                                rlutil::locate(50, 1);
+                                rlutil::setColor(rlutil::RED);
+                                cout << "CANTIDAD DE CLIENTES: " << gestor.cantidadRegistros();
+
+                                mostrar_encabezado(opcioness, 32, 3, 3, datos);
+                                gestor.leer(opcioness, 32, 3, 3, datos);
                             }
                             else {
-                                cout << "No se pudo eliminar el cliente con ID " << idEliminar << "." << endl;
+                                rlutil::locate(40, 15);
+                                rlutil::setColor(rlutil::RED);
+                                cerr << "NO SE ENCONTRARON REGISTROS";
                             }
-                        }
-                        break;
-                        case 4:
-                            cout << "soy el metodo modificar" << endl;
+                            }
                             break;
-                        case 6:
-                            cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
-                            gestor.leer();
-                            break;
-
-                        case 8: return;
+                        case 6: return;
                     }
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
             }
         }

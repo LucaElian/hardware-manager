@@ -5,10 +5,15 @@
 #include <cstring>
 #include <iostream>
 
+#include "utilidades.h"
+#include "artworks.h"
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
 
 template <typename T>
-class ArchivoManager
-{
+class ArchivoManager {
 private:
     char nombreArchivo[100];
 
@@ -58,32 +63,47 @@ public:
      *
      * @return bool True si la lectura fue exitosa, False si hubo error al abrir el archivo
      */
-    bool leer(){
+    bool leer(string opciones[], int posx, int posy, int can, int datos[]){
         FILE* archivo = fopen(nombreArchivo, "rb");
 
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            rlutil::locate(40, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return false;
         }
 
-        std::cout << "Contenido del archivo " << nombreArchivo << std::endl;
-
         T objeto;
         bool activos = false;
-
-        while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getEstado() == true){
-                objeto.mostrar();
-                std::cout << "---------------------\n";
+        int con = 0;
+        const int PAGINADO = 15;
+        while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
+            if (objeto.getEstado() == true) {
+                    if(con > 0 && con % PAGINADO == 0) {
+                        rlutil::setColor(rlutil::RED);
+                        mostrar_linea_final(datos, can, posx, 6+con);
+                        rlutil::locate(102, 6+PAGINADO+1);
+                        std::cout << "SIGUIENTE PAGINA";
+                        std::cin.ignore();
+                        system("cls");
+                        mostrar_encabezado(opciones, posx, posy, can, datos);
+                        con = 0;
+                    }
+                objeto.mostrar(posx, 6+con);
                 activos = true;
+                con++;
             }
         }
+        fclose(archivo);
 
-        if (!activos){
-            std::cout << "No se encontraron registros activos." << std::endl;
+        if (activos) {
+            rlutil::setColor(rlutil::RED);
+            mostrar_linea_final(datos, can, posx, 6+con);
+
+            rlutil::locate(101, 6+PAGINADO+1);
+            std::cout << "FIN DE PAGINACION";
         }
 
-        fclose(archivo);
         return true;
     }
 
@@ -100,8 +120,11 @@ public:
      */
     bool eliminarPorID(int id){
         FILE* archivo = fopen(nombreArchivo, "rb+");
+
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            rlutil::locate(40, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return false;
         }
 
@@ -109,7 +132,7 @@ public:
         bool encontrado = false;
 
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getID() == id){
+            if (objeto.getID() == id) {
                 objeto.setEstado(false);
                 fseek(archivo, -sizeof(T), SEEK_CUR);
                 fwrite(&objeto, sizeof(T), 1, archivo);
@@ -120,10 +143,7 @@ public:
 
         fclose(archivo);
 
-        if (!encontrado){
-            std::cerr << "Error: no se encontró el registro con ID " << id << std::endl;
-            return false;
-        }
+        if (!encontrado) return false;
 
         return true;
     }
@@ -163,8 +183,11 @@ public:
 
     int cantidadRegistrosActivos(){
         FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+
+        if (!archivo) {
+            rlutil::locate(47, 15);
+            rlutil::setColor(rlutil::RED);
+            std::cerr << "ERROR: NO SE PUDO ABRIR EL ARCHIVO";
             return 0;
         }
 
@@ -203,7 +226,7 @@ public:
     bool leerPorID(int id, T& objeto){
         FILE* archivo = fopen(nombreArchivo, "rb");
         if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            std::cout << "Error: no se pudo abrir el archivo " << std::endl;
             return false;
         }
 
