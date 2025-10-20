@@ -10,6 +10,8 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+#include "uiManager.h"
+
 void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
     string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
 
@@ -51,7 +53,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                             break;
                         case 2: {
                             cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
-                            gestor.leer();
+                            mostrarRegistros(gestor);
                             int idEliminar;
                             cout << "Ingrese el ID del cliente a eliminar: ";
                             cin >> idEliminar;
@@ -68,7 +70,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                             break;
                         case 6:
                             cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
-                            gestor.leer();
+                            mostrarRegistros(gestor);
                             break;
 
                         case 8: return;

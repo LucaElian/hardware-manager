@@ -47,7 +47,7 @@ public:
     const char *getDni() const { return dni; }
     // Implementacion con los metodos virtuales
     void cargar() override;
-    void mostrar() override;
+    void mostrar() const override;
 };
 
 #endif // CLSVENDEDOR_H_INCLUDED

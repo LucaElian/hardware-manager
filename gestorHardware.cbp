@@ -67,6 +67,7 @@
 		<Unit filename="src/ui/menuProducto.cpp" />
 		<Unit filename="src/ui/menuVendedor.cpp" />
 		<Unit filename="utilidades.cpp" />
+		<Unit filename="include/managers/uiManager.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

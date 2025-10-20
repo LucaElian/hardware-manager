@@ -10,6 +10,8 @@
 #include "clsCliente.h"
 #include "clsVendedor.h"
 
+#include "uiManager.h"
+
 // Despues lo documento como archivoManager
 // Lean esto para entender vector: https://cplusplus.com/reference/vector/vector/
 
@@ -169,7 +171,7 @@ public:
      * Lee y muestra las ventas registradas en el archivo.
     */
     void listarVentas() {
-        _gestorVenta.leer();
+        mostrarRegistros(_gestorVenta);
     }
 
 private:

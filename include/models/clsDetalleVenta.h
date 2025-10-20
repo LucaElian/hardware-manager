@@ -29,10 +29,10 @@ public:
     }
 
     ~DetalleVenta() {}
-
-    // Implementing pure virtual functions
+    
+    // Implementacion con los metodos virtuales
     void cargar() override {}
-    void mostrar() override {
+    void mostrar() const override {
         std::cout << "Detalle de Venta " << id << std::endl;
         std::cout << "ID Venta: " << idVenta << std::endl;
         std::cout << "ID Producto: " << idProducto << std::endl; 
