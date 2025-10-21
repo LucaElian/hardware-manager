@@ -6,36 +6,44 @@ using namespace std;
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
+#include "ContextoGestores.h"
+#include "menuVenta.h"
 
-void menuVenta(Venta enta, GestorVenta gestor){
-    string opciones[3] = {"GESTIONAR VENTA", "LISTAR VENTA", "SALIR"};
+void menuVenta(GestorVenta& gestor, ContextoGestores& contexto) {
+    string opciones[4] = {"GESTIONAR VENTA", "LISTAR VENTA", "LISTAR DETALLES DE VENTAS", "SALIR"};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
+
+        const int CURSOR_X_POS = 48;
+        const int CURSOR_Y_POS = 13;
+        const int SALTO_ENTRE_OPCIONES = 2;
+        const int ULTIMA_OPCION = 6;
+
         system("cls");
 
-        menu("M E N U   V E N D E D O R", opciones, 7, 3);
+        menu("M E N U   V E N D E D O R", opciones, 7, 4);
 
         while(curs == true){
-            rlutil::locate(49, 13 + opcion);
+            rlutil::locate(CURSOR_X_POS, CURSOR_Y_POS + opcion);
             cout << (char)175;
 
-            int pos = rlutil::getkey(); // Captura de teclas
+            int pos_cursor = rlutil::getkey(); // Captura de teclas
 
-            switch(pos) {
+            switch(pos_cursor) {
                 case 14:
-                    rlutil::locate(49, 13 + opcion);
+                    rlutil::locate(CURSOR_X_POS, CURSOR_Y_POS + opcion);
                     cout << " ";
-                    opcion -= 2;
-                    if(opcion < 0) opcion = 4;
+                    opcion -= SALTO_ENTRE_OPCIONES;
+                    if(opcion < 0) opcion = ULTIMA_OPCION;
                     break;
 
                 case 15:
-                    rlutil::locate(49, 13 + opcion);
+                    rlutil::locate(CURSOR_X_POS, CURSOR_Y_POS + opcion);
                     cout << " ";
-                    opcion += 2;
-                    if(opcion > 4) opcion = 0;
+                    opcion += SALTO_ENTRE_OPCIONES;
+                    if(opcion > ULTIMA_OPCION) opcion = 0;
                     break;
 
                 case 1:
@@ -43,24 +51,69 @@ void menuVenta(Venta enta, GestorVenta gestor){
                     curs = false;
                     switch(opcion) {
                         case 0: {
-                            int legajoCreado, identificadorCliente;
-
-                            cout << "Ingrese el id del cliente: "<<endl;
-                            cin >> identificadorCliente;
-
-                            cout << "Ingrese el legajo del vendedor: " << endl;
-                            cin >> legajoCreado;
-
-                            if (gestor.iniciarNuevaVenta(identificadorCliente, 
-                                legajoCreado))cout << "SE INICIO VENTA" << endl;
+                            procesarVenta(contexto, gestor);
                         }break;
                         case 2:{
                             gestor.listarVentas();
                         }break;
-                        case 4: return;
+                        case 4:{
+                            gestor.listarDetallesVentas();
+                        }break;
+                        case 6: return;
                     }
                     system("pause");
             }
         }
+    }
+}
+
+void procesarVenta(ContextoGestores& contexto, GestorVenta& gestor){
+    int legajoCreado, identificadorCliente;
+
+    cout << "Ingrese el id del cliente: "<<endl;
+    cin >> identificadorCliente;
+
+    cout << "Ingrese el legajo del vendedor: " << endl;
+    cin >> legajoCreado;
+
+    if (gestor.iniciarNuevaVenta(identificadorCliente, 
+        legajoCreado))cout << "SE INICIO VENTA" << endl;
+
+    vector<Producto> p;
+    contexto.gestorP.leerTodos(p);
+    
+    cout << "=== LISTA DE PRODUCTOS DISPONIBLES ===" << endl;
+
+    for (const auto& producto : p) {
+        cout << "ID: " << producto.getID()
+                << " - Nombre: " << producto.getNombre()
+                << " - Precio: $" << producto.getPrecio() << endl;
+    }
+
+    int idProducto, cantidad;
+    char continuar;
+
+    do {
+        cout << "Ingrese el ID del producto a agregar: ";
+        cin >> idProducto;
+        cout << "Ingrese la cantidad: ";
+        cin >> cantidad;
+
+        if (gestor.agregarProducto(idProducto, cantidad)) {
+            cout << "Producto agregado al carrito." << endl;
+        } else {
+            cout << "Error: No hay stock suficiente o el producto no existe." << endl;
+        }
+
+        gestor.mostrarCarrito();
+
+        cout << "¿Desea agregar otro producto? (s/n): ";
+        cin >> continuar;
+    } while (continuar == 's' || continuar == 'S');
+
+    if (gestor.finalizarVenta()) {
+        cout << "Venta finalizada exitosamente." << endl;
+    } else {
+        cout << "Error al finalizar la venta." << endl;
     }
 }

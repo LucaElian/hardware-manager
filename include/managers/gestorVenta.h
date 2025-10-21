@@ -11,6 +11,7 @@
 #include "clsVendedor.h"
 
 #include "uiManager.h"
+#include <ctime>
 
 // Despues lo documento como archivoManager
 // Lean esto para entender vector: https://cplusplus.com/reference/vector/vector/
@@ -119,7 +120,17 @@ public:
         nuevaVenta->setIdVenta(idVenta);
         nuevaVenta->setIdCliente(_idCliente);
         nuevaVenta->setLegajoVendedor(_legajoVendedor);
-        nuevaVenta->setFechaVenta(Fecha());
+
+        /*
+        tm_mday contiene el día del mes (1-31)
+        tm_mon contiene el mes (0-11, por eso se suma 1)
+        tm_year contiene los años desde 1900, por eso se suma 1900
+        */
+
+        time_t now = time(0);
+        tm* ltm = localtime(&now);
+
+        nuevaVenta->setFechaVenta(Fecha(ltm->tm_mday, ltm->tm_mon + 1, 1900 + ltm->tm_year));
 
         //calcula el total
         double total = 0;
@@ -172,6 +183,16 @@ public:
     */
     void listarVentas() {
         mostrarRegistros(_gestorVenta);
+    }
+
+    /**
+     * @brief Lista el detalle de las ventas
+     * 
+     * @return Lee y muestra los detalles de las ventas registradas en el archivo.
+     */
+
+    void listarDetallesVentas() {
+        mostrarRegistros(_gestorDetalle);
     }
 
 private:
@@ -252,6 +273,34 @@ private:
             return _gestorProducto.modificarPorId(idProducto, producto);
         }
         return false;
+    }
+
+    int clienteMaxVentas() {
+        std::vector<Venta> ventas;
+        if (!_gestorVenta.leerTodos(ventas) || ventas.empty()) {
+            return 0;
+        }
+
+        std::vector<Cliente> clientes;
+        _gestorCliente.leerTodos(clientes);
+
+        std::vector<int> contadorVentas(clientes.size() + 1, 0);
+
+        for (const auto& venta : ventas) {
+            contadorVentas[venta.getIdCliente()]++;
+        }
+
+        int clienteMax = 0;
+        int maxVentas = 0;
+
+        for (size_t i = 0; i < contadorVentas.size(); i++) {
+            if (contadorVentas[i] > maxVentas) {
+                maxVentas = contadorVentas[i];
+                clienteMax = i;
+            }
+        }
+
+        return clienteMax;
     }
 };
 

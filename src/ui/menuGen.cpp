@@ -10,6 +10,7 @@ using namespace std;
 #include "Contexto.h"
 #include "utilidades.h"
 #include "artworks.h"
+#include "menuReports.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -57,7 +58,7 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
                         case 0: menuProducto(objetos.producto, gestores.gestorP); break;
                         case 2: menuCliente(objetos.cliente, gestores.gestorC); break;
                         case 4: menuVendedor(objetos.vendedor, gestores.gestorV); break;
-                        case 6: menuVenta(objetos.venta, gestores.gestorVenta); break;
+                        case 6: menuVenta(gestores.gestorVenta, gestores); break;
                         case 8: return;
                     }
             }
