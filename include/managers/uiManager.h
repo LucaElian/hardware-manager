@@ -30,4 +30,26 @@ void mostrarRegistros(ArchivoManager<T>& gestor) {
     }
 }
 
+/** @brief Muestra un registro específico de una entidad
+ * 
+ * @tparam T Tipo de entidad (Producto, Cliente, Vendedor, etc)
+ * @param gestor Referencia al gestor de archivos de la entidad
+ * @param id ID del registro a mostrar
+ * 
+ * Esta función template busca un registro por su ID y lo muestra
+ * usando el método mostrar() de la entidad. Si no se encuentra,
+ * muestra un mensaje indicando que no fue encontrado.
+ */
+
+template<typename T>
+void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
+    T registro;
+    if (gestor.leerPorID(id, registro)) {
+        registro.mostrar();
+    } else {
+        std::cout << "Registro con ID " << id << " no encontrado." << std::endl;
+    }
+
+}
+
 #endif // UIMANAGER_H
