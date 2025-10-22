@@ -87,9 +87,12 @@ void procesarVenta(ContextoGestores& contexto, GestorVenta& gestor){
     cout << "=== LISTA DE PRODUCTOS DISPONIBLES ===" << endl;
 
     for (const auto& producto : p) {
-        cout << "ID: " << producto.getID()
-                << " - Nombre: " << producto.getNombre()
-                << " - Precio: $" << producto.getPrecio() << endl;
+        if (producto.getStock() > 0){
+            cout << "ID: " << producto.getID()
+                    << " - Nombre: " << producto.getNombre()
+                    << " - Precio: $" << producto.getPrecio()
+                    << " - Stock: " << producto.getStock() << endl;
+        }
     }
 
     int idProducto, cantidad;
