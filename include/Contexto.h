@@ -6,13 +6,12 @@
 #include "clsVendedor.h"
 #include "clsVenta.h"
 
-struct Contexto {
+class Contexto {
+public:
     Producto producto;
     Cliente cliente;
     Vendedor vendedor;
     Venta venta;
 };
-
-
 
 #endif // CONTEXTO_H_INCLUDED
