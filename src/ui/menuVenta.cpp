@@ -10,24 +10,26 @@ using namespace std;
 #include "menuVenta.h"
 
 void menuVenta(GestorVenta& gestor, ContextoGestores& contexto) {
-    string opciones[4] = {"GESTIONAR VENTA", "LISTAR VENTA", "LISTAR DETALLES DE VENTAS", "SALIR"};
+    const int CURSOR_X_POS = 48;
+    const int CURSOR_Y_POS = 13;
+    const int SALTO_ENTRE_OPCIONES = 2;
+    const int ULTIMA_OPCION = 6;
+    const int OPCIONES = 4;
+    const int INICIO_OPCIONES = 7;
+    const int CURSOR_MENU = 175; // Código ASCII para el cursor
+    string opciones[OPCIONES] = {"GESTIONAR VENTA", "LISTAR VENTA", "LISTAR DETALLES DE VENTAS", "SALIR"};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
 
-        const int CURSOR_X_POS = 48;
-        const int CURSOR_Y_POS = 13;
-        const int SALTO_ENTRE_OPCIONES = 2;
-        const int ULTIMA_OPCION = 6;
-
         system("cls");
 
-        menu("M E N U   V E N D E D O R", opciones, 7, 4);
+        menu("M E N U   V E N D E D O R", opciones, INICIO_OPCIONES, OPCIONES);
 
         while(curs == true){
             rlutil::locate(CURSOR_X_POS, CURSOR_Y_POS + opcion);
-            cout << (char)175;
+            cout << (char)CURSOR_MENU;
 
             int pos_cursor = rlutil::getkey(); // Captura de teclas
 
