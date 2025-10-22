@@ -41,7 +41,7 @@ public:
 
     /**
      * @brief Constructor que inicializa los gestores de archivos
-     * 
+     *
      * Inicializa los manejadores de archivos para ventas, detalles,
      * productos, clientes y vendedores.
      */
@@ -60,7 +60,7 @@ public:
 
     /**
      * @brief Agrega un producto al carrito de compras
-     * 
+     *
      * @param idProducto ID del producto a agregar
      * @param cantidad Cantidad del producto
      * @return true Si el producto se agregó correctamente
@@ -86,7 +86,7 @@ public:
 
     /**
      * @brief Muestra el contenido actual del carrito
-     * 
+     *
      * Imprime una lista de los productos en el carrito con sus
      * cantidades, precios y el total de la compra.
      */
@@ -104,10 +104,10 @@ public:
 
     /**
      * @brief Finaliza la venta actual
-     * 
+     *
      * Registra la venta en el archivo, actualiza el stock de productos
      * y limpia el carrito.
-     * 
+     *
      * @return true Si la venta se completó exitosamente
      * @return false Si hubo error o el carrito está vacío
      */
@@ -117,6 +117,7 @@ public:
         //crea la venta
         Venta* nuevaVenta = new Venta();
         int idVenta = generarIdVenta();
+        nuevaVenta->setID(idVenta);
         nuevaVenta->setIdVenta(idVenta);
         nuevaVenta->setIdCliente(_idCliente);
         nuevaVenta->setLegajoVendedor(_legajoVendedor);
@@ -141,7 +142,10 @@ public:
             actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
 
             DetalleVenta* pDetalle = new DetalleVenta(detalle);
+            //pDetalle.setID(_gestorDetalle.cantidadRegistros());
             //registra detalle
+
+
             if (!_gestorDetalle.escribir(pDetalle)) {
                 delete nuevaVenta;
                 delete pDetalle;
@@ -167,7 +171,7 @@ public:
 
     /**
      * @brief Cancela la venta actual
-     * 
+     *
      * Limpia el carrito y reinicia los datos del cliente y vendedor
      */
     void cancelarVenta() {
@@ -176,9 +180,9 @@ public:
         _legajoVendedor = 0;
     }
 
-    /** 
+    /**
      * @brief Lista las ventas del archivo
-     * 
+     *
      * Lee y muestra las ventas registradas en el archivo.
     */
     void listarVentas() {
@@ -187,7 +191,7 @@ public:
 
     /**
      * @brief Lista el detalle de las ventas
-     * 
+     *
      * @return Lee y muestra los detalles de las ventas registradas en el archivo.
      */
 
@@ -206,7 +210,7 @@ private:
 
     /**
      * @brief Valida si hay stock suficiente de un producto
-     * 
+     *
      * @param idProducto ID del producto a validar
      * @param cantidad Cantidad requerida
      * @return true Si hay stock suficiente
@@ -222,7 +226,7 @@ private:
 
     /**
      * @brief Valida si existe un cliente
-     * 
+     *
      * @param idCliente ID del cliente a validar
      * @return true Si el cliente existe
      * @return false Si el cliente no existe
@@ -234,7 +238,7 @@ private:
 
     /**
      * @brief Valida si existe un vendedor
-     * 
+     *
      * @param legajoVendedor Legajo del vendedor a validar
      * @return true Si el vendedor existe
      * @return false Si el vendedor no existe
@@ -246,7 +250,7 @@ private:
 
     /**
      * @brief Obtiene el precio de un producto
-     * 
+     *
      * @param idProducto ID del producto
      * @return double Precio del producto, 0 si no existe
      */
@@ -260,7 +264,7 @@ private:
 
     /**
      * @brief Actualiza el stock de un producto
-     * 
+     *
      * @param idProducto ID del producto
      * @param cantidad Cantidad a restar del stock
      * @return true Si el stock se actualizó correctamente

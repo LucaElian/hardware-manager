@@ -1,7 +1,5 @@
 #include <iostream>
-
 using namespace std;
-
 #include "menuGen.h"
 #include "menuProducto.h"
 #include "menuCliente.h"
