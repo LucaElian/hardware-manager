@@ -18,7 +18,7 @@ void titulo() {
         "`--'   `--' `------' '--'   '--' '--'   '--'  "
     };
 
-    rlutil::setColor(rlutil::GREEN);
+    rlutil::setColor(rlutil::RED);
 
     for(int x = 0; x < 5; x++) {
         rlutil::locate(40, 3+x);
@@ -27,7 +27,7 @@ void titulo() {
 }
 
 void menu(string title, string opciones[], int inicio, int can) {
-    rlutil::setColor(rlutil::GREEN);
+    rlutil::setColor(rlutil::RED);
     rlutil::locate(40, inicio);
     cout << (char)201;
     centrar_texto("", (char)205, 41);
@@ -42,7 +42,7 @@ void menu(string title, string opciones[], int inicio, int can) {
     cout << (char)186;
     rlutil::setColor(rlutil::WHITE);
     centrar_texto(title, ' ', 41);
-    rlutil::setColor(rlutil::GREEN);
+    rlutil::setColor(rlutil::RED);
     cout << (char)186;
 
     rlutil::locate(40, inicio+3);
@@ -65,7 +65,7 @@ void menu(string title, string opciones[], int inicio, int can) {
         cout << (char)186;
         rlutil::setColor(rlutil::WHITE);
         centrar_texto(opciones[x], ' ', 41);
-        rlutil::setColor(rlutil::GREEN);
+        rlutil::setColor(rlutil::RED);
         cout << (char)186;
 
         rlutil::locate(40, (inicio+6) + (x * 2) + 1);
@@ -95,7 +95,7 @@ void agregar(string title, int inicio, int can){
     cout << (char)186;
     rlutil::setColor(rlutil::WHITE);
     centrar_texto(title, ' ', 61);
-    rlutil::setColor(rlutil::GREEN);
+    rlutil::setColor(rlutil::RED);
     cout << (char)186;
 
     rlutil::locate(30, inicio + 3);

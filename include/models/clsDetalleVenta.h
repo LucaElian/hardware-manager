@@ -29,13 +29,13 @@ public:
     }
 
     ~DetalleVenta() {}
-    
+
     // Implementacion con los metodos virtuales
     void cargar() override {}
     void mostrar() const override {
         std::cout << "Detalle de Venta " << id << std::endl;
         std::cout << "ID Venta: " << idVenta << std::endl;
-        std::cout << "ID Producto: " << idProducto << std::endl; 
+        std::cout << "ID Producto: " << idProducto << std::endl;
         std::cout << "Cantidad: " << cantidad << std::endl;
         std::cout << "Precio: $" << precioVenta << std::endl;
         std::cout << "Subtotal: $" << subtotal << std::endl;
