@@ -8,6 +8,7 @@ using namespace std;
 #undef byte
 
 #include "uiManager.h"
+#include "menuVendedor.h"
 
 void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
     string opciones[5] = {"AGREGAR VENDEDOR", "ELIMINAR VENDEDOR", "MODIFICAR VENDEDOR", "LISTAR VENDEDORES", "SALIR"};

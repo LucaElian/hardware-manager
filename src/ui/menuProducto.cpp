@@ -11,6 +11,7 @@ using namespace std;
 #undef byte
 
 #include "uiManager.h"
+#include "menuProducto.h"
 
 void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};

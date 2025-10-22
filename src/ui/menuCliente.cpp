@@ -11,36 +11,45 @@ using namespace std;
 #undef byte
 
 #include "uiManager.h"
+#include "menuCliente.h"
 
 void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
-    string opciones[5] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
+    const int OPCIONES = 5;
+    const int CURSOR_START_X = 49;
+    const int CURSOR_START_Y = 13;
+    const int INICIO_OPCIONES = 7;
+    const int CURSOR_MENU = 175;
+    const int OPCION_ESPACIO = 2;
+    const int ULTIMA_OPCION = 8;
+
+    string opciones[OPCIONES] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
         system("cls");
 
-        menu("M E N U   C L I E N T E S", opciones, 7, 5);
+        menu("M E N U   C L I E N T E S", opciones, INICIO_OPCIONES, OPCIONES);
 
         while(curs == true) {
-            rlutil::locate(49, 13 + opcion);
-            cout << (char)175;
+            rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
+            cout << (char)CURSOR_MENU;
 
             int pos = rlutil::getkey(); // Captura de teclas
 
             switch(pos) {
                 case 14:
-                    rlutil::locate(49, 13 + opcion);
+                    rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                     cout << " ";
-                    opcion -= 2;
-                    if(opcion < 0) opcion = 8;
+                    opcion -= OPCION_ESPACIO;
+                    if(opcion < 0) opcion = ULTIMA_OPCION;
                     break;
 
             case 15:
-                rlutil::locate(49, 13 + opcion);
+                rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                 cout << " ";
-                opcion += 2;
-                if(opcion > 8) opcion = 0;
+                opcion += OPCION_ESPACIO;
+                if(opcion > ULTIMA_OPCION) opcion = 0;
                 break;
 
                 case 1:
@@ -48,8 +57,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0:
-                            cliente.cargar();
-                            gestor.escribir(&cliente);
+                            agregarCliente(cliente, gestor);
                             break;
                         case 2: {
                             cout << "La cantidad de clientes es: " << gestor.cantidadRegistros() << endl;
@@ -81,5 +89,8 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
     }
 }
 
-
+void agregarCliente(Cliente cliente, ArchivoManager<Cliente> &gestor) {
+    cliente.cargar();
+    gestor.escribir(&cliente);
+}
 
