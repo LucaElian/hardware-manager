@@ -14,48 +14,50 @@ using namespace std;
 #include "menuProducto.h"
 
 void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
-    string opciones[5] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
+    const int OPCIONES = 5;
+    const int CURSOR_START_X = 49;
+    const int CURSOR_START_Y = 13;
+    const int INICIO_OPCIONES = 7;
+    const int CURSOR_MENU = 175;
+    const int OPCION_ESPACIO = 2;
+    const int ULTIMA_OPCION = 8;
+
+    string opciones[OPCIONES] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true) {
         int opcion = 0;
         bool curs = true;
         system("cls");
 
-        menu("M E N U   P R O D U C T O", opciones, 7, 5);
+        menu("M E N U   P R O D U C T O", opciones, INICIO_OPCIONES, OPCIONES);
 
         while(curs == true) {
-            rlutil::locate(49, 13 + opcion);
-            cout << (char)175;
+            rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
+            cout << (char)CURSOR_MENU;
 
             int pos = rlutil::getkey(); // Captura de teclas
 
             switch(pos) {
                 case 14:
-                    rlutil::locate(49, 13 + opcion);
+                    rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                     cout << " ";
-                    opcion -= 2;
-                    if(opcion < 0) opcion = 8;
+                    opcion -= OPCION_ESPACIO;
+                    if(opcion < 0) opcion = ULTIMA_OPCION;
                     break;
 
                 case 15:
-                    rlutil::locate(49, 13 + opcion);
+                    rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                     cout << " ";
-                    opcion += 2;
-                    if(opcion > 8) opcion = 0;
+                    opcion += OPCION_ESPACIO;
+                    if(opcion > ULTIMA_OPCION) opcion = 0;
                     break;
 
                 case 1:
                     system("cls");
                     curs = false;
                     switch(opcion) {
-                        case 0: {
-                                producto.cargar();
-                                gestor.escribir(&producto);
-//                                cout << "Producto agregado exitosamente!" << endl;
-                            }
-                            break;
+                        case 0: agregarProducto(producto, gestor); break;
                         case 2: {
-                                cout << "La cantidad de productos es: " << gestor.cantidadRegistros() << endl;
                                 mostrarRegistros(gestor);
                                 int idEliminar;
                                 cout << "Ingrese el ID del producto a eliminar: ";
@@ -69,14 +71,21 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                             }
                             break;
                         case 4: break;
-                        case 6:
-                            cout << "La cantidad de productos es: " << gestor.cantidadRegistrosActivos() << endl;
-                            mostrarRegistros(gestor);
-                            break;
+                        case 6: mostrarProducto(producto); break;
                         case 8: return;
                     }
+                    rlutil::setColor(rlutil::BLACK);
                     system("pause");
             }
         }
     }
+}
+
+void agregarProducto(Producto producto, ArchivoManager<Producto> &gestor) {
+    producto.cargar();
+    gestor.escribir(&producto);
+}
+
+void mostrarProducto(Producto producto) {
+    producto.mostrar();
 }

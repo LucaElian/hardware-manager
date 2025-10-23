@@ -12,8 +12,8 @@
 #undef byte
 
 void menuReports(ContextoGestores& contextoGestores) {
-    const int TAMANO_MENU = 6;
-    std::string opciones[TAMANO_MENU] = {
+    const int TAMANIO_MENU = 6;
+    std::string opciones[TAMANIO_MENU] = {
         "VENTAS DEL ULTIMO CUATRIMESTRE", 
         "CLIENTE CON MAS PRODUCTOS", 
         "TOP 3 VENDEDORES", 
@@ -32,7 +32,7 @@ void menuReports(ContextoGestores& contextoGestores) {
         bool cursorActivo = true;
         system("cls");
 
-        menu("R E P O R T E S", opciones, INICIO_MENU_Y, TAMANO_MENU);
+        menu("R E P O R T E S", opciones, INICIO_MENU_Y, TAMANIO_MENU);
 
         while(cursorActivo == true) {
             rlutil::locate(POSICION_CURSOR_X, ESPACIO_MENU + opcionSeleccionada);

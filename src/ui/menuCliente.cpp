@@ -22,7 +22,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
     const int OPCION_ESPACIO = 2;
     const int ULTIMA_OPCION = 8;
 
-    string opciones[OPCIONES] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "LISTAR CLIENTES", "SALIR"};
+    string opciones[OPCIONES] = {"AGREGAR CLIENTE", "ELIMINAR CLIENTE", "MODIFICAR CLIENTE", "MOSTRAR CLIENTES", "SALIR"};
 
     while(true) {
         int opcion = 0;

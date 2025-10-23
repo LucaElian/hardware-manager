@@ -8,9 +8,12 @@ using namespace std;
 
 void cargarCadena(char *cadena, int maxDigits) {
     int i = 0;
+    int key;
     char c;
+
     while (true) {
-        c = _getch();
+        key = _getch();
+        c = static_cast<char>(key);
 
         if (c == 13 && i > 0) { /// 13 == ENTER
             cadena[i] = '\0';
@@ -32,9 +35,13 @@ void cargarCadena(char *cadena, int maxDigits) {
 int cargarInt(int maxDigits) {
     char buffer[10] = {0};
     int i = 0;
+    int key;
     char c;
+
     while (true) {
-        c = _getch();
+        key = _getch();
+        c = static_cast<char>(key);
+
         if (c == 13 && i > 0) {
             buffer[i] = '\0';
             break;
@@ -57,10 +64,12 @@ double cargarDouble(int maxDigits, int maxDecimals) {
     char buffer[16] = {0};
     int i = 0, decimales = 0;
     bool punto = false;
+    int key;
     char c;
 
     while (true) {
-        c = _getch();
+        key = _getch();
+        c = static_cast<char>(key);
 
         if (c == 13 && i > 0) {  /// 13 == ENTER
             buffer[i] = '\0';

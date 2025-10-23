@@ -22,7 +22,6 @@ void mostrarRegistros(ArchivoManager<T>& gestor) {
             std::cout << "No hay registros activos." << std::endl;
             return;
         }
-
         // Itera en cada registro usando una referencia constante para evitar copias
         for (const auto& registro : registros) {
             registro.mostrar();
