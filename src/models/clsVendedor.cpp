@@ -30,3 +30,5 @@ void Vendedor::mostrar() const{
     cout << "ID: " << id << endl;
     cout << endl;
 }
+
+void Vendedor::mostrarFila(int x, int y) const {}

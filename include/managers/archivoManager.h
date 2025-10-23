@@ -106,10 +106,7 @@ public:
 
         fclose(archivo);
 
-        if (!encontrado){
-            std::cerr << "Error: no se encontró el registro con ID " << id << std::endl;
-            return false;
-        }
+        if (!encontrado) return false;
 
         return true;
     }
@@ -247,7 +244,7 @@ public:
     }
 
     /**
-     * @brief Lee todos los registros activos del archivo y los almacena en un vector
+     * @brief Lee todos los registros del archivo y los almacena en un vector
      *
      * @param objetos Referencia al vector donde se almacenarán los registros activos
      * @return true Si la lectura fue exitosa
@@ -271,6 +268,27 @@ public:
 
         fclose(archivo);
         return true;
+    }
+
+
+
+    bool leerTodosActivos(std::vector<T>& objetos){
+    FILE* archivo = fopen(nombreArchivo, "rb");
+    if (!archivo){
+        std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+        return false;
+    }
+    objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
+
+    T objeto;
+    while (fread(&objeto, sizeof(T), 1, archivo) == 1){
+        if(objeto.getEstado()) {
+            objetos.push_back(objeto);
+        }
+    }
+
+    fclose(archivo);
+    return true;
     }
 };
 

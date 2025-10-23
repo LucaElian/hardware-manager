@@ -22,3 +22,6 @@ void Cliente::mostrar() const {
     cout << "Telefono: " << telefono << endl;
     cout << endl;
 }
+
+void Cliente::mostrarFila(int x, int y) const {}
+

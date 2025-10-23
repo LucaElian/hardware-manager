@@ -13,15 +13,15 @@ using namespace std;
 #include "uiManager.h"
 #include "menuProducto.h"
 
-void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
-    const int OPCIONES = 5;
-    const int CURSOR_START_X = 49;
-    const int CURSOR_START_Y = 13;
-    const int INICIO_OPCIONES = 7;
-    const int CURSOR_MENU = 175;
-    const int OPCION_ESPACIO = 2;
-    const int ULTIMA_OPCION = 8;
+const int OPCIONES = 5;
+const int CURSOR_START_X = 49;
+const int CURSOR_START_Y = 13;
+const int INICIO_OPCIONES = 7;
+const int CURSOR_MENU = 175;
+const int OPCION_ESPACIO = 2;
+const int ULTIMA_OPCION = 8;
 
+void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
     string opciones[OPCIONES] = {"AGREGAR PRODUCTO", "ELIMINAR PRODUCTO", "MODIFICAR PRODUCTO", "MOSTRAR PRODUCTOS", "SALIR"};
 
     while(true) {
@@ -57,21 +57,10 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0: agregarProducto(producto, gestor); break;
-                        case 2: {
-                                mostrarRegistros(gestor);
-                                int idEliminar;
-                                cout << "Ingrese el ID del producto a eliminar: ";
-                                cin >> idEliminar;
-                                if (gestor.eliminarPorID(idEliminar)) {
-                                    cout << "Producto con ID " << idEliminar << " eliminado exitosamente." << endl;
-                                }
-                                else {
-                                    cout << "No se pudo eliminar el producto con ID " << idEliminar << "." << endl;
-                                }
-                            }
+                        case 2: eliminarProducto(producto, gestor); break;
                             break;
                         case 4: break;
-                        case 6: mostrarProducto(producto); break;
+                        case 6: producto.mostrar(); break;
                         case 8: return;
                     }
                     rlutil::setColor(rlutil::BLACK);
@@ -86,6 +75,29 @@ void agregarProducto(Producto producto, ArchivoManager<Producto> &gestor) {
     gestor.escribir(&producto);
 }
 
-void mostrarProducto(Producto producto) {
-    producto.mostrar();
+void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor) {
+    producto.mostrar_activos();
+
+    if(gestor.cantidadRegistrosActivos() > 0) {
+        int idEliminar;
+        caja_eliminar(&idEliminar, 52, 24);
+
+        if(gestor.eliminarPorID(idEliminar)) {
+            rlutil::setColor(rlutil::WHITE);
+            rlutil::locate(41, 24+3);
+            cout << "PRODUCTO CON ID " << idEliminar << " ELIMINADO EXITOSAMENTE";
+        }
+
+        else {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, 24+3);
+            cout << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
+        }
+    }
+
+    else {
+        rlutil::locate(40, 15);
+        rlutil::setColor(rlutil::RED);
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+    }
 }

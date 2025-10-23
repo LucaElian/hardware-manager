@@ -172,3 +172,24 @@ void barra_final(int can, int posY, int datos[]) {
     }
     cout << (char)188;
 }
+
+void caja_eliminar(int *id, int posX, int posY){
+    rlutil::locate(posX, posY);
+    cout << (char)201; centrar_texto("", (char)205, 4); cout << (char)203;
+    centrar_texto("", (char)205, 10); cout << (char)187;
+
+    rlutil::locate(posX, posY+1);
+    cout << (char)186; rlutil::setColor(rlutil::GREY); cout << " ID ";
+    rlutil::setColor(rlutil::MAGENTA); cout << (char)186;
+    cout << "          " << (char)186;
+
+    rlutil::locate(posX, posY+2);
+    cout << (char)200; centrar_texto("", (char)205, 4); cout << (char)202;
+    centrar_texto("", (char)205, 10); cout << (char)188;
+
+    rlutil::locate(59, posY+1);
+    rlutil::showcursor();
+    rlutil::setColor(rlutil::WHITE);
+    *id = cargarInt(8);
+    rlutil::hidecursor();
+}

@@ -13,12 +13,12 @@ private:
 public:
     // Constructor
     Venta(int _id = 0,
-          int _idVenta = 0,
-          int _idCliente = 0,
-          int _legajoVendedor = 0,
-          double _total = 0.0,
-          bool _estado = true,
-          Fecha _fechaVenta = Fecha(1,1,1))
+        int _idVenta = 0,
+        int _idCliente = 0,
+        int _legajoVendedor = 0,
+        double _total = 0.0,
+        bool _estado = true,
+        Fecha _fechaVenta = Fecha(1,1,1))
         : Entidad(_id, _estado, _fechaVenta) {
         idVenta = _idVenta;
         idCliente = _idCliente;
@@ -40,6 +40,7 @@ public:
         fechaVenta.MostrarF();
         std::cout << std::endl;
     }
+    void mostrarFila(int posX, int posY) const override {}
 
     // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }

@@ -36,6 +36,7 @@ public:
     // Implementacion de metodos virtuales
     void cargar() override;
     void mostrar() const override;
+    void mostrarFila(int posX, int posY) const override;
 };
 #endif // CLIENTE_H_INCLUDED
 //si, copypasteo una banda el mismo codigo que existe
