@@ -4,5 +4,7 @@
 #include "archivoManager.h"
 
 void menuProducto(Producto, ArchivoManager<Producto>);
+void agregarProducto(Producto producto, ArchivoManager<Producto> &gestor);
+void mostrarProducto(Producto producto);
 
 #endif // MENUPRODUCTO_H_INCLUDED

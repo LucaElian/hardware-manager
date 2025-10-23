@@ -37,7 +37,7 @@ public:
 
     // Getters especificos
     const char *getNombre() const { return nombre; }
-    const char getTipo() const { return tipo; }
+    char getTipo() const { return tipo; }
     double getPrecio() const { return precio; }
     int getStock() const { return stock; }
 

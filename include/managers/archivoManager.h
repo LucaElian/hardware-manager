@@ -58,10 +58,10 @@ public:
     bool leer(std::vector<T>& objetos) {
         FILE* archivo = fopen(nombreArchivo, "rb");
         if (!archivo) {
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+            //std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
             return false;
         }
-        objetos.reserve(cantidadRegistrosActivos());
+        objetos.reserve(cantidadRegistros());
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
             if (objeto.getEstado()) {
@@ -97,7 +97,7 @@ public:
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
             if (objeto.getID() == id){
                 objeto.setEstado(false);
-                fseek(archivo, -sizeof(T), SEEK_CUR);
+                fseek(archivo, -static_cast<long>(sizeof(T)), SEEK_CUR);
                 fwrite(&objeto, sizeof(T), 1, archivo);
                 encontrado = true;
                 break;
@@ -130,7 +130,7 @@ public:
         fclose(archivo);
 
         if (sizeof(T) == 0) return 0;
-        return bytes / sizeof(T);
+        return static_cast<int>(bytes / static_cast<long>(sizeof(T)));
     }
 
     /// ----------------------------METODO CANTIDAD DE REGISTROS ACTIVOS----------------------------
@@ -233,7 +233,7 @@ public:
         while (fread(&temp, sizeof(T), 1, archivo) == 1){
             if (temp.getID() == id){
                 //SEEK_CUR: Desplazamiento desde la posición actual del puntero.
-                fseek(archivo, -sizeof(T), SEEK_CUR); // mueve el puntero al inicio del registro encontrado
+                fseek(archivo, -static_cast<long>(sizeof(T)), SEEK_CUR);  // mueve el puntero al inicio del registro encontrado
                 fwrite(&objeto, sizeof(T), 1, archivo); // escribe el nuevo objeto
                 encontrado = true;
                 break;
@@ -262,11 +262,11 @@ public:
             std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
             return false;
         }
-        objetos.reserve(cantidadRegistrosActivos());
+        objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
 
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
-            if (objeto.getEstado()) objetos.push_back(objeto);
+            objetos.push_back(objeto);
         }
 
         fclose(archivo);

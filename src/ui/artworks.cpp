@@ -18,7 +18,7 @@ void titulo() {
         "`--'   `--' `------' '--'   '--' '--'   '--'  "
     };
 
-    rlutil::setColor(rlutil::RED);
+    rlutil::setColor(rlutil::MAGENTA);
 
     for(int x = 0; x < 5; x++) {
         rlutil::locate(40, 3+x);
@@ -27,7 +27,7 @@ void titulo() {
 }
 
 void menu(string title, string opciones[], int inicio, int can) {
-    rlutil::setColor(rlutil::RED);
+    rlutil::setColor(rlutil::MAGENTA);
     rlutil::locate(40, inicio);
     cout << (char)201;
     centrar_texto("", (char)205, 41);
@@ -42,7 +42,7 @@ void menu(string title, string opciones[], int inicio, int can) {
     cout << (char)186;
     rlutil::setColor(rlutil::WHITE);
     centrar_texto(title, ' ', 41);
-    rlutil::setColor(rlutil::RED);
+    rlutil::setColor(rlutil::MAGENTA);
     cout << (char)186;
 
     rlutil::locate(40, inicio+3);
@@ -65,7 +65,7 @@ void menu(string title, string opciones[], int inicio, int can) {
         cout << (char)186;
         rlutil::setColor(rlutil::WHITE);
         centrar_texto(opciones[x], ' ', 41);
-        rlutil::setColor(rlutil::RED);
+        rlutil::setColor(rlutil::MAGENTA);
         cout << (char)186;
 
         rlutil::locate(40, (inicio+6) + (x * 2) + 1);
@@ -80,7 +80,7 @@ void menu(string title, string opciones[], int inicio, int can) {
     cout << (char)188;
 }
 
-void agregar(string title, int inicio, int can){
+void agregar(string title, int inicio, int can) {
     rlutil::locate(30, inicio);
     cout << (char)201;
     centrar_texto("", (char)205, 61);
@@ -95,7 +95,7 @@ void agregar(string title, int inicio, int can){
     cout << (char)186;
     rlutil::setColor(rlutil::WHITE);
     centrar_texto(title, ' ', 61);
-    rlutil::setColor(rlutil::RED);
+    rlutil::setColor(rlutil::MAGENTA);
     cout << (char)186;
 
     rlutil::locate(30, inicio + 3);
@@ -121,9 +121,9 @@ void agregar(string title, int inicio, int can){
     cout << (char)188;
 }
 
-void agregar_opciones(string opciones[], int inicio, int can, string id){
+void agregar_opciones(string opciones[], int inicio, int can, string id) {
     rlutil::setColor(rlutil::GREY);
-    for(int x = 0; x < can-1; x++){
+    for(int x = 0; x < can-1; x++) {
         rlutil::locate(32, inicio + (2 * x));
         cout << opciones[x];
         if(x == 0){
@@ -131,4 +131,44 @@ void agregar_opciones(string opciones[], int inicio, int can, string id){
             cout << id;
         }
     }
+}
+
+void mostrar_encabezado(string opciones[], int posX, int posY, int can, int opciones_espacios[]) {
+    rlutil::locate(posX, posY);
+    cout << (char)201;
+    for(int x = 0; x < can; x++) {
+        centrar_texto("", (char)205, opciones_espacios[x]);
+        if(x+1 != can) cout << (char)203;
+    }
+    cout << (char)187;
+
+
+    rlutil::locate(posX, posY+1);
+    for(int x = 0; x < can; x++) {
+        rlutil::setColor(rlutil::MAGENTA);
+        cout << (char)186;
+        rlutil::setColor(rlutil::GREY);
+        cout << opciones[x];
+    }
+    rlutil::setColor(rlutil::MAGENTA);
+    cout << (char)186;
+
+
+    rlutil::locate(posX, posY+2);
+    cout << (char)204;
+    for(int x = 0; x < can; x++) {
+        centrar_texto("", (char)205, opciones_espacios[x]);
+        if(x+1 != can) cout << (char)206;
+    }
+    cout << (char)185;
+}
+
+void barra_final(int can, int posY, int datos[]) {
+    rlutil::locate(3, posY);
+    cout << (char)200;
+    for(int x = 0; x < can; x++) {
+        centrar_texto("", (char)205, datos[x]);
+        if(x+1 != can) cout << (char)202;
+    }
+    cout << (char)188;
 }

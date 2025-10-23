@@ -291,7 +291,7 @@ private:
         std::vector<int> contadorVentas(clientes.size() + 1, 0);
 
         for (const auto& venta : ventas) {
-            contadorVentas[venta.getIdCliente()]++;
+            contadorVentas[static_cast<size_t>(venta.getIdCliente())]++;
         }
 
         int clienteMax = 0;
@@ -300,7 +300,7 @@ private:
         for (size_t i = 0; i < contadorVentas.size(); i++) {
             if (contadorVentas[i] > maxVentas) {
                 maxVentas = contadorVentas[i];
-                clienteMax = i;
+                clienteMax = static_cast<int>(i);
             }
         }
 
