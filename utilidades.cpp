@@ -1,10 +1,14 @@
 #include <iostream>
 #include <cstring>
 #include <limits>
-#include <conio.h>
 using namespace std;
 
 #include "utilidades.h"
+
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
 
 void cargarCadena(char *cadena, int maxDigits) {
     int i = 0;
@@ -12,10 +16,10 @@ void cargarCadena(char *cadena, int maxDigits) {
     char c;
 
     while (true) {
-        key = _getch();
+        key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 13 && i > 0) { /// 13 == ENTER
+        if (c == 1 && i > 0) { /// 1 == ENTER
             cadena[i] = '\0';
             break;
         }
@@ -39,10 +43,10 @@ int cargarInt(int maxDigits) {
     char c;
 
     while (true) {
-        key = _getch();
+        key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 13 && i > 0) {
+        if (c == 1 && i > 0) {
             buffer[i] = '\0';
             break;
         }
@@ -68,10 +72,10 @@ double cargarDouble(int maxDigits, int maxDecimals) {
     char c;
 
     while (true) {
-        key = _getch();
+        key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 13 && i > 0) {  /// 13 == ENTER
+        if (c == 1 && i > 0) {  /// 13 == ENTER
             buffer[i] = '\0';
             break;
         }

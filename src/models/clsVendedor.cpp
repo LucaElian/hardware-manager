@@ -22,9 +22,9 @@ static ArchivoManager<Vendedor> archivo("vendedores.dat");
 void Vendedor::cargar() {
     string datos[OPCIONES-1] = {
         "NOMBRE: [                                ]", 
-        "TELEFONO: [                 ]"             , /// ERROR SIMBO/LET | 10 MIN | TEL REPETIDO | 
-        "DNI: [          ]"                         , /// ERROR SIMBO/LET | NO COMPLETO | DNI REPETIDO |
-        "FECHA: [ __/__/____ ]"                     , /// ERROR DIA 0 32 | MES 0 13 | ANIO 0  
+        "TELEFONO: [                 ]"             ,
+        "DNI: [          ]"                         ,
+        "FECHA: [ __/__/____ ]"                     ,  
         "ID: [          ]"                          };
 
     agregar("A G R E G A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
