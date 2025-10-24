@@ -64,9 +64,9 @@ public:
         objetos.reserve(cantidadRegistros());
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
-            if (objeto.getEstado()) {
+            // if (objeto.getEstado()) {
                 objetos.push_back(objeto);
-            }
+            // }
         }
 
         fclose(archivo);

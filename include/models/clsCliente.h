@@ -6,8 +6,8 @@
 
 class Cliente : public Entidad {
 private:
-    char nombre[50];
-    char telefono[15];
+    char nombre[31];
+    char telefono[16];
 
 public:
     // Constructor
@@ -38,5 +38,5 @@ public:
     void mostrar() const override;
     void mostrarFila(int posX, int posY) const override;
 };
+
 #endif // CLIENTE_H_INCLUDED
-//si, copypasteo una banda el mismo codigo que existe

@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 #include "menuGen.h"
 #include "menuProducto.h"
 #include "menuCliente.h"
@@ -14,10 +15,18 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+const int OPCIONES = 6;
+const int CURSOR_START_X = 45;
+const int CURSOR_START_Y = 16;
+const int INICIO_OPCIONES = 10;
+const int CURSOR_MENU = 175;
+const int OPCION_ESPACIO = 2;
+const int ULTIMA_OPCION = 10;
+
 ///ESTA FUNCION MUESTRA EL MENU Y CONTROLA CON RLUTIL EL MOVIMIENTO DE LAS FLECHAS ---------------------------
-//recibe el archivo del gestor para pasarselo a todos los menues, y el struct contexto con todos los objetos, tambien para pasarle a los menues
+//recibe el archivo del gestor para pasarselo a todos los menues, y el class contexto con todos los objetos, tambien para pasarle a los menues
 void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) {
-    string opciones[5] = {"GESTIONAR PRODUCTOS", "GESTIONAR CLIENTES", "GESTIONAR VENDEDORES", "VENTA","SALIR"};
+    string opciones[6] = {"GESTIONAR PRODUCTOS", "GESTIONAR CLIENTES", "GESTIONAR VENDEDORES", "GESTIONAR VENTAS", "GESTIONAR REPORTES", "SALIR"};
 
     while(true) {
         rlutil::hidecursor();
@@ -26,27 +35,27 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
         system("cls");
 
         titulo();
-        menu("M E N U   G E S T O R", opciones, 10, 5);
+        menu("M E N U   G E S T O R", opciones, INICIO_OPCIONES, OPCIONES);
 
         while(curs == true) {
-            rlutil::locate(45, 16 + opcion);
-            cout << (char)175;
+            rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
+            cout << (char)CURSOR_MENU;
 
             int pos = rlutil::getkey(); // Captura de teclas
 
             switch(pos) {
                 case 14:
-                    rlutil::locate(45, 16 + opcion);
+                    rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                     cout << " ";
-                    opcion -= 2;
-                    if(opcion < 0) opcion = 8;
+                    opcion -= OPCION_ESPACIO;
+                    if(opcion < 0) opcion = ULTIMA_OPCION;
                     break;
 
                 case 15:
-                    rlutil::locate(45, 16 + opcion);
+                    rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
                     cout << " ";
-                    opcion += 2;
-                    if(opcion > 8) opcion = 0;
+                    opcion += OPCION_ESPACIO;
+                    if(opcion > ULTIMA_OPCION) opcion = 0;
                     break;
 
                 case 1:
@@ -57,7 +66,8 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
                         case 2: menuCliente(objetos.cliente, gestores.gestorC); break;
                         case 4: menuVendedor(objetos.vendedor, gestores.gestorV); break;
                         case 6: menuVenta(gestores.gestorVenta, gestores); break;
-                        case 8: return;
+                        case 8: break;
+                        case 10: return;
                     }
             }
         }

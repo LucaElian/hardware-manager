@@ -163,8 +163,8 @@ void mostrar_encabezado(string opciones[], int posX, int posY, int can, int opci
     cout << (char)185;
 }
 
-void barra_final(int can, int posY, int datos[]) {
-    rlutil::locate(3, posY);
+void barra_final(int can, int posX, int posY, int datos[]) {
+    rlutil::locate(posX, posY);
     cout << (char)200;
     for(int x = 0; x < can; x++) {
         centrar_texto("", (char)205, datos[x]);
@@ -192,4 +192,10 @@ void caja_eliminar(int *id, int posX, int posY){
     rlutil::setColor(rlutil::WHITE);
     *id = cargarInt(8);
     rlutil::hidecursor();
+}
+
+
+void limpiar_linea(int posX, int posY) {
+    rlutil::locate(posX, posY);
+    cout << "                                                    ";
 }

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <conio.h>
 #include <iomanip>
 
 using namespace std;
@@ -15,12 +14,16 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-void Producto::cargar() {
-    const int OPCIONES = 6;
-    const int INICIO_TITULO = 3;
-    const int INICIO_TABLA = 8;
+const int OPCIONES = 7;
+const int INICIO_TITULO = 3;
+const int INICIO_TABLA = INICIO_TITULO + 5;
+const int CURSOR_START_X = 3;
+const int CURSOR_START_Y = 4;
+const int PAGINADO = 15;
+static ArchivoManager<Producto> archivo("productos.dat");
 
-    string datos[OPCIONES] = {
+void Producto::cargar() {
+    string datos[OPCIONES-1] = {
                 "NOMBRE: [                                ]",
                 "TIPO: [   ]"                               ,
                 "STOCK: [           ]"                      ,
@@ -28,12 +31,12 @@ void Producto::cargar() {
                 "FECHA: [ __/__/____ ]"                     ,
                 "ID: [          ]"                          };
 
-    agregar("A G R E G A R  P R O D U C T O", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1]);
+    agregar("A G R E G A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
-    cout << "'A' PARA PERIFERICO. 'B' PARA COMPONENTE.";
+    cout << "'A' PARA PERIFERICO - 'B' PARA COMPONENTE";
 
     rlutil::locate(54, 16);
     cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
@@ -58,10 +61,9 @@ void Producto::cargar() {
         cargarCadena(nombre, 31);
         toUpperCase(nombre);
 
-        ArchivoManager<Producto> archivo("productos.dat");
         vector<Producto> productos;
         archivo.leer(productos);
-        int can = archivo.cantidadRegistros();
+        int can = productos.size();
 
         repetido = false;
         
@@ -82,8 +84,7 @@ void Producto::cargar() {
             cout << "                              ";
         }
     }
-    rlutil::locate(48, 22);
-    cout << "                          ";
+    limpiar_linea(43, 22);
 
 
 
@@ -104,8 +105,7 @@ void Producto::cargar() {
         cargarCadena(&tipo, 2);
         toUpperCase(&tipo);
     }
-    rlutil::locate(49, 22);
-    cout << "                        ";
+    limpiar_linea(43, 22);
 
 
 
@@ -124,8 +124,7 @@ void Producto::cargar() {
 
         stock = cargarInt(9);
     }
-    rlutil::locate(43, 22);
-    cout << "                                     ";
+    limpiar_linea(43, 22);
 
 
 
@@ -144,8 +143,7 @@ void Producto::cargar() {
 
         precio = cargarDouble(15, 2);
     }
-    rlutil::locate(44, 22);
-    cout << "                                  ";
+    limpiar_linea(43, 22);
 
 
 
@@ -164,8 +162,7 @@ void Producto::cargar() {
         rlutil::setColor(rlutil::MAGENTA);
         fechaIngreso.setDia();
     }
-    rlutil::locate(45, 22);
-    cout << "                                ";
+    limpiar_linea(43, 22);
 
 
 
@@ -183,8 +180,7 @@ void Producto::cargar() {
         rlutil::setColor(rlutil::MAGENTA);
         fechaIngreso.setMes();
     }
-    rlutil::locate(45, 22);
-    cout << "                                ";
+    limpiar_linea(43, 22);
 
 
 
@@ -202,28 +198,19 @@ void Producto::cargar() {
         rlutil::setColor(rlutil::MAGENTA);
         fechaIngreso.setAnio();
     }
-    rlutil::locate(45, 22);
-    cout << "                                ";
+    limpiar_linea(43, 22);
 
 
 
     rlutil::setColor(rlutil::WHITE);
-    rlutil::locate(47,22);
+    rlutil::locate(46, 22);
     cout << "PRODUCTO AGREGADO EXITOSAMENTE";
 
     rlutil::hidecursor();
-    rlutil::setColor(rlutil::BLACK);
 }
 
 
 void Producto::mostrar() const {
-    const int OPCIONES = 7;
-    const int CURSOR_START_X = 3;
-    const int CURSOR_START_Y = 4;
-    const int PAGINADO = 15;
-
-    ArchivoManager<Producto> archivo("productos.dat");
-
     string datos_titulo[OPCIONES] = {
                             "    ID    ",
                             "          N O M B R E           ",
@@ -246,13 +233,6 @@ void Producto::mostrar() const {
 }
 
 void Producto::mostrar_activos() const {
-    const int OPCIONES = 7;
-    const int CURSOR_START_X = 3;
-    const int CURSOR_START_Y = 4;
-    const int PAGINADO = 15;
-
-    ArchivoManager<Producto> archivo("productos.dat");
-
     string datos_titulo[OPCIONES] = {
                             "    ID    ",
                             "          N O M B R E           ",
@@ -292,7 +272,7 @@ void Producto::mostrarFila(int posX, int posY) const {
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(5, posY); cout << id;
     rlutil::locate(16, posY); cout << getNombre();
-    rlutil::locate(49, posY); cout << (getID() == 'A' ? "PERIFERICO" : "COMPONENTE");
+    rlutil::locate(49, posY); cout << (getTipo() == 'A' ? "PERIFERICO" : "COMPONENTE");
     rlutil::locate(62, posY); cout << getStock();
     rlutil::locate(74, posY); cout << fixed << setprecision(2) << getPrecio();
     rlutil::locate(95, posY); getFecha().MostrarF();

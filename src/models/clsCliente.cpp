@@ -1,27 +1,178 @@
 #include <iostream>
+
+using namespace std;
+
 #include "clsCliente.h"
+#include "archivoManager.h"
 #include "utilidades.h"
 #include "ContextoGestores.h"
+#include "uiManager.h"
+#include "artworks.h"
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
+
+const int OPCIONES = 3;
+const int INICIO_TITULO = 3;
+const int INICIO_TABLA = INICIO_TITULO + 5;
+const int CURSOR_START_X = 30;
+const int CURSOR_START_Y = 4;
+const int PAGINADO = 15;
+static ArchivoManager<Cliente> archivo("clientes.dat");
 
 void Cliente::cargar() {
-    cout << "Ingrese el nombre del cliente: ";
-    cargarCadena(nombre, 49);
-    toUpperCase(nombre);
+    string datos[OPCIONES] = {
+                "NOMBRE: [                                ]",
+                "TELEFONO: [                 ]"             ,
+                "ID: [          ]"                          };
 
-    cout << "Ingrese el telefono del cliente: ";
-    cargarCadena(telefono, 14);
+    agregar("A G R E G A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1]);
+
+    rlutil::setColor(rlutil::RED);
+    rlutil::locate(68, 10);
+    cout << "MINIMO 10 NUMEROS";
+
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::showcursor();
+
+
 
     ContextoGestores contexto;
     int cantidad = contexto.gestorC.cantidadRegistros();
     setID(cantidad + 1);
+    rlutil::locate(81, 8); /// ID
+    cout << id;
+
+
+
+    bool valido = false;
+
+    while(!valido) {
+        rlutil::locate(42, 8);  /// NOMBRE
+        cargarCadena(nombre, 31);
+        toUpperCase(nombre);
+
+        int can = strlen(nombre);
+
+        valido = true;
+
+        for(int x = 0; x < can; x++) {
+            int letra = static_cast<int>(nombre[x]);
+            if(!((letra >= 'A' && letra <= 'Z') || letra == ' ')) {
+                valido = false;
+                break;
+            }
+        }
+
+        if (!valido) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(52, 16);
+            cout << "ERROR: SOLO LETRAS";
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(42, 8);
+            cout << "                              ";
+        }
+    }
+    limpiar_linea(52, 16);
+
+
+    vector<Cliente> clientes;
+    archivo.leer(clientes);
+    valido = false;
+
+    while(!valido) {
+        rlutil::locate(44, 10); /// TELEFONO
+        cargarCadena(telefono, 16);
+        
+        int registros = clientes.size();
+
+        int can = strlen(telefono);
+        valido = true;
+
+        if(can < 10) {
+            rlutil::setColor(rlutil::RED);
+            limpiar_linea(47, 16);
+            rlutil::locate(49, 16);
+            cout << "ERROR: MINIMO 10 NUMEROS";
+            valido = false;
+        }
+
+        else {
+            for(int x = 0; x < can; x++) {
+                if(!(telefono[x] >= '0' && telefono[x] <= '9')) {
+                    rlutil::setColor(rlutil::RED);
+                    limpiar_linea(47, 16);
+                    rlutil::locate(52, 16);
+                    cout << "ERROR: SOLO NUMEROS";
+                    valido = false;
+                    break;
+                }
+            }
+        }
+
+        for(int x = 0; x < registros; x++) {
+            if(strcmp(clientes[x].getTelefono(), telefono) == 0) {
+                rlutil::setColor(rlutil::RED);
+                limpiar_linea(47, 16);
+                rlutil::locate(47, 16);
+                cout << "ERROR: TELEFONO YA EXISTENTE";
+                valido = false;
+                break;
+            }
+        }
+
+        if(!valido) {
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(44, 10);
+            cout << "               ";
+        }
+    }
+    limpiar_linea(47, 16);
+
+
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(47, 16);
+    cout << "CLIENTE AGREGADO EXITOSAMENTE";
+
+    rlutil::hidecursor();
 }
 
 void Cliente::mostrar() const {
-    cout << "-------------------- CLIENTE " << id << " ----------------------" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Telefono: " << telefono << endl;
-    cout << endl;
+    string datos_titulo[OPCIONES] = {
+                            "    ID    ",
+                            "          N O M B R E           ",
+                            "    TELEFONO     "
+                            };
+
+    int datos_espacios[OPCIONES] = {10, 32, 17};
+
+    rlutil::locate(50, 1);
+    rlutil::setColor(rlutil::MAGENTA);
+    cout << "CANTIDAD DE CLIENTES: " << archivo.cantidadRegistros();
+
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
 }
 
-void Cliente::mostrarFila(int x, int y) const {}
+
+
+void Cliente::mostrarFila(int posX, int posY) const {
+    rlutil::locate(posX, posY);
+    cout << char(186) << "          " /// ID
+                    << char(186) << "                                " /// NOMBRE
+                    << char(186) << "                 " /// TELEFONO
+                    << char(186);
+
+    rlutil::locate(posX, posY);
+    cout << char(186);
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(32, posY); cout << id;
+    rlutil::locate(43, posY); cout << getNombre();
+    rlutil::locate(76, posY); cout << getTelefono();
+
+    rlutil::setColor(rlutil::MAGENTA);
+}
 
