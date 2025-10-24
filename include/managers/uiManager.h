@@ -3,10 +3,16 @@
 
 #include <iostream>
 #include <vector>
+
 #include "archivoManager.h"
+#include "artworks.h"
+
+#define byte windows_byte
+#include "rlutil.h"
+#undef byte
 
 /**
- * @brief Muestra todos los registros activos de una entidad
+ * @brief Muestra todos los registros de una entidad
  * 
  * @tparam T Tipo de entidad a mostrar (Producto, Cliente, Vendedor, etc)
  * @param gestor Referencia al gestor de archivos de la entidad
@@ -14,19 +20,57 @@
  * Esta función template obtiene todos los registros activos y los muestra
  * usando el método mostrar() de cada entidad
  */
+
+
 template<typename T>
-void mostrarRegistros(ArchivoManager<T>& gestor) {
+void mostrarRegistros(ArchivoManager<T>& gestor,
+                    std::string titulos[] = nullptr,
+                    int espacios[] = nullptr,
+                    int xInicio = 3,
+                    int yInicio = 4,
+                    int paginado = 15,
+                    int opciones = 0,
+                    bool modo = 1) { /// 1 - agregar (todos)  2 - eliminar (estado activo)
     std::vector<T> registros;
-    if (gestor.leerTodos(registros)) {
-        if (registros.empty()) {
-            std::cout << "No hay registros activos." << std::endl;
+    if(modo == 1) {
+        if (!gestor.leerTodos(registros)) {
+            std::cout << "ERROR AL LEER EL ARCHIVO";
             return;
         }
-        // Itera en cada registro usando una referencia constante para evitar copias
-        for (const auto& registro : registros) {
-            registro.mostrar();
+    }
+
+    else {
+        if (!gestor.leerTodosActivos(registros)) {
+            std::cout << "ERROR AL LEER EL ARCHIVO";
+            return;
         }
     }
+
+    mostrar_encabezado((std::string*)titulos, xInicio, yInicio, opciones, (int*)espacios);
+
+    int cont_lineas = 0;
+
+    for (const auto& registro : registros) {
+        registro.mostrarFila(xInicio, yInicio + 3 + cont_lineas);
+        cont_lineas++;
+
+        if(cont_lineas % paginado == 0 && cont_lineas < registros.size()) {
+            barra_final(opciones, yInicio + 3 + cont_lineas, espacios);
+            rlutil::locate(102, yInicio + 3 + cont_lineas + 1);
+            cout << "SIGUIENTE PAGINA";
+
+            cin.ignore();
+            system("cls");
+
+            mostrar_encabezado((std::string*)titulos, xInicio, yInicio, opciones, (int*)espacios);
+            cont_lineas = 0;
+        }
+    }
+
+    barra_final(opciones, yInicio + 3 + cont_lineas, espacios);
+
+    rlutil::locate(101, yInicio + 3 + cont_lineas + 1);
+    cout << "FIN DE PAGINACION";
 }
 
 /** @brief Muestra un registro específico de una entidad

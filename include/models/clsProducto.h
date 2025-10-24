@@ -44,6 +44,9 @@ public:
     // Implementacion con los metodos virtuales
     void cargar() override;
     void mostrar() const override;
+    void mostrarFila(int posX, int posY) const override;
+
+    void mostrar_activos() const;
 };
 
 #endif // PRODUCTOS_H_INCLUDED

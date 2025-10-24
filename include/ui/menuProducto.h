@@ -5,6 +5,6 @@
 
 void menuProducto(Producto, ArchivoManager<Producto>);
 void agregarProducto(Producto producto, ArchivoManager<Producto> &gestor);
-void mostrarProducto(Producto producto);
+void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor);
 
 #endif // MENUPRODUCTO_H_INCLUDED

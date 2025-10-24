@@ -45,9 +45,11 @@ public:
     const char *getNombre() const { return nombre; }
     const char *getTelefonoVendedor() const { return telefonoVendedor; }
     const char *getDni() const { return dni; }
+
     // Implementacion con los metodos virtuales
     void cargar() override;
     void mostrar() const override;
+    void mostrarFila(int posX, int posY) const override;
 };
 
 #endif // CLSVENDEDOR_H_INCLUDED

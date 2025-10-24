@@ -13,13 +13,13 @@ private:
 public:
     // Constructor
     DetalleVenta(int _id = 0,
-                 int _idVenta = 0,
-                 int _idProducto = 0,
-                 int _cantidad = 0,
-                 double _precioVenta = 0.0,
-                 double _subtotal = 0.0,
-                 bool _estado = true,
-                 Fecha _fecha = Fecha(1,1,1))
+                int _idVenta = 0,
+                int _idProducto = 0,
+                int _cantidad = 0,
+                double _precioVenta = 0.0,
+                double _subtotal = 0.0,
+                bool _estado = true,
+                Fecha _fecha = Fecha(1,1,1))
         : Entidad(_id, _estado, _fecha) {
         idVenta = _idVenta;
         idProducto = _idProducto;
@@ -40,6 +40,7 @@ public:
         std::cout << "Precio: $" << precioVenta << std::endl;
         std::cout << "Subtotal: $" << subtotal << std::endl;
     }
+    void mostrarFila(int posX, int posY) const override {}
 
     // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }

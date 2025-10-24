@@ -32,6 +32,7 @@ public:
     // Metodos virtuales puros - cada clase debe implementarlos
     virtual void cargar() = 0;
     virtual void mostrar() const = 0;
+    virtual void mostrarFila(int posX, int posY) const = 0;
 };
 
 #endif // ENTIDAD_H_INCLUDED

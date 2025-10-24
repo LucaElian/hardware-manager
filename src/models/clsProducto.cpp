@@ -8,6 +8,7 @@ using namespace std;
 #include "archivoManager.h"
 #include "utilidades.h"
 #include "ContextoGestores.h"
+#include "UiManager.h"
 #include "artworks.h"
 
 #define byte windows_byte
@@ -39,6 +40,8 @@ void Producto::cargar() {
 
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
+
+
 
     ContextoGestores contexto;
     int cantidad = contexto.gestorP.cantidadRegistros();
@@ -212,12 +215,12 @@ void Producto::cargar() {
     rlutil::setColor(rlutil::BLACK);
 }
 
-void Producto::mostrar() const{
+
+void Producto::mostrar() const {
     const int OPCIONES = 7;
     const int CURSOR_START_X = 3;
     const int CURSOR_START_Y = 4;
     const int PAGINADO = 15;
-    int cont_lineas = 0;
 
     ArchivoManager<Producto> archivo("productos.dat");
 
@@ -239,69 +242,61 @@ void Producto::mostrar() const{
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1); /// AGREGAR
+}
 
-    mostrar_encabezado(datos_titulo, CURSOR_START_X, CURSOR_START_Y, OPCIONES, datos_espacios);
+void Producto::mostrar_activos() const {
+    const int OPCIONES = 7;
+    const int CURSOR_START_X = 3;
+    const int CURSOR_START_Y = 4;
+    const int PAGINADO = 15;
+
+    ArchivoManager<Producto> archivo("productos.dat");
+
+    string datos_titulo[OPCIONES] = {
+                            "    ID    ",
+                            "          N O M B R E           ",
+                            "    TIPO    ",
+                            "   STOCK   ",
+                            "       PRECIO       ",
+                            "   FECHA    ",
+                            "  ESTADO  "
+                            };
+
+    int datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
+
+    rlutil::locate(50, 1);
+    rlutil::setColor(rlutil::MAGENTA);
+    cout << "CANTIDAD DE PRODUCTOS: " << archivo.cantidadRegistros();
+    rlutil::locate(46, 2);
+    cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
+
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 0); /// ELIMINAR
+}
 
 
-    FILE *p = fopen("productos.dat", "rb");
-    if(p == nullptr) return;
-    Producto producto;
 
-    while(fread(&producto, sizeof(Producto), 1, p) == 1) {
-        rlutil::locate(CURSOR_START_X, CURSOR_START_Y + 3 + cont_lineas);
-        cout << char(186) << "          " /// ID
-            << char(186) << "                                " /// NOMBRE
-            << char(186) << "            " /// TIPO
-            << char(186) << "           " /// STOCK
-            << char(186) << "                    " /// PRECIO
-            << char(186) << "   /  /     " /// FECHA
-            << char(186) << "          " /// ESTADO
-            << char(186);
+void Producto::mostrarFila(int posX, int posY) const {
+    rlutil::locate(posX, posY);
+    cout << char(186) << "          " /// ID
+                    << char(186) << "                                " /// NOMBRE
+                    << char(186) << "            " /// TIPO
+                    << char(186) << "           " /// STOCK
+                    << char(186) << "                    " /// PRECIO
+                    << char(186) << "   /  /     " /// FECHA
+                    << char(186) << "          " /// ESTADO
+                    << char(186);
+    
+    rlutil::locate(posX, posY);
+    cout << char(186);
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(5, posY); cout << id;
+    rlutil::locate(16, posY); cout << getNombre();
+    rlutil::locate(49, posY); cout << (getID() == 'A' ? "PERIFERICO" : "COMPONENTE");
+    rlutil::locate(62, posY); cout << getStock();
+    rlutil::locate(74, posY); cout << fixed << setprecision(2) << getPrecio();
+    rlutil::locate(95, posY); getFecha().MostrarF();
+    rlutil::locate(108, posY); cout << (getEstado() ? "ACTIVO" : "INACTIVO");
 
-        rlutil::setColor(rlutil::WHITE);
-        rlutil::locate(5, CURSOR_START_Y + 3 + cont_lineas);
-        cout << producto.getID();
-
-        rlutil::locate(16, CURSOR_START_Y + 3 + cont_lineas);
-        cout << producto.getNombre();
-
-        rlutil::locate(49, CURSOR_START_Y + 3 + cont_lineas);
-        if(producto.getTipo() == 'A') cout << "PERIFERICO";
-        else if (producto.getTipo() == 'B') cout << "COMPONENTE";
-
-        rlutil::locate(62, CURSOR_START_Y + 3 + cont_lineas);
-        cout << producto.getStock();
-
-        rlutil::locate(74, CURSOR_START_Y + 3 + cont_lineas);
-        cout << fixed << setprecision(2) << producto.getPrecio();
-
-        rlutil::locate(95, CURSOR_START_Y + 3 + cont_lineas);
-        producto.getFecha().MostrarF();
-
-        rlutil::locate(108, CURSOR_START_Y + 3 + cont_lineas);
-        cout << (producto.getEstado() ? "ACTIVO" : "INACTIVO");
-
-        rlutil::setColor(rlutil::MAGENTA);
-
-        cont_lineas++;
-
-        if(cont_lineas % PAGINADO == 0) {
-            barra_final(OPCIONES, CURSOR_START_Y + 3 + cont_lineas, datos_espacios);
-
-            rlutil::locate(102, CURSOR_START_Y + 3 + cont_lineas + 1);
-            cout << "SIGUIENTE PAGINA";
-
-            cin.ignore();
-            system("cls");
-
-            mostrar_encabezado(datos_titulo, CURSOR_START_X, CURSOR_START_Y, OPCIONES, datos_espacios);
-            cont_lineas = 0;
-        }
-    }
-    fclose(p);
-
-    barra_final(OPCIONES,  CURSOR_START_Y + 3 + cont_lineas, datos_espacios);
-
-    rlutil::locate(101, CURSOR_START_Y + 3 + cont_lineas + 1);
-    cout << "FIN DE PAGINACION";
+    rlutil::setColor(rlutil::MAGENTA);
 }
