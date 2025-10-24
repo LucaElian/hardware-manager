@@ -58,13 +58,12 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     switch(opcion) {
                         case 0: agregarProducto(producto, gestor); break;
                         case 2: eliminarProducto(producto, gestor); break;
-                            break;
                         case 4: break;
                         case 6: producto.mostrar(); break;
                         case 8: return;
                     }
-                    rlutil::setColor(rlutil::BLACK);
-                    system("pause");
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
             }
         }
     }

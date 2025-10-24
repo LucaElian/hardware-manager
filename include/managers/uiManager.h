@@ -54,8 +54,8 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
         registro.mostrarFila(xInicio, yInicio + 3 + cont_lineas);
         cont_lineas++;
 
-        if(cont_lineas % paginado == 0 && cont_lineas < registros.size()) {
-            barra_final(opciones, yInicio + 3 + cont_lineas, espacios);
+        if(cont_lineas % paginado == 0 && static_cast<size_t>(cont_lineas) < registros.size()) {
+            barra_final(opciones, xInicio, yInicio + 3 + cont_lineas, espacios);
             rlutil::locate(102, yInicio + 3 + cont_lineas + 1);
             cout << "SIGUIENTE PAGINA";
 
@@ -67,7 +67,7 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
         }
     }
 
-    barra_final(opciones, yInicio + 3 + cont_lineas, espacios);
+    barra_final(opciones, xInicio, yInicio + 3 + cont_lineas, espacios);
 
     rlutil::locate(101, yInicio + 3 + cont_lineas + 1);
     cout << "FIN DE PAGINACION";
