@@ -7,7 +7,7 @@ using namespace std;
 #include "archivoManager.h"
 #include "utilidades.h"
 #include "ContextoGestores.h"
-#include "UiManager.h"
+#include "uiManager.h"
 #include "artworks.h"
 
 #define byte windows_byte
