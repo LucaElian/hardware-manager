@@ -66,7 +66,7 @@ void Producto::cargar() {
         int can = productos.size();
 
         repetido = false;
-        
+
         for(int x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0) {
                 repetido = true;
@@ -266,7 +266,7 @@ void Producto::mostrarFila(int posX, int posY) const {
                     << char(186) << "   /  /     " /// FECHA
                     << char(186) << "          " /// ESTADO
                     << char(186);
-    
+
     rlutil::locate(posX, posY);
     cout << char(186);
     rlutil::setColor(rlutil::WHITE);
@@ -280,3 +280,5 @@ void Producto::mostrarFila(int posX, int posY) const {
 
     rlutil::setColor(rlutil::MAGENTA);
 }
+
+
