@@ -270,8 +270,16 @@ public:
         return true;
     }
 
-
-
+    /**
+     * @brief Lee todos los registros activos del archivo y los almacena en un vector
+     * 
+     * @param objetos Referencia al vector donde se almacenarán los registros activos
+     * @return true Si la lectura fue exitosa
+     * @return false Si hubo un error al abrir el archivo
+     * 
+     * Este método lee todos los registros del archivo y almacena únicamente aquellos que están activos
+     * (getEstado() retorna verdadero) en el vector proporcionado.
+     */
     bool leerTodosActivos(std::vector<T>& objetos){
     FILE* archivo = fopen(nombreArchivo, "rb");
     if (!archivo){
