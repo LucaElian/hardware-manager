@@ -1,8 +1,14 @@
 #ifndef CLSVENTA_H
 #define CLSVENTA_H
+
+#include <iostream>
 #include <iomanip>
+#define byte windows_byte
 #include "rlutil.h"
+#undef byte
+
 #include "clsEntidad.h"
+#include "clsFecha.h"
 
 class Venta : public Entidad {
 private:
