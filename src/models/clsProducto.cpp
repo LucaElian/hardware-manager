@@ -281,4 +281,199 @@ void Producto::mostrarFila(int posX, int posY) const {
     rlutil::setColor(rlutil::MAGENTA);
 }
 
+void Producto::modificar() {
+    string datos[OPCIONES-1] = {
+                "NOMBRE: [                                ]",
+                "TIPO: [   ]"                               ,
+                "STOCK: [           ]"                      ,
+                "PRECIO: [                 ]"               ,
+                "FECHA: [ __/__/____ ]"                     ,
+                "ID: [          ]"                          };
 
+    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+
+    rlutil::setColor(rlutil::RED);
+    rlutil::locate(47, 10);
+    cout << "'A' PARA PERIFERICO - 'B' PARA COMPONENTE";
+
+    rlutil::locate(54, 16);
+    cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
+
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::showcursor();
+
+    // Mostrar datos ACTUALES como placeholders
+    rlutil::locate(42, 8); /// NOMBRE
+    cout << nombre;
+    
+    rlutil::locate(40, 10); /// TIPO
+    cout << tipo;
+    
+    rlutil::locate(41, 12); /// STOCK
+    cout << stock;
+    
+    rlutil::locate(42, 14); /// PRECIO
+    cout << fixed << setprecision(2) << precio;
+    
+    rlutil::locate(81, 8); /// ID
+    cout << id;
+
+
+
+    bool repetido = true;
+
+    while(repetido) {
+        rlutil::locate(42, 8); /// NOMBRE
+        cargarCadena(nombre, 31);
+        toUpperCase(nombre);
+
+        vector<Producto> productos;
+        archivo.leer(productos);
+        size_t can = productos.size();
+
+        repetido = false;
+        
+        for(size_t x = 0; x < can; x++) {
+            // NO REPETIR CON EL MISMO ID (es el que estamos modificando)
+            if(strcmp(productos[x].getNombre(), nombre) == 0 && productos[x].getID() != id) {
+                repetido = true;
+                break;
+            }
+        }
+
+        if(repetido) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(48, 22);
+            cout << "ERROR: NOMBRE YA EXISTENTE";
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(42, 8);
+            cout << "                                  ";
+        }
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(40, 10); /// TIPO
+    cargarCadena(&tipo, 2);
+    toUpperCase(&tipo);
+
+    while(tipo != 'A' && tipo != 'B'){
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(49, 22);
+        cout << "ERROR: ESCRIBA 'A' O 'B'";
+
+        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(40, 10);
+        cout << " ";
+        rlutil::locate(40, 10);
+
+        cargarCadena(&tipo, 2);
+        toUpperCase(&tipo);
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(41, 12); /// STOCK
+    stock = cargarInt(9);
+
+    while(stock <= 0) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(43, 22);
+        cout << "ERROR: ESCRIBA UNA CANTIDAD MAYOR A 0";
+
+        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(41, 12);
+        cout << "         ";
+        rlutil::locate(41, 12);
+
+        stock = cargarInt(9);
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(42, 14); /// PRECIO
+    precio = cargarDouble(15, 2);
+
+    while(precio <= 0) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(44, 22);
+        cout << "ERROR: ESCRIBA UN PRECIO MAYOR A 0";
+
+        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(42, 14);
+        cout << "               ";
+        rlutil::locate(42, 14);
+
+        precio = cargarDouble(15, 2);
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(41, 16); /// DIA
+    fechaIngreso.setDia();
+
+    while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 22);
+        cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
+
+        rlutil::locate(41, 16);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(41, 16);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setDia();
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(44, 16); /// MES
+    fechaIngreso.setMes();
+    while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 22);
+        cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
+
+        rlutil::locate(44, 16);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(44, 16);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setMes();
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::locate(47, 16); /// ANIO
+    fechaIngreso.setAnio();
+    while (fechaIngreso.getAnio() < 1) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 22);
+        cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
+
+        rlutil::locate(47, 16);
+        rlutil::setColor(rlutil::GREY);
+        cout << "____";
+        rlutil::locate(47, 16);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setAnio();
+    }
+    limpiar_linea(43, 22);
+
+
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(46, 22);
+    cout << "PRODUCTO MODIFICADO EXITOSAMENTE";
+
+    rlutil::hidecursor();
+    estado = true;
+}

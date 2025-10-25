@@ -56,7 +56,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                     switch(opcion) {
                         case 0: agregarVendedor(vendedor, gestor); break;
                         case 2: eliminarVendedor(vendedor, gestor); break;
-                        case 4: break;
+                        case 4: modificarRegistro(gestor); break;
                         case 6: vendedor.mostrar(); break;
                         case 8: return;
                     }

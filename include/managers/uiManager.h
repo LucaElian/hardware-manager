@@ -57,9 +57,9 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
         if(cont_lineas % paginado == 0 && static_cast<size_t>(cont_lineas) < registros.size()) {
             barra_final(opciones, xInicio, yInicio + 3 + cont_lineas, espacios);
             rlutil::locate(102, yInicio + 3 + cont_lineas + 1);
-            cout << "SIGUIENTE PAGINA";
+            std::cout << "SIGUIENTE PAGINA";
 
-            cin.ignore();
+            std::cin.ignore();
             system("cls");
 
             mostrar_encabezado(titulos, xInicio, yInicio, opciones, espacios);
@@ -70,7 +70,7 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
     barra_final(opciones, xInicio, yInicio + 3 + cont_lineas, espacios);
 
     rlutil::locate(101, yInicio + 3 + cont_lineas + 1);
-    cout << "FIN DE PAGINACION";
+    std::cout << "FIN DE PAGINACION";
 }
 
 /** @brief Muestra un registro específico de una entidad
@@ -93,6 +93,35 @@ void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
         std::cout << "Registro con ID " << id << " no encontrado." << std::endl;
     }
 
+}
+/** @brief Modifica un registro existente de una entidad
+ * @tparam T Tipo de entidad (Producto, Cliente, Vendedor, etc)
+ * @param gestor Referencia al gestor de archivos de la entidad
+ * Esta función template busca un registro por su ID, permite modificar sus datos
+ * usando el método cargar() de la entidad, y guarda los cambios en el archivo.
+ * Si no se encuentra el registro, muestra un mensaje indicando que no fue encontrado.
+ * 
+ * (INFO DESACTUALIZADA PQ SE VA A MODIFICAR CON EL TIEMPO)
+ */
+template <typename T>
+void modificarRegistro(ArchivoManager<T>& gestor){
+    int idModificar;
+    //aca deberia mostrar los registros disponibles a modificar
+    //mostrarRegistros(gestor);
+    std::cout << "Ingrese el ID del registro a modificar: ";
+    std::cin >> idModificar;
+
+    T registro;
+    if (gestor.leerPorID(idModificar, registro)) {
+        std::cout << "Registro encontrado:" << std::endl;
+        registro.modificar();
+
+        gestor.modificarPorId(idModificar, registro);
+
+        std::cout << "Registro modificado exitosamente." << std::endl;
+    } else {
+        std::cout << "Registro con ID " << idModificar << " no encontrado." << std::endl;
+    }
 }
 
 #endif // UIMANAGER_H
