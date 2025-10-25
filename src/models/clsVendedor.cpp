@@ -322,3 +322,189 @@ void Vendedor::mostrarFila(int posX, int posY) const {
     rlutil::setColor(rlutil::MAGENTA);
 }
 
+void Vendedor::modificar() {
+    string datos[OPCIONES-1] = {
+        "NOMBRE: [                                ]", 
+        "TELEFONO: [                 ]"             ,
+        "DNI: [          ]"                         ,
+        "FECHA: [ __/__/____ ]"                     };
+
+    agregar("M O D I F I C A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+
+    rlutil::setColor(rlutil::RED);
+    rlutil::locate(68, 10);
+    cout << "MINIMO 10 NUMEROS";
+
+    rlutil::locate(54, 16);
+    cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
+
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::showcursor();
+
+    // Mostrar datos actuales como placeholders
+    rlutil::locate(42, 8); /// NOMBRE
+    cout << nombre;
+    
+    rlutil::locate(44, 10); /// TELEFONO
+    cout << telefonoVendedor;
+    
+    rlutil::locate(39, 12); /// DNI
+    cout << dni;
+
+    bool valido = false;
+
+    while(!valido) {
+        rlutil::locate(42, 8); /// NOMBRE
+        cargarCadena(nombre, 31);
+        toUpperCase(nombre);
+
+        size_t can = strlen(nombre);
+        valido = true;
+
+        for(size_t x = 0; x < can; x++) {
+            int letra = static_cast<int>(nombre[x]);
+            if(!((letra >= 'A' && letra <= 'Z') || letra == ' ')) {
+                valido = false;
+                break;
+            }
+        }
+
+        if (!valido) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(52, 20);
+            cout << "ERROR: SOLO LETRAS";
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(42, 8);
+            cout << "                              ";
+        }
+    }
+    limpiar_linea(52, 20);
+
+    valido = false;
+
+    while(!valido) {
+        rlutil::locate(44, 10); /// TELEFONO
+        cargarCadena(telefonoVendedor, 16);
+        
+        size_t can = strlen(telefonoVendedor);
+        valido = true;
+
+        if(can < 10) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(49, 20);
+            cout << "ERROR: MINIMO 10 NUMEROS";
+            valido = false;
+        }
+        else {
+            for(size_t x = 0; x < can; x++) {
+                if(!(telefonoVendedor[x] >= '0' && telefonoVendedor[x] <= '9')) {
+                    rlutil::setColor(rlutil::RED);
+                    rlutil::locate(52, 20);
+                    cout << "ERROR: SOLO NUMEROS";
+                    valido = false;
+                    break;
+                }
+            }
+        }
+
+        if(!valido) {
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(44, 10);
+            cout << "                         ";
+        }
+    }
+    limpiar_linea(50, 20);
+
+    valido = false;
+
+    while(!valido) {
+        rlutil::locate(39, 12); /// DNI
+        cargarCadena(dni, 9);
+        
+        size_t can = strlen(dni);
+        valido = true;
+
+        if(can != 8) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(49, 20);
+            cout << "ERROR: INGRESAR 8 DIGITOS";
+            valido = false;
+        }
+        else {
+            for(size_t x = 0; x < can; x++) {
+                if(!(dni[x] >= '0' && dni[x] <= '9')) {
+                    rlutil::setColor(rlutil::RED);
+                    rlutil::locate(52, 20);
+                    cout << "ERROR: SOLO NUMEROS";
+                    valido = false;
+                    break;
+                }
+            }
+        }
+
+        if(!valido) {
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(39, 12);
+            cout << "        ";
+        }
+    }
+    limpiar_linea(50, 20);
+
+    rlutil::locate(41, 14); /// DIA
+    fechaIngreso.setDia();
+
+    while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
+
+        rlutil::locate(41, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(41, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setDia();
+    }
+    limpiar_linea(45, 20);
+
+    rlutil::locate(44, 14); /// MES
+    fechaIngreso.setMes();
+    while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
+
+        rlutil::locate(44, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(44, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setMes();
+    }
+    limpiar_linea(45, 20);
+
+    rlutil::locate(47, 14); /// ANIO
+    fechaIngreso.setAnio();
+    while (fechaIngreso.getAnio() < 1) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
+
+        rlutil::locate(47, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "____";
+        rlutil::locate(47, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setAnio();
+    }
+    limpiar_linea(45, 20);
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(46, 20);
+    cout << "VENDEDOR MODIFICADO EXITOSAMENTE";
+
+    rlutil::hidecursor();
+    estado = true;
+}

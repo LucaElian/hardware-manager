@@ -41,6 +41,7 @@ public:
 
     // Implementacion con los metodos virtuales
     void cargar() override;
+    void modificar() override;
     void mostrar() const override;
     void mostrarFila(int posX, int posY) const override;
 

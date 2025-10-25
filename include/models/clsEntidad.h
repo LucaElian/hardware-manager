@@ -31,6 +31,9 @@ public:
 
     // Metodos virtuales puros - cada clase debe implementarlos
     virtual void cargar() = 0;
+    virtual void modificar() {
+        std::cout << "Esta entidad no soporta modificación." << std::endl;
+    }
     virtual void mostrar() const = 0;
     virtual void mostrarFila(int posX, int posY) const = 0;
 };

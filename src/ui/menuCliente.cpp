@@ -57,7 +57,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0: agregarCliente(cliente, gestor); break;
-                        case 2: break;
+                        case 2: modificarRegistro(gestor); break;
                         case 4: cliente.mostrar(); break;
                         case 6: return;
                     }

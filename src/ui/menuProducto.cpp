@@ -58,7 +58,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     switch(opcion) {
                         case 0: agregarProducto(producto, gestor); break;
                         case 2: eliminarProducto(producto, gestor); break;
-                        case 4: break;
+                        case 4: modificarRegistro(gestor); break;
                         case 6: producto.mostrar(); break;
                         case 8: return;
                     }

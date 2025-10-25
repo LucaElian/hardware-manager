@@ -176,3 +176,94 @@ void Cliente::mostrarFila(int posX, int posY) const {
     rlutil::setColor(rlutil::MAGENTA);
 }
 
+void Cliente::modificar() {
+    string datos[2] = {
+        "NOMBRE: [                                ]",
+        "TELEFONO: [                 ]"             };
+
+    agregar("M O D I F I C A R  C L I E N T E", 3, 2);
+    agregar_opciones(datos, 8, 2, datos[1]);
+
+    rlutil::setColor(rlutil::RED);
+    rlutil::locate(68, 10);
+    cout << "MINIMO 10 NUMEROS";
+
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::showcursor();
+
+    //muestra los datos actuales como placeholders
+    rlutil::locate(42, 8);
+    cout << nombre;
+    rlutil::locate(44, 10);
+    cout << telefono;
+
+    bool valido = false;
+
+    while(!valido) {
+        rlutil::locate(42, 8); /// NOMBRE
+        cargarCadena(nombre, 31);
+        toUpperCase(nombre);
+
+        size_t can = strlen(nombre);
+        valido = true;
+
+        for(size_t x = 0; x < can; x++) {
+            int letra = static_cast<int>(nombre[x]);
+            if(!((letra >= 'A' && letra <= 'Z') || letra == ' ')) {
+                valido = false;
+                break;
+            }
+        }
+
+        if (!valido) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(52, 16);
+            cout << "ERROR: SOLO LETRAS";
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(42, 8);
+            cout << "                              ";
+        }
+    }
+    limpiar_linea(52, 16);
+    valido = false;
+
+    while(!valido) {
+        rlutil::locate(44, 10); /// TELEFONO
+        cargarCadena(telefono, 16);
+        
+        size_t can = strlen(telefono);
+        valido = true;
+
+        if(can < 10) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(49, 16);
+            cout << "ERROR: MINIMO 10 NUMEROS";
+            valido = false;
+        }
+        else {
+            for(size_t x = 0; x < can; x++) {
+                if(!(telefono[x] >= '0' && telefono[x] <= '9')) {
+                    rlutil::setColor(rlutil::RED);
+                    rlutil::locate(52, 16);
+                    cout << "ERROR: SOLO NUMEROS";
+                    valido = false;
+                    break;
+                }
+            }
+        }
+
+        if(!valido) {
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(44, 10);
+            cout << "                         ";
+        }
+    }
+
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(46, 16);
+    cout << "CLIENTE MODIFICADO EXITOSAMENTE";
+
+    rlutil::hidecursor();
+    estado = true;
+}
