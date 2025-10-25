@@ -1,15 +1,39 @@
-#include "menuReports.h"
-#include "artworks.h"
-#include <iostream>
-#include "archivoManager.h"
-#include "rlutil.h"
-#include "uiManager.h"
-#include <string>
-#include "ContextoGestores.h"
-#include "gestorVenta.h"
+/*=======================
+LIBRERÍAS ESTÁNDAR C++
+=========================*/
+#include <iostream>   // Para usar std::cout y std::endl (imprimir en consola).
+#include <string>     // Para poder usar la clase std::string (para los títulos y opciones).
+#include <vector>     // Para crear los listados (vectores) de Ventas, Clientes, etc., al leer los archivos.
+#include <ctime>      // Para opcion1: Permite obtener la fecha actual del sistema (time, localtime).
+#include <map>        // Para opcion2: Permite crear "diccionarios" para contar items y asociar ventas con clientes.
+/*===================================================================
+NÚCLEO DEL PROYECTO (DATOS)
+===================================================================*/
+#include "ContextoGestores.h" // Objeto CLAVE. Nos da acceso a todos los gestores de archivos (gestorP, gestorC, gestorV, gestorVenta).
+#include "gestorVenta.h"    // Para acceder a la lógica de ventas y, (importante), a la función 'leerTodos' de ventas.
+#include "archivoManager.h" // (Incluido por ContextoGestores) Es la plantilla base que maneja los archivos .dat.
+#include "clsVenta.h"       // Para poder crear std::vector<Venta> y entender la estructura de una Venta.
+#include "clsDetalleVenta.h"// Para poder crear std::vector<DetalleVenta> y contar los items.
+#include "clsCliente.h"     // Para poder crear objetos Cliente y mostrar al ganador de opcion2.
+
+/*===================================================================
+INTERFAZ DE USUARIO (UI)
+===================================================================*/
+#include "artworks.h"     // Para dibujar las cajas del menú ('menu()') y las tablas de resultados ('mostrar_encabezado()', 'barra_final()').
+#include "rlutil.h"       // Para la navegación del menú (getkey) y los colores (setColor).
+#include "uiManager.h"    // Contiene la plantilla 'mostrarRegistros' (aunque los reportes usan 'artworks' directamente).
+/*===================================================================
+HACK DE COMPILACIÓN (rlutil vs C++)
+===================================================================*/
+// Este bloque soluciona el conflicto de la palabra 'byte' entre rlutil.h (que es C viejo) y C++ moderno.
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
+/*===================================================================
+DECLARACIONES LOCALES
+===================================================================*/
+#include "menuReports.h"  // El .h de este .cpp. Contiene las declaraciones de 'menuReports()', 'opcion1()', 'opcion2()', etc.
+
 
 void menuReports(Contexto objetos, ContextoGestores& gestores) {
     const int TAMANIO_MENU = 6;
@@ -62,7 +86,6 @@ void menuReports(Contexto objetos, ContextoGestores& gestores) {
                     cursorActivo = false;
                     switch(opcionSeleccionada) {
                         case 0:
-                            std::cout << "Mostrando ventas del ultimo cuatrimestre..." << std::endl;
                             opcion1(objetos,gestores);
                             break;
                         case 2:
@@ -113,29 +136,34 @@ void opcion1(Contexto objetos, ContextoGestores& gestor) {
     int fechaActualInt = anioActual * 10000 + mesActual * 100 + diaActual;
     int fechaLimiteInt = anioLimite * 10000 + mesLimite * 100 + diaActual;
 
-
     // --- 2. LEER Y FILTRAR LAS VENTAS ---
 
     vector<Venta> todasLasVentas;
     vector<Venta> ventasReporte; // Aquí guardamos solo las que cumplen la condición
 
     // Leemos todas las ventas del archivo
-    // Leemos todas las ventas del archivo
     gestor.gestorVenta.leerTodos(todasLasVentas);
 
-    // Recorremos las ventas y filtramos
-    for (const Venta& v : todasLasVentas) {
+    // Obtenemos el total de ventas para usarlo en el bucle
+    size_t totalVentas = todasLasVentas.size();
+
+    // Recorremos las ventas y filtramos (estilo "antiguo")
+    for (size_t i = 0; i < totalVentas; i++) {
+
+        // Accedemos a la venta actual usando el índice 'i'
+        const Venta& vecVenta = todasLasVentas[i];
+
         // Ignoramos ventas inactivas (eliminadas)
-        if (!v.getEstado()) {
+        if (!vecVenta.getEstado()) {
             continue;
         }
 
-        Fecha fechaVenta = v.getFecha(); // Obtenemos la fecha de la venta
+        Fecha fechaVenta = vecVenta.getFecha(); // Obtenemos la fecha de la venta
         int fechaVentaInt = fechaVenta.getAnio() * 10000 + fechaVenta.getMes() * 100 + fechaVenta.getDia();
 
         // Comprobamos si la venta está dentro de nuestra "ventana" de 4 meses
         if (fechaVentaInt >= fechaLimiteInt && fechaVentaInt <= fechaActualInt) {
-            ventasReporte.push_back(v); // ¡La añadimos al reporte!
+            ventasReporte.push_back(vecVenta); // ¡La añadimos al reporte!
         }
     }
 
@@ -161,7 +189,7 @@ void opcion1(Contexto objetos, ContextoGestores& gestor) {
     std::string titulos[OPCIONES] = {
         " ID VENTA ", " ID CLIENTE ", " LEGAJO VEND ", "    TOTAL    ", "   FECHA    ", "  ESTADO  "
     };
-    size_t espacios[OPCIONES] = { 10, 12, 12, 15, 12, 10 };
+    size_t espacios[OPCIONES] = { 10, 12, 10, 15, 12, 10 };
 
     // Dibujamos el encabezado
     mostrar_encabezado(titulos, posX, posY, OPCIONES, espacios);
