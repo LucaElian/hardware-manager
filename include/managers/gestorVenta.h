@@ -136,6 +136,7 @@ public:
 
         //calcula el total
         double total = 0;
+        int detalleID_counter = _gestorDetalle.cantidadRegistros();
         for (auto& detalle : _carrito) {
             detalle.setIdVenta(idVenta);
             total += detalle.getSubtotal();
@@ -186,8 +187,18 @@ public:
      *
      * Lee y muestra las ventas registradas en el archivo.
     */
-    void listarVentas() {
-        mostrarRegistros(_gestorVenta);
+   void listarVentas() {
+        const int OPCIONES = 7;
+        // Definimos los títulos de las columnas
+        std::string titulos[OPCIONES] = {
+            "    ID    ", " ID VENTA ", " ID CLIENTE ", " LEGAJO VEND ", "    TOTAL    ", "   FECHA    ", "  ESTADO  "
+        };
+        // Definimos los anchos de esas columnas
+        int espacios[OPCIONES] = {
+            10, 10, 12, 12, 15, 12, 10
+        };
+        // Llamamos a mostrarRegistros con todos los parámetros
+        mostrarRegistros(_gestorVenta, titulos, espacios, 10, 4, 15, OPCIONES, 1);
     }
 
     /**
@@ -197,7 +208,14 @@ public:
      */
 
     void listarDetallesVentas() {
-        mostrarRegistros(_gestorDetalle);
+        const int OPCIONES = 7;
+        std::string titulos[OPCIONES] = {
+            "    ID    ", " ID VENTA ", " ID PROD ", " CANT ", "    PRECIO    ", "   SUBTOTAL   ", "  ESTADO  "
+        };
+        int espacios[OPCIONES] = {
+            10, 10, 10, 8, 15, 15, 10
+        };
+        mostrarRegistros(_gestorDetalle, titulos, espacios, 10, 4, 15, OPCIONES, 1);
     }
 
 private:

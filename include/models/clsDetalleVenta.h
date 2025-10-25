@@ -40,7 +40,33 @@ public:
         std::cout << "Precio: $" << precioVenta << std::endl;
         std::cout << "Subtotal: $" << subtotal << std::endl;
     }
-    void mostrarFila(int posX, int posY) const override {}
+
+    // A�ADE ESTO EN SU LUGAR:
+void mostrarFila(int posX, int posY) const override {
+    rlutil::locate(posX, posY);
+    // Estructura (7 campos)
+    std::cout << char(186) << "          " // ID
+              << char(186) << "          " // ID VENTA
+              << char(186) << "          " // ID PROD
+              << char(186) << "        "   // CANT
+              << char(186) << "               " // PRECIO
+              << char(186) << "               " // SUBTOTAL
+              << char(186) << "          " // ESTADO
+              << char(186);
+
+    // Rellenar con datos
+    rlutil::setColor(rlutil::WHITE);
+    // Ajusta estos 'posX + X' si es necesario
+    rlutil::locate(posX + 2, posY); std::cout << getID();
+    rlutil::locate(posX + 12, posY); std::cout << getIdVenta();
+    rlutil::locate(posX + 22, posY); std::cout << getIdProducto();
+    rlutil::locate(posX + 33, posY); std::cout << getCantidad();
+    rlutil::locate(posX + 41, posY); std::cout << std::fixed << std::setprecision(2) << getPrecioVenta();
+    rlutil::locate(posX + 57, posY); std::cout << std::fixed << std::setprecision(2) << getSubtotal();
+    rlutil::locate(posX + 73, posY); std::cout << (getEstado() ? "ACTIVO" : "INACTIVO");
+
+    rlutil::setColor(rlutil::MAGENTA);
+}
 
     // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }

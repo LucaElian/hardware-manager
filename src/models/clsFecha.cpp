@@ -3,7 +3,6 @@
 using namespace std;
 
 #include "clsFecha.h"
-#include "clsProducto.h"
 #include "utilidades.h"
 
 ///Constructor de la clase fecha
