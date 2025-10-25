@@ -11,7 +11,7 @@
 #include "rlutil.h"
 #undef byte
 
-const int OPCIONES = 6;
+const size_t OPCIONES = 6;
 const int INICIO_TITULO = 3;
 const int INICIO_TABLA = INICIO_TITULO + 5;
 const int CURSOR_START_X = 12; // 3
@@ -61,11 +61,11 @@ void Vendedor::cargar() {
         cargarCadena(nombre, 31);
         toUpperCase(nombre);
 
-        int can = strlen(nombre);
+        size_t can = strlen(nombre);
 
         valido = true;
 
-        for(int x = 0; x < can; x++) {
+        for(size_t x = 0; x < can; x++) {
             int letra = static_cast<int>(nombre[x]);
             if(!((letra >= 'A' && letra <= 'Z') || letra == ' ')) {
                 valido = false;
@@ -94,9 +94,9 @@ void Vendedor::cargar() {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefonoVendedor, 16);
         
-        int registros = vendedor.size();
+        size_t registros = vendedor.size();
 
-        int can = strlen(telefonoVendedor);
+        size_t can = strlen(telefonoVendedor);
         valido = true;
 
         if(can < 10) {
@@ -108,7 +108,7 @@ void Vendedor::cargar() {
         }
 
         else {
-            for(int x = 0; x < can; x++) {
+            for(size_t x = 0; x < can; x++) {
                 if(!(telefonoVendedor[x] >= '0' && telefonoVendedor[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
                     limpiar_linea(47, 20);
@@ -120,7 +120,7 @@ void Vendedor::cargar() {
             }
         }
 
-        for(int x = 0; x < registros; x++) {
+        for(size_t x = 0; x < registros; x++) {
             if(strcmp(vendedor[x].getTelefonoVendedor(), telefonoVendedor) == 0) {
                 rlutil::setColor(rlutil::RED);
                 limpiar_linea(47, 20);
@@ -145,9 +145,9 @@ void Vendedor::cargar() {
         rlutil::locate(39, 12); /// DNI
         cargarCadena(dni, 9);
         
-        int registros = vendedor.size();
+        size_t registros = vendedor.size();
 
-        int can = strlen(dni);
+        size_t can = strlen(dni);
         valido = true;
 
         if(can != 8) {
@@ -159,7 +159,7 @@ void Vendedor::cargar() {
         }
 
         else {
-            for(int x = 0; x < can; x++) {
+            for(size_t x = 0; x < can; x++) {
                 if(!(dni[x] >= '0' && dni[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
                     limpiar_linea(47, 20);
@@ -171,7 +171,7 @@ void Vendedor::cargar() {
             }
         }
 
-        for(int x = 0; x < registros; x++) {
+        for(size_t x = 0; x < registros; x++) {
             if(strcmp(vendedor[x].getDni(), dni) == 0) {
                 rlutil::setColor(rlutil::RED);
                 limpiar_linea(47, 20);
@@ -265,7 +265,7 @@ void Vendedor::mostrar() const {
                             "  ESTADO  "
                             };
 
-    int datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
+    size_t datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -286,7 +286,7 @@ void Vendedor::mostrar_activos() const {
                             "  ESTADO  "
                             };
 
-    int datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
+    size_t datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);

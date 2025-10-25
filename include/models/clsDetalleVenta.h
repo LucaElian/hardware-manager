@@ -41,7 +41,7 @@ public:
         std::cout << "Subtotal: $" << subtotal << std::endl;
     }
 
-    // AÑADE ESTO EN SU LUGAR:
+    // Aï¿½ADE ESTO EN SU LUGAR:
 void mostrarFila(int posX, int posY) const override {
     rlutil::locate(posX, posY);
     // Estructura (7 campos)
