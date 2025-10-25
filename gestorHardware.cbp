@@ -68,6 +68,7 @@
 		<Unit filename="src/models/clsFecha.cpp" />
 		<Unit filename="src/models/clsProducto.cpp" />
 		<Unit filename="src/models/clsVendedor.cpp" />
+		<Unit filename="src/models/clsVenta.cpp" />
 		<Unit filename="src/ui/artworks.cpp" />
 		<Unit filename="src/ui/menuCliente.cpp" />
 		<Unit filename="src/ui/menuGen.cpp" />
