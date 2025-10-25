@@ -43,21 +43,28 @@
 		<Unit filename="include/Contexto.h" />
 		<Unit filename="include/ContextoGestores.h" />
 		<Unit filename="include/managers/archivoManager.h" />
+		<Unit filename="include/managers/gestorVenta.h" />
+		<Unit filename="include/managers/uiManager.h" />
 		<Unit filename="include/models/clsCliente.h" />
+		<Unit filename="include/models/clsDetalleVenta.h" />
 		<Unit filename="include/models/clsEntidad.h" />
 		<Unit filename="include/models/clsFecha.h" />
 		<Unit filename="include/models/clsProducto.h" />
 		<Unit filename="include/models/clsVendedor.h" />
+		<Unit filename="include/models/clsVenta.h" />
 		<Unit filename="include/rlutil.h" />
 		<Unit filename="include/ui/artworks.h" />
 		<Unit filename="include/ui/menuCliente.h" />
 		<Unit filename="include/ui/menuGen.h" />
 		<Unit filename="include/ui/menuProducto.h" />
+		<Unit filename="include/ui/menuReports.h" />
 		<Unit filename="include/ui/menuVendedor.h" />
+		<Unit filename="include/ui/menuVenta.h" />
 		<Unit filename="include/utilidades.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="output/main.exe" />
 		<Unit filename="src/models/clsCliente.cpp" />
+		<Unit filename="src/models/clsDetalleVenta.cpp" />
 		<Unit filename="src/models/clsFecha.cpp" />
 		<Unit filename="src/models/clsProducto.cpp" />
 		<Unit filename="src/models/clsVendedor.cpp" />
@@ -65,9 +72,10 @@
 		<Unit filename="src/ui/menuCliente.cpp" />
 		<Unit filename="src/ui/menuGen.cpp" />
 		<Unit filename="src/ui/menuProducto.cpp" />
+		<Unit filename="src/ui/menuReports.cpp" />
 		<Unit filename="src/ui/menuVendedor.cpp" />
+		<Unit filename="src/ui/menuVenta.cpp" />
 		<Unit filename="utilidades.cpp" />
-		<Unit filename="include/managers/uiManager.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
