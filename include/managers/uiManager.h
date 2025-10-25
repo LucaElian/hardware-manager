@@ -13,10 +13,10 @@
 
 /**
  * @brief Muestra todos los registros de una entidad
- * 
+ *
  * @tparam T Tipo de entidad a mostrar (Producto, Cliente, Vendedor, etc)
  * @param gestor Referencia al gestor de archivos de la entidad
- * 
+ *
  * Esta función template obtiene todos los registros activos y los muestra
  * usando el método mostrar() de cada entidad
  */
@@ -74,11 +74,11 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
 }
 
 /** @brief Muestra un registro específico de una entidad
- * 
+ *
  * @tparam T Tipo de entidad (Producto, Cliente, Vendedor, etc)
  * @param gestor Referencia al gestor de archivos de la entidad
  * @param id ID del registro a mostrar
- * 
+ *
  * Esta función template busca un registro por su ID y lo muestra
  * usando el método mostrar() de la entidad. Si no se encuentra,
  * muestra un mensaje indicando que no fue encontrado.
