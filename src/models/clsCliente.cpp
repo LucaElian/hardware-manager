@@ -13,7 +13,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const int OPCIONES = 3;
+const size_t OPCIONES = 3;
 const int INICIO_TITULO = 3;
 const int INICIO_TABLA = INICIO_TITULO + 5;
 const int CURSOR_START_X = 30;
@@ -54,11 +54,11 @@ void Cliente::cargar() {
         cargarCadena(nombre, 31);
         toUpperCase(nombre);
 
-        int can = strlen(nombre);
+        size_t can = strlen(nombre);
 
         valido = true;
 
-        for(int x = 0; x < can; x++) {
+        for(size_t x = 0; x < can; x++) {
             int letra = static_cast<int>(nombre[x]);
             if(!((letra >= 'A' && letra <= 'Z') || letra == ' ')) {
                 valido = false;
@@ -87,9 +87,9 @@ void Cliente::cargar() {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefono, 16);
         
-        int registros = clientes.size();
+        size_t registros = clientes.size();
 
-        int can = strlen(telefono);
+        size_t can = strlen(telefono);
         valido = true;
 
         if(can < 10) {
@@ -101,7 +101,7 @@ void Cliente::cargar() {
         }
 
         else {
-            for(int x = 0; x < can; x++) {
+            for(size_t x = 0; x < can; x++) {
                 if(!(telefono[x] >= '0' && telefono[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
                     limpiar_linea(47, 16);
@@ -113,7 +113,7 @@ void Cliente::cargar() {
             }
         }
 
-        for(int x = 0; x < registros; x++) {
+        for(size_t x = 0; x < registros; x++) {
             if(strcmp(clientes[x].getTelefono(), telefono) == 0) {
                 rlutil::setColor(rlutil::RED);
                 limpiar_linea(47, 16);
@@ -148,7 +148,7 @@ void Cliente::mostrar() const {
                             "    TELEFONO     "
                             };
 
-    int datos_espacios[OPCIONES] = {10, 32, 17};
+    size_t datos_espacios[OPCIONES] = {10, 32, 17};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);

@@ -14,7 +14,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const int OPCIONES = 7;
+const size_t OPCIONES = 7;
 const int INICIO_TITULO = 3;
 const int INICIO_TABLA = INICIO_TITULO + 5;
 const int CURSOR_START_X = 3;
@@ -63,11 +63,11 @@ void Producto::cargar() {
 
         vector<Producto> productos;
         archivo.leer(productos);
-        int can = productos.size();
+        size_t can = productos.size();
 
         repetido = false;
         
-        for(int x = 0; x < can; x++) {
+        for(size_t x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0) {
                 repetido = true;
                 break;
@@ -221,7 +221,7 @@ void Producto::mostrar() const {
                             "  ESTADO  "
                             };
 
-    int datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
+    size_t datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -243,7 +243,7 @@ void Producto::mostrar_activos() const {
                             "  ESTADO  "
                             };
 
-    int datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
+    size_t datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);

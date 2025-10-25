@@ -11,7 +11,7 @@
 #include "rlutil.h"
 #undef byte
 
-void menuReports(ContextoGestores& contextoGestores) {
+void menuReports([[maybe_unused]] ContextoGestores& contextoGestores) {
     const int TAMANIO_MENU = 6;
     std::string opciones[TAMANIO_MENU] = {
         "VENTAS DEL ULTIMO CUATRIMESTRE", 

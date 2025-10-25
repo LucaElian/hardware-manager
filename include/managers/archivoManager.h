@@ -61,7 +61,7 @@ public:
             //std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
             return false;
         }
-        objetos.reserve(cantidadRegistros());
+        objetos.reserve(static_cast<typename std::vector<T>::size_type>(std::max(0, cantidadRegistros())));
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
             // if (objeto.getEstado()) {

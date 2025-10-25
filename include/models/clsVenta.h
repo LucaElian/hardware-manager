@@ -40,7 +40,7 @@ public:
         fechaVenta.MostrarF();
         std::cout << std::endl;
     }
-    void mostrarFila(int posX, int posY) const override {}
+    void mostrarFila([[maybe_unused]] int posX, [[maybe_unused]] int posY) const override {}
 
     // Setters
     void setIdVenta(int _idVenta) { idVenta = _idVenta; }
