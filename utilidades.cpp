@@ -119,6 +119,10 @@ void toUpperCase(char *texto) {
 }
 
 void centrar_texto(string palabra, char dato, size_t cantidad) {
+    // Ya no necesitamos la comprobación 'if (cantidad < 0)'
+    // porque size_t nunca es negativo.
+
+    // Tu lógica original (ya usa size_t, así que está perfecta)
     size_t espacios_izq = (cantidad - palabra.length()) / 2;
     size_t espacios_der = cantidad - palabra.length() - espacios_izq;
 

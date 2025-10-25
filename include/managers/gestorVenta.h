@@ -9,8 +9,9 @@
 #include "clsProducto.h"
 #include "clsCliente.h"
 #include "clsVendedor.h"
-
+#include "utilidades.h"
 #include "uiManager.h"
+#include "artworks.h"
 #include <ctime>
 
 // Despues lo documento como archivoManager
@@ -143,6 +144,8 @@ public:
 
             actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
 
+            detalle.setID(++detalleID_counter); // <-- ¡ESTA LÍNEA!
+
             DetalleVenta* pDetalle = new DetalleVenta(detalle);
             //pDetalle.setID(_gestorDetalle.cantidadRegistros());
             //registra detalle
@@ -188,17 +191,15 @@ public:
      * Lee y muestra las ventas registradas en el archivo.
     */
    void listarVentas() {
-        const int OPCIONES = 7;
-        // Definimos los títulos de las columnas
-        std::string titulos[OPCIONES] = {
-            "    ID    ", " ID VENTA ", " ID CLIENTE ", " LEGAJO VEND ", "    TOTAL    ", "   FECHA    ", "  ESTADO  "
-        };
-        // Definimos los anchos de esas columnas
-        int espacios[OPCIONES] = {
-            10, 10, 12, 12, 15, 12, 10
-        };
-        // Llamamos a mostrarRegistros con todos los parámetros
-        mostrarRegistros(_gestorVenta, titulos, espacios, 10, 4, 15, OPCIONES, 1);
+        const size_t OPCIONES = 7;
+    std::string titulos[OPCIONES] = {
+        "    ID    ", " ID VENTA ", " ID CLIENTE ", " LEGAJO VEND ", "    TOTAL    ", "   FECHA    ", "  ESTADO  "
+    };
+
+    size_t espacios[OPCIONES] = {
+        10, 10, 12, 12, 15, 12, 10
+    };
+    mostrarRegistros(_gestorVenta, titulos, espacios, 15, 4, 15, OPCIONES, 1);
     }
 
     /**
@@ -208,14 +209,19 @@ public:
      */
 
     void listarDetallesVentas() {
-        const int OPCIONES = 7;
-        std::string titulos[OPCIONES] = {
-            "    ID    ", " ID VENTA ", " ID PROD ", " CANT ", "    PRECIO    ", "   SUBTOTAL   ", "  ESTADO  "
-        };
-        int espacios[OPCIONES] = {
-            10, 10, 10, 8, 15, 15, 10
-        };
-        mostrarRegistros(_gestorDetalle, titulos, espacios, 10, 4, 15, OPCIONES, 1);
+       const size_t OPCIONES = 7;
+    std::string titulos[OPCIONES] = {
+        "    ID    ", " ID VENTA ", " ID PROD ", " CANT ", "    PRECIO    ", "   SUBTOTAL   ", "  ESTADO  "
+    };
+
+    size_t espacios[OPCIONES] = {
+        10, 10, 10, 8, 15, 15, 10
+    };
+    mostrarRegistros(_gestorDetalle, titulos, espacios, 10, 4, 15, OPCIONES, 1);
+    }
+
+    bool leerTodos(std::vector<Venta>& ventas) {
+        return _gestorVenta.leerTodos(ventas);
     }
 
 private:
