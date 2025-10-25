@@ -14,7 +14,9 @@
  * About: Licensing
  * See <License>
  */
-
+#ifndef _WIN32
+#define _WIN32
+#endif
 
 /// Define: RLUTIL_USE_ANSI
 /// Define this to use ANSI escape sequences also on Windows
@@ -55,9 +57,9 @@
 #endif // __cplusplus
 
 #ifdef _WIN32
-	#include <windows.h>  // for WinAPI and Sleep()
+    #include <windows.h>  // for WinAPI and Sleep()
+	#include <conio.h>     // for _getch and _kbhit
 	#define _NO_OLDNAMES  // for MinGW compatibility
-	#include <conio.h>    // for getch() and kbhit()
 	#define getch _getch
 	#define kbhit _kbhit
 #else

@@ -25,11 +25,11 @@
 template<typename T>
 void mostrarRegistros(ArchivoManager<T>& gestor,
                     std::string titulos[] = nullptr,
-                    int espacios[] = nullptr,
+                    size_t espacios[] = nullptr,
                     int xInicio = 3,
                     int yInicio = 4,
                     int paginado = 15,
-                    int opciones = 0,
+                    size_t opciones = 0,
                     bool modo = 1) { /// 1 - agregar (todos)  2 - eliminar (estado activo)
     std::vector<T> registros;
     if(modo == 1) {
@@ -46,7 +46,7 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
         }
     }
 
-    mostrar_encabezado((std::string*)titulos, xInicio, yInicio, opciones, (int*)espacios);
+    mostrar_encabezado(titulos, xInicio, yInicio, opciones, espacios);
 
     int cont_lineas = 0;
 
@@ -62,7 +62,7 @@ void mostrarRegistros(ArchivoManager<T>& gestor,
             cin.ignore();
             system("cls");
 
-            mostrar_encabezado((std::string*)titulos, xInicio, yInicio, opciones, (int*)espacios);
+            mostrar_encabezado(titulos, xInicio, yInicio, opciones, espacios);
             cont_lineas = 0;
         }
     }

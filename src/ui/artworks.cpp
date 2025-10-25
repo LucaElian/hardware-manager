@@ -133,10 +133,10 @@ void agregar_opciones(string opciones[], int inicio, int can, string id) {
     }
 }
 
-void mostrar_encabezado(string opciones[], int posX, int posY, int can, int opciones_espacios[]) {
+void mostrar_encabezado(string opciones[], int posX, int posY, size_t can, size_t opciones_espacios[]) {
     rlutil::locate(posX, posY);
     cout << (char)201;
-    for(int x = 0; x < can; x++) {
+    for(size_t x = 0; x < can; x++) {
         centrar_texto("", (char)205, opciones_espacios[x]);
         if(x+1 != can) cout << (char)203;
     }
@@ -144,7 +144,7 @@ void mostrar_encabezado(string opciones[], int posX, int posY, int can, int opci
 
 
     rlutil::locate(posX, posY+1);
-    for(int x = 0; x < can; x++) {
+    for(size_t x = 0; x < can; x++) {
         rlutil::setColor(rlutil::MAGENTA);
         cout << (char)186;
         rlutil::setColor(rlutil::GREY);
@@ -156,17 +156,17 @@ void mostrar_encabezado(string opciones[], int posX, int posY, int can, int opci
 
     rlutil::locate(posX, posY+2);
     cout << (char)204;
-    for(int x = 0; x < can; x++) {
+    for(size_t x = 0; x < can; x++) {
         centrar_texto("", (char)205, opciones_espacios[x]);
         if(x+1 != can) cout << (char)206;
     }
     cout << (char)185;
 }
 
-void barra_final(int can, int posX, int posY, int datos[]) {
+void barra_final(size_t can, int posX, int posY, size_t datos[]) {
     rlutil::locate(posX, posY);
     cout << (char)200;
-    for(int x = 0; x < can; x++) {
+    for(size_t x = 0; x < can; x++) {
         centrar_texto("", (char)205, datos[x]);
         if(x+1 != can) cout << (char)202;
     }
