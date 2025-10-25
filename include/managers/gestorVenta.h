@@ -68,10 +68,11 @@ public:
      * @return false Si no hay stock suficiente o el producto no existe
      */
     bool agregarProducto(int idProducto, int cantidad) {
+        if (cantidad <= 0) return false; // validación simple
+
         if (!validarStock(idProducto, cantidad)) {
             return false;
         }
-
         double precio = obtenerPrecioProducto(idProducto);
         if (precio <= 0) return false;
 
@@ -243,7 +244,11 @@ private:
     bool validarStock(int idProducto, int cantidad) {
         Producto producto;
         if (_gestorProducto.leerPorID(idProducto, producto)) {
-            return producto.getStock() >= cantidad;
+            int reservado = 0;
+            for (const auto& d : _carrito) {
+                if (d.getIdProducto() == idProducto) reservado += d.getCantidad();
+            }
+            return (producto.getStock() - reservado) >= cantidad;
         }
         return false;
     }
