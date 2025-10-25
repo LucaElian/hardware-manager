@@ -7,7 +7,9 @@
 #include "artworks.h"
 
 #include "ContextoGestores.h"
+#include "Contexto.h"
 
-void menuReports(ContextoGestores& contextoGestores);
+void menuReports(Contexto objetos, ContextoGestores& gestores);
+void opcion1(Contexto objetos, ContextoGestores& gestores);
 
 #endif // MENU_REPORTS_H
