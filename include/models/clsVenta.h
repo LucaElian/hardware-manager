@@ -5,6 +5,8 @@
 #include "clsEntidad.h"
 #include "clsFecha.h"
 
+#include <ctime> // Para la fecha actual
+
 class Venta : public Entidad {
 private:
     int idVenta;
