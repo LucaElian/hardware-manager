@@ -78,12 +78,12 @@ void procesarVenta(ContextoGestores& contexto, GestorVenta& gestor){
     cout << "Ingrese el legajo del vendedor: " << endl;
     cin >> legajoCreado;
 
-    if (gestor.iniciarNuevaVenta(identificadorCliente, 
+    if (gestor.iniciarNuevaVenta(identificadorCliente,
         legajoCreado))cout << "SE INICIO VENTA" << endl;
 
     vector<Producto> p;
     contexto.gestorP.leerTodos(p);
-    
+
     cout << "=== LISTA DE PRODUCTOS DISPONIBLES ===" << endl;
 
     for (const auto& producto : p) {
