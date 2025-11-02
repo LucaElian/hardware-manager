@@ -228,6 +228,10 @@ public:
         return _gestorVenta.leerTodos(ventas);
     }
 
+    bool leerTodosDetalles(std::vector<DetalleVenta>& detalles) {
+        return _gestorDetalle.leerTodos(detalles); // Llama al ArchivoManager interno de detalles
+    }
+
 private:
     /**
      * @brief Genera un nuevo ID para la venta

@@ -92,11 +92,12 @@ void DetalleVenta::mostrarFila(int posX, int posY) const {
     rlutil::locate(currentX + 1, posY); std::cout << (getEstado() ? "ACTIVO" : "INACTIVO");
     currentX += 10;
 
-    // Barra final
+   // Barra final
     rlutil::locate(currentX + 1, posY);
+    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
     std::cout << (char)186; // ║
 
-    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::setColor(rlutil::MAGENTA); // Resetea el color
 }
 
 // --- Setters ---

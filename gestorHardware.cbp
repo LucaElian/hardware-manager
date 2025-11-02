@@ -76,6 +76,7 @@
 		<Unit filename="src/ui/menuReports.cpp" />
 		<Unit filename="src/ui/menuVendedor.cpp" />
 		<Unit filename="src/ui/menuVenta.cpp" />
+		<Unit filename="test/genDb.h" />
 		<Unit filename="utilidades.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
