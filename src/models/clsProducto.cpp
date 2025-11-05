@@ -282,7 +282,7 @@ void Producto::mostrarFila(int posX, int posY) const {
 }
 
 void Producto::modificar() {
-    string datos[OPCIONES-1] = {
+    string datos[OPCIONES] = {
                 "NOMBRE: [                                ]",
                 "TIPO: [   ]"                               ,
                 "STOCK: [           ]"                      ,
@@ -290,8 +290,8 @@ void Producto::modificar() {
                 "FECHA: [ __/__/____ ]"                     ,
                 "ID: [          ]"                          };
 
-    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-1);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1]);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
@@ -304,22 +304,22 @@ void Producto::modificar() {
     rlutil::showcursor();
 
     // Mostrar datos ACTUALES como placeholders
-    rlutil::locate(42, 8); /// NOMBRE
-    cout << nombre;
+    string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
+    string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
+    string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
     
-    rlutil::locate(40, 10); /// TIPO
-    cout << tipo;
+    stringstream precioStream;
+    precioStream << fixed << setprecision(2) << precio;
+    string valoresActuales[6] = {
+        nombre, 
+        string(1, tipo), 
+        to_string(stock), 
+        precioStream.str(), 
+        fechaStr,
+        to_string(id)
+    };
     
-    rlutil::locate(41, 12); /// STOCK
-    cout << stock;
-    
-    rlutil::locate(42, 14); /// PRECIO
-    cout << fixed << setprecision(2) << precio;
-    
-    rlutil::locate(81, 8); /// ID
-    cout << id;
-
-
+    mostrarPlaceholdersActuales(valoresActuales, 6, 32, INICIO_TABLA, 2); // Cambiar de 33 a 32
 
     bool repetido = true;
 

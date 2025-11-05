@@ -177,12 +177,12 @@ void Cliente::mostrarFila(int posX, int posY) const {
 }
 
 void Cliente::modificar() {
-    string datos[2] = {
+    string datos[OPCIONES-1] = {
         "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             };
 
-    agregar("M O D I F I C A R  C L I E N T E", 3, 2);
-    agregar_opciones(datos, 8, 2, datos[1]);
+    agregar("M O D I F I C A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-2]);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -191,11 +191,8 @@ void Cliente::modificar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-    //muestra los datos actuales como placeholders
-    rlutil::locate(42, 8);
-    cout << nombre;
-    rlutil::locate(44, 10);
-    cout << telefono;
+    string valoresActuales[2] = {nombre, telefono};
+    mostrarPlaceholdersActuales(valoresActuales, 2, 32, 8, 2);
 
     bool valido = false;
 

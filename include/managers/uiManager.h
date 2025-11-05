@@ -7,6 +7,9 @@
 #include "archivoManager.h"
 #include "artworks.h"
 
+#include <string>
+#include <limits>
+
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
@@ -107,13 +110,19 @@ template <typename T>
 void modificarRegistro(ArchivoManager<T>& gestor){
     int idModificar;
     //aca deberia mostrar los registros disponibles a modificar
-    //mostrarRegistros(gestor);
+    std::string titulos[] = {"ID", "DATOS"};
+    size_t espacios[] = {10, 50};
+    
+    mostrarRegistros(gestor, titulos, espacios, 3, 4, 15, 2, 1);
     std::cout << "Ingrese el ID del registro a modificar: ";
     std::cin >> idModificar;
 
     T registro;
     if (gestor.leerPorID(idModificar, registro)) {
         std::cout << "Registro encontrado:" << std::endl;
+
+        system("cls");
+
         registro.modificar();
 
         gestor.modificarPorId(idModificar, registro);
@@ -122,6 +131,48 @@ void modificarRegistro(ArchivoManager<T>& gestor){
     } else {
         std::cout << "Registro con ID " << idModificar << " no encontrado." << std::endl;
     }
+}
+
+/** @brief Muestra los placeholders actuales en la interfaz
+ *  @param valores Array de strings con los valores actuales
+ * @param cantidadValores Cantidad de valores en el array
+ * @param xInicio Posición X inicial para mostrar los valores
+ * @param yInicio Posición Y inicial para mostrar los valores
+ * @param paso Espacio vertical entre cada valor (default 2)
+ * Esta función muestra los valores actuales de los campos en gris
+ * en las posiciones correspondientes de la interfaz.
+ */
+inline void mostrarPlaceholdersActuales(std::string valores[], int cantidadValores, int xInicio, int yInicio, int paso = 2) {
+    // Offsets segun el orden: NOMBRE, TELEFONO, DNI, FECHA, TIPO, STOCK, PRECIO, ID
+    // Para Producto: NOMBRE(9), TIPO(7), STOCK(8), PRECIO(9), FECHA(8), ID(5)
+    int offsets[] = {9, 7, 8, 9, 8, 5}; // Orden de Producto
+    
+    // Si es Cliente/Vendedor (2-4 campos), se usa este orden:
+    // NOMBRE(9), TELEFONO(11), DNI(6), FECHA(8)
+    if (cantidadValores <= 4) {
+        int offsetsClienteVendedor[] = {9, 11, 6, 8};
+        rlutil::setColor(rlutil::GREY);
+        for(int i = 0; i < cantidadValores; i++) {
+            int offset = offsetsClienteVendedor[i];
+            int cursorX = xInicio + offset + 1;
+            int cursorY = yInicio + (i * paso);
+            
+            rlutil::locate(cursorX, cursorY);
+            std::cout << valores[i];
+        }
+    } else {
+        // Para Producto (6 campos)
+        rlutil::setColor(rlutil::GREY);
+        for(int i = 0; i < cantidadValores; i++) {
+            int offset = offsets[i];
+            int cursorX = xInicio + offset + 1;
+            int cursorY = yInicio + (i * paso);
+            
+            rlutil::locate(cursorX, cursorY);
+            std::cout << valores[i];
+        }
+    }
+    rlutil::setColor(rlutil::MAGENTA);
 }
 
 #endif // UIMANAGER_H

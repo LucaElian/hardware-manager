@@ -343,14 +343,12 @@ void Vendedor::modificar() {
     rlutil::showcursor();
 
     // Mostrar datos actuales como placeholders
-    rlutil::locate(42, 8); /// NOMBRE
-    cout << nombre;
+    string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
+    string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
+    string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
     
-    rlutil::locate(44, 10); /// TELEFONO
-    cout << telefonoVendedor;
-    
-    rlutil::locate(39, 12); /// DNI
-    cout << dni;
+    string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
+    mostrarPlaceholdersActuales(valoresActuales, 4, 32, 8, 2);
 
     bool valido = false;
 
