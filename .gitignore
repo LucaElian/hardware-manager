@@ -41,6 +41,7 @@
 #*.exe
 #*.out
 #*.app
+execute.bat
 
 ### CodeBlocks ###
 # specific to CodeBlocks IDE

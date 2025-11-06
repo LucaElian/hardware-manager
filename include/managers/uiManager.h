@@ -13,6 +13,7 @@
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
+#include "utilidades.h"
 
 /**
  * @brief Muestra todos los registros de una entidad
@@ -103,21 +104,21 @@ void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
  * Esta función template busca un registro por su ID, permite modificar sus datos
  * usando el método cargar() de la entidad, y guarda los cambios en el archivo.
  * Si no se encuentra el registro, muestra un mensaje indicando que no fue encontrado.
- * 
+ *
  * (INFO DESACTUALIZADA PQ SE VA A MODIFICAR CON EL TIEMPO)
  */
 template <typename T>
 void modificarRegistro(ArchivoManager<T>& gestor){
     int idModificar;
-    //aca deberia mostrar los registros disponibles a modificar
     std::string titulos[] = {"ID", "DATOS"};
     size_t espacios[] = {10, 50};
-    
-    mostrarRegistros(gestor, titulos, espacios, 3, 4, 15, 2, 1);
-    std::cout << "Ingrese el ID del registro a modificar: ";
-    std::cin >> idModificar;
-
     T registro;
+    registro.mostrar();
+    rlutil::locate(41, 24);
+
+    std::cout << "Ingrese el ID del registro a modificar: ";
+    idModificar = cargarInt(9);
+
     if (gestor.leerPorID(idModificar, registro)) {
         std::cout << "Registro encontrado:" << std::endl;
 
@@ -131,6 +132,7 @@ void modificarRegistro(ArchivoManager<T>& gestor){
     } else {
         std::cout << "Registro con ID " << idModificar << " no encontrado." << std::endl;
     }
+    std::cin.ignore();
 }
 
 /** @brief Muestra los placeholders actuales en la interfaz
@@ -146,7 +148,7 @@ inline void mostrarPlaceholdersActuales(std::string valores[], int cantidadValor
     // Offsets segun el orden: NOMBRE, TELEFONO, DNI, FECHA, TIPO, STOCK, PRECIO, ID
     // Para Producto: NOMBRE(9), TIPO(7), STOCK(8), PRECIO(9), FECHA(8), ID(5)
     int offsets[] = {9, 7, 8, 9, 8, 5}; // Orden de Producto
-    
+
     // Si es Cliente/Vendedor (2-4 campos), se usa este orden:
     // NOMBRE(9), TELEFONO(11), DNI(6), FECHA(8)
     if (cantidadValores <= 4) {
@@ -156,7 +158,7 @@ inline void mostrarPlaceholdersActuales(std::string valores[], int cantidadValor
             int offset = offsetsClienteVendedor[i];
             int cursorX = xInicio + offset + 1;
             int cursorY = yInicio + (i * paso);
-            
+
             rlutil::locate(cursorX, cursorY);
             std::cout << valores[i];
         }
@@ -167,7 +169,7 @@ inline void mostrarPlaceholdersActuales(std::string valores[], int cantidadValor
             int offset = offsets[i];
             int cursorX = xInicio + offset + 1;
             int cursorY = yInicio + (i * paso);
-            
+
             rlutil::locate(cursorX, cursorY);
             std::cout << valores[i];
         }

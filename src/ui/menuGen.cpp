@@ -15,6 +15,8 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+#include "genDb.h"
+
 const int OPCIONES = 6;
 const int CURSOR_START_X = 45;
 const int CURSOR_START_Y = 16;
@@ -42,7 +44,7 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
             cout << (char)CURSOR_MENU;
 
             int pos = rlutil::getkey(); // Captura de teclas
-
+            
             switch(pos) {
                 case 14:
                     rlutil::locate(CURSOR_START_X, CURSOR_START_Y + opcion);
@@ -57,7 +59,16 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
                     opcion += OPCION_ESPACIO;
                     if(opcion > ULTIMA_OPCION) opcion = 0;
                     break;
-
+                case 20: // F3
+                    rlutil::locate(1,1);
+                    rlutil::setColor(rlutil::GREEN);
+                    system("python test/borrar_archivo.py");
+                    generarProductos();
+                    generarClientes();
+                    generarVendedores();
+                    generarVentas();
+                    rlutil::setColor(rlutil::MAGENTA);
+                    break;
                 case 1:
                     system("cls");
                     curs = false;
