@@ -1,14 +1,16 @@
 #include <iostream>
 #include <cstring>
 #include <limits>
-using namespace std;
+#include <string>
 
 #include "utilidades.h"
-
+#include "constantes.h"
 
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
+
+using namespace std;
 
 void cargarCadena(char *cadena, int maxDigits) {
     int i = 0;
@@ -19,17 +21,18 @@ void cargarCadena(char *cadena, int maxDigits) {
         key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 1 && i > 0) { /// 1 == ENTER
+        if (c == TECLA_ENTER && i > 0) {
             cadena[i] = '\0';
             break;
         }
 
-        if (c == 8 && i > 0) { /// 8 == BACKSPACE
+        if (c == TECLA_BACKSPACE && i > 0) {
             i--;
             cout << "\b \b"; /// BORRA CARACTER EN PANTALLA
         }
 
-        else if (i < maxDigits - 1 && c >= 32 && c <= 126) { /// CARACTERES IMPRIMIBLES
+        else if (i < maxDigits - TECLA_ENTER && c >= 
+            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) { /// CARACTERES IMPRIMIBLES
             cadena[i++] = c;
             cout << c;
         }
@@ -37,7 +40,7 @@ void cargarCadena(char *cadena, int maxDigits) {
 }
 
 int cargarInt(int maxDigits) {
-    char buffer[10] = {0};
+    char buffer[maxDigits] = {0};
     int i = 0;
     int key;
     char c;
@@ -46,12 +49,12 @@ int cargarInt(int maxDigits) {
         key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 1 && i > 0) {
+        if (c == TECLA_ENTER && i > 0) {
             buffer[i] = '\0';
             break;
         }
 
-        if (c == 8 && i > 0) {
+        if (c == TECLA_BACKSPACE && i > 0) {
             i--;
             cout << "\b \b";
         }
@@ -65,7 +68,7 @@ int cargarInt(int maxDigits) {
 }
 
 double cargarDouble(int maxDigits, int maxDecimals) {
-    char buffer[16] = {0};
+    char buffer[maxDigits + maxDecimals + 2] = {0}; // Extra espacio para el punto decimal y el terminador nulo
     int i = 0, decimales = 0;
     bool punto = false;
     int key;
@@ -75,12 +78,12 @@ double cargarDouble(int maxDigits, int maxDecimals) {
         key = rlutil::getkey();
         c = static_cast<char>(key);
 
-        if (c == 1 && i > 0) {  /// 13 == ENTER
+        if (c == TECLA_ENTER && i > 0) {
             buffer[i] = '\0';
             break;
         }
 
-        if (c == 8 && i > 0) {  /// 8 == BACKSPACE
+        if (c == TECLA_BACKSPACE && i > 0) {
             i--;
             if (buffer[i] == '.') punto = false;
             else if (punto && decimales > 0) decimales--;
@@ -119,10 +122,10 @@ void toUpperCase(char *texto) {
 }
 
 void centrar_texto(string palabra, char dato, size_t cantidad) {
-    // Ya no necesitamos la comprobaci�n 'if (cantidad < 0)'
+    // Ya no necesitamos la comprobacion 'if (cantidad < 0)'
     // porque size_t nunca es negativo.
 
-    // Tu l�gica original (ya usa size_t, as� que est� perfecta)
+    // Tu logica original (ya usa size_t, asi que esta perfecta)
     size_t espacios_izq = (cantidad - palabra.length()) / 2;
     size_t espacios_der = cantidad - palabra.length() - espacios_izq;
 

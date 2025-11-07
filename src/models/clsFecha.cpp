@@ -32,3 +32,4 @@ void Fecha::MostrarF() const {
 
     cout << diaString + "/" + mesString + "/" + anioString;
 }
+// comentario para farmear una linea

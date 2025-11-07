@@ -8,6 +8,7 @@ using namespace std;
 #include "ContextoGestores.h"
 #include "uiManager.h"
 #include "artworks.h"
+#include "constantes.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -37,8 +38,6 @@ void Cliente::cargar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-
-
     ContextoGestores contexto;
     int cantidad = contexto.gestorC.cantidadRegistros();
     setID(cantidad + 1);
@@ -51,7 +50,7 @@ void Cliente::cargar() {
 
     while(!valido) {
         rlutil::locate(42, 8);  /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -85,7 +84,7 @@ void Cliente::cargar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefono, 16);
+        cargarCadena(telefono, MAX_TELEFONO);
         
         size_t registros = clientes.size();
 
@@ -132,8 +131,6 @@ void Cliente::cargar() {
     }
     limpiar_linea(47, 16);
 
-
-
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(47, 16);
     cout << "CLIENTE AGREGADO EXITOSAMENTE";
@@ -156,8 +153,6 @@ void Cliente::mostrar() const {
 
     mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
 }
-
-
 
 void Cliente::mostrarFila(int posX, int posY) const {
     rlutil::locate(posX, posY);
@@ -198,7 +193,7 @@ void Cliente::modificar() {
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -227,7 +222,7 @@ void Cliente::modificar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefono, 16);
+        cargarCadena(telefono, MAX_TELEFONO);
         
         size_t can = strlen(telefono);
         valido = true;

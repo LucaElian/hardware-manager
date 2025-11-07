@@ -6,6 +6,7 @@
 #include "clsCliente.h"
 #include "clsVendedor.h"
 #include "gestorVenta.h"
+#include "constantes.h"
 
 class ContextoGestores {
 public:
@@ -14,9 +15,9 @@ public:
     ArchivoManager<Vendedor> gestorV;
     GestorVenta gestorVenta;
 
-    ContextoGestores() : gestorP("productos.dat"),
-                        gestorC("clientes.dat"), 
-                        gestorV("vendedores.dat") {}
+    ContextoGestores() : gestorP(ARCHIVO_PRODUCTOS),
+                        gestorC(ARCHIVO_CLIENTES),
+                        gestorV(ARCHIVO_VENDEDORES) {}
 };
 
 #endif // CONTEXTOGESTORES_H_INCLUDED

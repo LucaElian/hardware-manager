@@ -3,13 +3,14 @@
 #include <cstring>
 #include "clsFecha.h"
 #include "clsEntidad.h"
+#include "constantes.h"
 
 class Vendedor : public Entidad {
 private:
     int legajo;
-    char nombre[31];
-    char telefonoVendedor[16];
-    char dni[9];
+    char nombre[MAX_NOMBRE];
+    char telefonoVendedor[MAX_TELEFONO];
+    char dni[MAX_DNI];
 
 public:
     // Constructor

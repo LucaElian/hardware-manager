@@ -9,6 +9,7 @@ using namespace std;
 #include "ContextoGestores.h"
 #include "uiManager.h"
 #include "artworks.h"
+#include "constantes.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -58,7 +59,7 @@ void Producto::cargar() {
 
     while(repetido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         vector<Producto> productos;
