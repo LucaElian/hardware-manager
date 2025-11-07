@@ -6,6 +6,7 @@
 #include "ContextoGestores.h"
 #include "uiManager.h"
 #include "artworks.h"
+#include "constantes.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -52,13 +53,11 @@ void Vendedor::cargar() {
     rlutil::locate(81, 8);
     cout << legajo;
 
-
-
     bool valido = false;
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -92,14 +91,14 @@ void Vendedor::cargar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefonoVendedor, 16);
+        cargarCadena(telefonoVendedor, MAX_TELEFONO);
         
         size_t registros = vendedor.size();
 
         size_t can = strlen(telefonoVendedor);
         valido = true;
 
-        if(can < 10) {
+        if(can < TELEFONO_MIN_DIGITOS) {
             rlutil::setColor(rlutil::RED);
             limpiar_linea(47, 20);
             rlutil::locate(49, 20);
@@ -143,7 +142,7 @@ void Vendedor::cargar() {
 
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
-        cargarCadena(dni, 9);
+        cargarCadena(dni, MAX_DNI);
         
         size_t registros = vendedor.size();
 
@@ -301,16 +300,16 @@ void Vendedor::mostrar_activos() const {
 
 void Vendedor::mostrarFila(int posX, int posY) const {
     rlutil::locate(posX, posY);
-    cout << char(186) << "          " /// ID / LEGAJO
-                    << char(186) << "                                " /// NOMBRE
-                    << char(186) << "                 " /// TELEFONO
-                    << char(186) << "          " /// DNI
-                    << char(186) << "   /  /     " /// FECHA
-                    << char(186) << "          " /// ESTADO
-                    << char(186);
+    cout << char(ASCII_BARRA_VERTICAL) << "          " /// ID / LEGAJO
+                    << char(ASCII_BARRA_VERTICAL) << "                                " /// NOMBRE
+                    << char(ASCII_BARRA_VERTICAL) << "                 " /// TELEFONO
+                    << char(ASCII_BARRA_VERTICAL) << "          " /// DNI
+                    << char(ASCII_BARRA_VERTICAL) << "   /  /     " /// FECHA
+                    << char(ASCII_BARRA_VERTICAL) << "          " /// ESTADO
+                    << char(ASCII_BARRA_VERTICAL);
 
     rlutil::locate(posX, posY);
-    cout << char(186);
+    cout << char(ASCII_BARRA_VERTICAL);
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(14, posY); cout << legajo;
     rlutil::locate(25, posY); cout << getNombre();
@@ -343,20 +342,18 @@ void Vendedor::modificar() {
     rlutil::showcursor();
 
     // Mostrar datos actuales como placeholders
-    rlutil::locate(42, 8); /// NOMBRE
-    cout << nombre;
+    string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
+    string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
+    string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
     
-    rlutil::locate(44, 10); /// TELEFONO
-    cout << telefonoVendedor;
-    
-    rlutil::locate(39, 12); /// DNI
-    cout << dni;
+    string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
+    mostrarPlaceholdersActuales(valoresActuales, 4, 32, 8, 2);
 
     bool valido = false;
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -386,12 +383,12 @@ void Vendedor::modificar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefonoVendedor, 16);
+        cargarCadena(telefonoVendedor, MAX_TELEFONO);
         
         size_t can = strlen(telefonoVendedor);
         valido = true;
 
-        if(can < 10) {
+        if(can < TELEFONO_MIN_DIGITOS) {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(49, 20);
             cout << "ERROR: MINIMO 10 NUMEROS";
@@ -421,7 +418,7 @@ void Vendedor::modificar() {
 
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
-        cargarCadena(dni, 9);
+        cargarCadena(dni, MAX_DNI);
         
         size_t can = strlen(dni);
         valido = true;

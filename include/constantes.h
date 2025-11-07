@@ -1,0 +1,50 @@
+// ARCHIVOS
+#define ARCHIVO_VENDEDORES "vendedores.dat"
+#define ARCHIVO_CLIENTES "clientes.dat"
+#define ARCHIVO_PRODUCTOS "productos.dat"
+#define ARCHIVO_VENTAS "ventas.dat"
+#define ARCHIVO_DETALLE_VENTAS "detalle_ventas.dat"
+// TECLAS
+#define TECLA_ARRIBA 14
+#define TECLA_ABAJO 15
+#define TECLA_ENTER 1
+#define TECLA_F3 20
+#define TECLA_ESC 27
+#define TECLA_BACKSPACE 8
+#define TECLA_ESPACIO 32
+
+#define ASCII_IMPRIMIBLE_MAX 126
+#ifdef _WIN32
+    #define ASCII_ESQUINA_IZQUIERDA 201
+    #define ASCII_ESQUINA_DERECHA 187
+    #define ASCII_BARRA_VERTICAL 186
+    #define ASCII_BARRA_HORIZONTAL 205
+    #define ASCII_BARRA_EMPALME_DERECHA 204
+    #define ASCII_BARRA_EMPALME_IZQUIERDA 185
+    #define ASCII_BARRA_EMPALME_IZQUIERDA_INFERIOR 200
+    #define ASCII_BARRA_EMPALME_HORIZONTAL_ARRIBA 202
+    #define ASCII_BARRA_ESQUINA_DERECHA_INFERIOR 188
+    #define ASCII_BARRA_DOBLE_CRUCE 206
+    #define ASCII_BARRA_EMPALME_ABAJO 203
+#else
+    // Valores para mi linu
+    #define ASCII_ESQUINA_IZQUIERDA "╔"
+    #define ASCII_ESQUINA_DERECHA "╗"
+    #define ASCII_BARRA_VERTICAL "║"
+    #define ASCII_BARRA_HORIZONTAL "═"
+    #define ASCII_BARRA_EMPALME_DERECHA "╠"
+    #define ASCII_BARRA_EMPALME_IZQUIERDA "╣"
+    #define ASCII_BARRA_EMPALME_IZQUIERDA_INFERIOR "╚"
+    #define ASCII_BARRA_EMPALME_HORIZONTAL_ARRIBA "╩"
+    #define ASCII_BARRA_ESQUINA_DERECHA_INFERIOR "╝"
+    #define ASCII_BARRA_DOBLE_CRUCE "╬"
+    #define ASCII_BARRA_EMPALME_ABAJO "╦"
+#endif
+
+// En clsVendedor.h, clsCliente.h, clsProducto.h
+#define MAX_NOMBRE 31
+#define MAX_TELEFONO 16
+#define MAX_DNI 9
+
+// En clsVendedor.cpp (validación de teléfono)
+#define TELEFONO_MIN_DIGITOS 10

@@ -8,6 +8,7 @@ using namespace std;
 #include "ContextoGestores.h"
 #include "uiManager.h"
 #include "artworks.h"
+#include "constantes.h"
 
 #define byte windows_byte
 #include "rlutil.h"
@@ -37,8 +38,6 @@ void Cliente::cargar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-
-
     ContextoGestores contexto;
     int cantidad = contexto.gestorC.cantidadRegistros();
     setID(cantidad + 1);
@@ -51,7 +50,7 @@ void Cliente::cargar() {
 
     while(!valido) {
         rlutil::locate(42, 8);  /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -85,7 +84,7 @@ void Cliente::cargar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefono, 16);
+        cargarCadena(telefono, MAX_TELEFONO);
         
         size_t registros = clientes.size();
 
@@ -132,8 +131,6 @@ void Cliente::cargar() {
     }
     limpiar_linea(47, 16);
 
-
-
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(47, 16);
     cout << "CLIENTE AGREGADO EXITOSAMENTE";
@@ -157,8 +154,6 @@ void Cliente::mostrar() const {
     mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
 }
 
-
-
 void Cliente::mostrarFila(int posX, int posY) const {
     rlutil::locate(posX, posY);
     cout << char(186) << "          " /// ID
@@ -177,12 +172,12 @@ void Cliente::mostrarFila(int posX, int posY) const {
 }
 
 void Cliente::modificar() {
-    string datos[2] = {
+    string datos[OPCIONES-1] = {
         "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             };
 
-    agregar("M O D I F I C A R  C L I E N T E", 3, 2);
-    agregar_opciones(datos, 8, 2, datos[1]);
+    agregar("M O D I F I C A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-2]);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -191,17 +186,14 @@ void Cliente::modificar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-    //muestra los datos actuales como placeholders
-    rlutil::locate(42, 8);
-    cout << nombre;
-    rlutil::locate(44, 10);
-    cout << telefono;
+    string valoresActuales[2] = {nombre, telefono};
+    mostrarPlaceholdersActuales(valoresActuales, 2, 32, 8, 2);
 
     bool valido = false;
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadena(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -230,7 +222,7 @@ void Cliente::modificar() {
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefono, 16);
+        cargarCadena(telefono, MAX_TELEFONO);
         
         size_t can = strlen(telefono);
         valido = true;

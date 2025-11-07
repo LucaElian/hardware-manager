@@ -3,10 +3,11 @@
 #include <cstring>
 #include "clsFecha.h"
 #include "clsEntidad.h"
+#include "constantes.h"
 
 class Producto : public Entidad {
 private:
-    char nombre[31];
+    char nombre[MAX_NOMBRE];
     char tipo;
     double precio;
     int stock;

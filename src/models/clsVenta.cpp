@@ -1,7 +1,6 @@
 #include "clsVenta.h"
 #include <iostream>   // Para std::cout, std::endl
 #include <iomanip>    // Para std::fixed, std::setprecision
-#include "rlutil.h"   // Para rlutil::
 
 // Hack de rlutil
 #define byte windows_byte

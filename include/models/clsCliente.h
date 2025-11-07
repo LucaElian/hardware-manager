@@ -3,11 +3,12 @@
 #include <cstring>
 #include "clsFecha.h"
 #include "clsEntidad.h"
+#include "constantes.h"
 
 class Cliente : public Entidad {
 private:
-    char nombre[31];
-    char telefono[16];
+    char nombre[MAX_NOMBRE];
+    char telefono[MAX_TELEFONO];
 
 public:
     // Constructor

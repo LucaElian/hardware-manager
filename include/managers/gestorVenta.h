@@ -1,8 +1,10 @@
 #ifndef GESTORVENTA_H
 #define GESTORVENTA_H
 
+#include <ctime>
 #include <iostream>
 #include <vector>
+
 #include "archivoManager.h"
 #include "clsVenta.h"
 #include "clsDetalleVenta.h"
@@ -12,7 +14,7 @@
 #include "utilidades.h"
 #include "uiManager.h"
 #include "artworks.h"
-#include <ctime>
+#include "constantes.h"
 
 // Despues lo documento como archivoManager
 // Lean esto para entender vector: https://cplusplus.com/reference/vector/vector/
@@ -32,11 +34,11 @@ private:
 
 public:
     GestorVenta() :
-        _gestorVenta("ventas.dat"),
-        _gestorDetalle("detalles_venta.dat"),
-        _gestorProducto("productos.dat"),
-        _gestorCliente("clientes.dat"),
-        _gestorVendedor("vendedores.dat"),
+        _gestorVenta(ARCHIVO_VENTAS),
+        _gestorDetalle(ARCHIVO_DETALLE_VENTAS),
+        _gestorProducto(ARCHIVO_PRODUCTOS),
+        _gestorCliente(ARCHIVO_CLIENTES),
+        _gestorVendedor(ARCHIVO_VENDEDORES),
         _idCliente(0),
         _legajoVendedor(0) {}
 
@@ -68,7 +70,7 @@ public:
      * @return false Si no hay stock suficiente o el producto no existe
      */
     bool agregarProducto(int idProducto, int cantidad) {
-        if (cantidad <= 0) return false; // validación simple
+        if (cantidad <= 0) return false; // validacion simple
 
         if (!validarStock(idProducto, cantidad)) {
             return false;

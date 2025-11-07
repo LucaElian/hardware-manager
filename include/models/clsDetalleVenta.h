@@ -4,11 +4,6 @@
 #include "clsEntidad.h"
 #include <iostream>   // Para std::cout
 #include <iomanip>    // Para std::fixed y std::setprecision
-#include "rlutil.h"   // Para rlutil::
-#define byte windows_byte
-#include "rlutil.h"
-#undef byte
-
 
 class DetalleVenta : public Entidad
 {

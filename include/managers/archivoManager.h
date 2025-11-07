@@ -7,10 +7,30 @@
 #include <vector>
 
 template <typename T>
-class ArchivoManager
-{
+class ArchivoManager{
 private:
     char nombreArchivo[100];
+
+    /** @brief Abre un archivo con el modo especificado y maneja errores 
+     * @param modo Modo de apertura del archivo (por ejemplo, "rb", "wb", "ab", etc.)
+     * @return Puntero al archivo abierto, o nullptr si hubo un error
+    */
+    FILE *abrirArchivo(const char* modo) {
+        FILE* archivo = fopen(nombreArchivo, modo);
+        if (!archivo) {
+            std::cerr << "Error al abrir '" << nombreArchivo 
+                      << "': " << strerror(errno) << std::endl;
+        }
+        return archivo;
+    }
+    /** @brief Cierra un archivo y maneja errores
+     * @param archivo Puntero al archivo a cerrar
+    */
+    void cerrarArchivo(FILE* archivo) {
+        if (fclose(archivo) != 0) {
+            std::cerr << "Advertencia: error al cerrar archivo" << std::endl;
+        }
+    }
 
 public:
     ArchivoManager(const char* archivo){
@@ -32,20 +52,25 @@ public:
      */
 
     bool escribir(T* objeto){
-        FILE* archivo = fopen(nombreArchivo, "ab");
-        if (!archivo){
-            std::cerr << "Error: fallo al abrir el archivo" << std::endl;
+        if (!objeto) {
+            std::cerr << "Error: puntero nulo recibido en escribir()" << std::endl;
             return false;
         }
+        FILE* archivo = abrirArchivo("ab");
 
         size_t element = fwrite(objeto, sizeof(T), 1, archivo);
-        fclose(archivo);
+        
+        //vean este link para mas info sobre ferror
+        //https://www.geeksforgeeks.org/c/ferror-in-c/
 
-        if (element != 1){
-            std::cerr << "Error: fallo al escribir el objeto" << std::endl;
+        if (ferror(archivo)) {
+            std::cerr << "Error de I/O al escribir en '" << nombreArchivo << "'" << std::endl;
+            cerrarArchivo(archivo);
             return false;
         }
-        return true;
+        
+        cerrarArchivo(archivo);
+        return element == 1;
     }
 
     /**
@@ -56,20 +81,16 @@ public:
      * @return false Si hubo un error al abrir el archivo
      */
     bool leer(std::vector<T>& objetos) {
-        FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo) {
-            //std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-            return false;
+        FILE* archivo = abrirArchivo("rb");
+        if(cantidadRegistros() > 0) {
+            objetos.reserve(static_cast<typename std::vector<T>::size_type>(std::max(0, cantidadRegistros())));
         }
-        objetos.reserve(static_cast<typename std::vector<T>::size_type>(std::max(0, cantidadRegistros())));
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1) {
-            // if (objeto.getEstado()) {
-                objetos.push_back(objeto);
-            // }
+            objetos.push_back(objeto);
         }
 
-        fclose(archivo);
+        cerrarArchivo(archivo);
         return true;
     }
 
@@ -85,11 +106,11 @@ public:
      * El registro permanece en el archivo pero no será mostrado en las lecturas normales.
      */
     bool eliminarPorID(int id){
-        FILE* archivo = fopen(nombreArchivo, "rb+");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
+        if (id < 0){
+            std::cerr << "Error: ID inválido proporcionado para eliminarPorID()" << std::endl;
             return false;
         }
+        FILE* archivo = abrirArchivo("rb+");
 
         T objeto;
         bool encontrado = false;
@@ -104,7 +125,7 @@ public:
             }
         }
 
-        fclose(archivo);
+        cerrarArchivo(archivo);
 
         if (!encontrado) return false;
 
@@ -118,15 +139,20 @@ public:
      * @return int Número total de registros en el archivo
      */
     int cantidadRegistros(){
-        FILE* archivo = fopen(nombreArchivo, "rb");
-
-        if (!archivo) return 0;
+        FILE* archivo = abrirArchivo("rb");
 
         fseek(archivo, 0, SEEK_END);
         long bytes = ftell(archivo);
-        fclose(archivo);
+        if (bytes == -1) {
+            std::cerr << "Error: no se pudo obtener la posición del archivo " << nombreArchivo << std::endl;
+            return 0;
+        }
+        cerrarArchivo(archivo);
 
-        if (sizeof(T) == 0) return 0;
+        if (sizeof(T) == 0) {
+            std::cerr << "Error: tamaño de T es 0" << std::endl;
+            return 0;
+        }
         return static_cast<int>(bytes / static_cast<long>(sizeof(T)));
     }
 
@@ -145,15 +171,11 @@ public:
      */
 
     int cantidadRegistrosActivos(){
-        FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-            return 0;
-        }
+        FILE* archivo = abrirArchivo("rb");
 
         int contadorActivos = 0;
         if (sizeof(T) == 0){
-            fclose(archivo);
+            cerrarArchivo(archivo);
             return 0;
         }
 
@@ -164,7 +186,7 @@ public:
             if (objeto.getEstado()){contadorActivos++;}
         }
 
-        fclose(archivo);
+        cerrarArchivo(archivo);
 
         return contadorActivos;
     }
@@ -184,22 +206,18 @@ public:
      * Si lo encuentra, carga los datos en el objeto proporcionado por referencia.
      */
     bool leerPorID(int id, T& objeto){
-        FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-            return false;
-        }
+        FILE* archivo = abrirArchivo("rb");
 
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
             if (objeto.getID() == id)
             {
-                fclose(archivo);
+                cerrarArchivo(archivo);
                 return true;
             }
         }
 
         std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
-        fclose(archivo);
+        cerrarArchivo(archivo);
         return false;
     }
 
@@ -220,11 +238,8 @@ public:
      */
 
     bool modificarPorId(int id, T& objeto){
-        FILE* archivo = fopen(nombreArchivo, "rb+"); // abre en modo update
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-            return false;
-        }
+        FILE* archivo = abrirArchivo("rb+");
+
         T temp;
         bool encontrado = false;
         while (fread(&temp, sizeof(T), 1, archivo) == 1){
@@ -236,7 +251,7 @@ public:
                 break;
             }
         }
-        fclose(archivo);
+        cerrarArchivo(archivo);
         if (!encontrado){
             std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
             return false;
@@ -254,19 +269,17 @@ public:
      * (getEstado() retorna verdadero) en el vector proporcionado.
      */
     bool leerTodos(std::vector<T>& objetos){
-        FILE* archivo = fopen(nombreArchivo, "rb");
-        if (!archivo){
-            std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-            return false;
+        FILE* archivo = abrirArchivo("rb");
+        if (cantidadRegistrosActivos() > 0) {
+            objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
         }
-        objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
 
         T objeto;
         while (fread(&objeto, sizeof(T), 1, archivo) == 1){
             objetos.push_back(objeto);
         }
 
-        fclose(archivo);
+        cerrarArchivo(archivo);
         return true;
     }
 
@@ -281,12 +294,11 @@ public:
      * (getEstado() retorna verdadero) en el vector proporcionado.
      */
     bool leerTodosActivos(std::vector<T>& objetos){
-    FILE* archivo = fopen(nombreArchivo, "rb");
-    if (!archivo){
-        std::cerr << "Error: no se pudo abrir el archivo " << nombreArchivo << std::endl;
-        return false;
+    FILE* archivo = abrirArchivo("rb");
+
+    if (cantidadRegistrosActivos() > 0) {
+        objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
     }
-    objetos.reserve(static_cast<size_t>(cantidadRegistrosActivos()));
 
     T objeto;
     while (fread(&objeto, sizeof(T), 1, archivo) == 1){
@@ -295,7 +307,7 @@ public:
         }
     }
 
-    fclose(archivo);
+    cerrarArchivo(archivo);
     return true;
     }
 };
