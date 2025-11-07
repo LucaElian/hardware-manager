@@ -4,8 +4,7 @@
 #include "clsEntidad.h"
 #include <ctime>
 
-class Venta : public Entidad
-{
+class Venta : public Entidad{
 private:
     int idVenta;
     int idCliente;
@@ -14,7 +13,7 @@ private:
     Fecha fechaVenta;
 
 public:
-    // Constructor
+    // Constructor (solo declaración, valores por defecto van aquí)
     Venta(int _id = 0,
           int _idVenta = 0,
           int _idCliente = 0,
@@ -26,7 +25,7 @@ public:
     // Destructor
     ~Venta();
 
-    // Métodos virtuales heredados
+    // MÃ©todos virtuales heredados
     void cargar() override;
     void mostrar() const override;
     void mostrarFila(int posX, int posY) const override;

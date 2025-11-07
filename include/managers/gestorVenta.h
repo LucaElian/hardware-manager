@@ -193,14 +193,18 @@ public:
      * Lee y muestra las ventas registradas en el archivo.
     */
    void listarVentas() {
-        const size_t OPCIONES = 7;
+    const size_t OPCIONES = 6; // <-- 1. Cambiado de 7 a 6
     std::string titulos[OPCIONES] = {
-        "    ID    ", " ID VENTA ", " ID CLIENTE ", " LEGAJO VEND ", "    TOTAL    ", "   FECHA    ", "  ESTADO  "
+        // "    ID    ", // <-- 2. Columna ID eliminada
+        " ID VENTA ", " ID CLIENTE ", "L.VENDEDOR", "     TOTAL     ", "    FECHA   ", "  ESTADO  "
     };
 
     size_t espacios[OPCIONES] = {
-        10, 10, 12, 12, 15, 12, 10
+        // 10, // <-- 3. Ancho de ID eliminado
+        10, 12, 10, 15, 12, 10
     };
+
+    // 4. Centramos la tabla (igual que el reporte)
     mostrarRegistros(_gestorVenta, titulos, espacios, 15, 4, 15, OPCIONES, 1);
     }
 
@@ -213,7 +217,7 @@ public:
     void listarDetallesVentas() {
        const size_t OPCIONES = 7;
     std::string titulos[OPCIONES] = {
-        "    ID    ", " ID VENTA ", " ID PROD ", " CANT ", "    PRECIO    ", "   SUBTOTAL   ", "  ESTADO  "
+        "    ID    ", " ID VENTA ", " ID PROD  ", "  CANT  ", "     PRECIO    ", "    SUBTOTAL   ", "  ESTADO  "
     };
 
     size_t espacios[OPCIONES] = {
@@ -224,6 +228,10 @@ public:
 
     bool leerTodos(std::vector<Venta>& ventas) {
         return _gestorVenta.leerTodos(ventas);
+    }
+
+    bool leerTodosDetalles(std::vector<DetalleVenta>& detalles) {
+        return _gestorDetalle.leerTodos(detalles); // Llama al ArchivoManager interno de detalles
     }
 
 private:

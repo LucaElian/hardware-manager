@@ -69,6 +69,7 @@
 		<Unit filename="src/models/clsFecha.cpp" />
 		<Unit filename="src/models/clsProducto.cpp" />
 		<Unit filename="src/models/clsVendedor.cpp" />
+		<Unit filename="src/models/clsVenta.cpp" />
 		<Unit filename="src/ui/artworks.cpp" />
 		<Unit filename="src/ui/menuCliente.cpp" />
 		<Unit filename="src/ui/menuGen.cpp" />
@@ -76,6 +77,7 @@
 		<Unit filename="src/ui/menuReports.cpp" />
 		<Unit filename="src/ui/menuVendedor.cpp" />
 		<Unit filename="src/ui/menuVenta.cpp" />
+		<Unit filename="test/genDb.h" />
 		<Unit filename="utilidades.cpp" />
 		<Unit filename="test/genDb.h"/>
 		<Extensions>
