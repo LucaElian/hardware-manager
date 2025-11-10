@@ -26,6 +26,7 @@ void generarProductos() {
 
     for(int i = 0; i < 15; i++) {
         Producto p;
+        p.setId(i+1)
         p.setNombre(nombres[i]);
         p.setTipo(tipos[i]);
         p.setStock(stocks[i]);
