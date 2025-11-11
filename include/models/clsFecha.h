@@ -17,6 +17,9 @@ class Fecha {
         void setDia();
         void setMes();
         void setAnio();
+        void setDiaConValor();
+        void setMesConValor();
+        void setAnioConValor();
 
         /// GETTERS
         int getDia() { return dia; }

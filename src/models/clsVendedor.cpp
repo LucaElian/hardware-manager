@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 #include "clsVendedor.h"
 #include "archivoManager.h"
@@ -29,7 +32,7 @@ void Vendedor::cargar() {
         "ID: [          ]"                          };
 
     agregar("A G R E G A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -328,12 +331,17 @@ void Vendedor::modificar() {
         "DNI: [          ]"                         ,
         "FECHA: [ __/__/____ ]"                     };
 
+    rlutil::setColor(rlutil::MAGENTA);
+
     agregar("M O D I F I C A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
     cout << "MINIMO 10 NUMEROS";
+
+    rlutil::locate(50, 12);
+    cout << "AGREGAR CEROS ADELANTE SI FALTAN DIGITOS";
 
     rlutil::locate(54, 16);
     cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
@@ -341,22 +349,28 @@ void Vendedor::modificar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
+
+
     // Mostrar datos actuales como placeholders
     string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
     string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
     string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
     
     string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
-    mostrarPlaceholdersActuales(valoresActuales, 4, 32, 8, 2);
+    mostrarPlaceholdersActuales(valoresActuales, 4, 32, INICIO_TABLA, 2);
+
+    rlutil::locate(81, 8); /// ID
+    cout << legajo;
 
     bool valido = false;
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, MAX_NOMBRE);
+        cargarCadenaConValor(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
+
         valido = true;
 
         for(size_t x = 0; x < can; x++) {
@@ -379,25 +393,33 @@ void Vendedor::modificar() {
     }
     limpiar_linea(52, 20);
 
+
+    vector<Vendedor> vendedor;
+    archivo.leer(vendedor);
     valido = false;
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefonoVendedor, MAX_TELEFONO);
+        cargarCadenaConValor(telefonoVendedor, MAX_TELEFONO);
         
+        size_t registros = vendedor.size();
+
         size_t can = strlen(telefonoVendedor);
         valido = true;
 
         if(can < TELEFONO_MIN_DIGITOS) {
             rlutil::setColor(rlutil::RED);
+            limpiar_linea(47, 20);
             rlutil::locate(49, 20);
             cout << "ERROR: MINIMO 10 NUMEROS";
             valido = false;
         }
+
         else {
             for(size_t x = 0; x < can; x++) {
                 if(!(telefonoVendedor[x] >= '0' && telefonoVendedor[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
+                    limpiar_linea(47, 20);
                     rlutil::locate(52, 20);
                     cout << "ERROR: SOLO NUMEROS";
                     valido = false;
@@ -406,10 +428,21 @@ void Vendedor::modificar() {
             }
         }
 
+        for(size_t x = 0; x < registros; x++) {
+            if(strcmp(vendedor[x].getTelefonoVendedor(), telefonoVendedor) == 0 && vendedor[x].getID() != id) {
+                rlutil::setColor(rlutil::RED);
+                limpiar_linea(47, 20);
+                rlutil::locate(47, 20);
+                cout << "ERROR: TELEFONO YA EXISTENTE";
+                valido = false;
+                break;
+            }
+        }
+
         if(!valido) {
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(44, 10);
-            cout << "                         ";
+            cout << "               ";
         }
     }
     limpiar_linea(50, 20);
@@ -418,26 +451,42 @@ void Vendedor::modificar() {
 
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
-        cargarCadena(dni, MAX_DNI);
+        cargarCadenaConValor(dni, MAX_DNI);
         
+        size_t registros = vendedor.size();
+
         size_t can = strlen(dni);
         valido = true;
 
         if(can != 8) {
             rlutil::setColor(rlutil::RED);
+            limpiar_linea(47, 20);
             rlutil::locate(49, 20);
             cout << "ERROR: INGRESAR 8 DIGITOS";
             valido = false;
         }
+
         else {
             for(size_t x = 0; x < can; x++) {
                 if(!(dni[x] >= '0' && dni[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
+                    limpiar_linea(47, 20);
                     rlutil::locate(52, 20);
                     cout << "ERROR: SOLO NUMEROS";
                     valido = false;
                     break;
                 }
+            }
+        }
+
+        for(size_t x = 0; x < registros; x++) {
+            if(strcmp(vendedor[x].getDni(), dni) == 0 && vendedor[x].getID() != id) {
+                rlutil::setColor(rlutil::RED);
+                limpiar_linea(47, 20);
+                rlutil::locate(50, 20);
+                cout << "ERROR: DNI YA EXISTENTE";
+                valido = false;
+                break;
             }
         }
 
@@ -450,7 +499,7 @@ void Vendedor::modificar() {
     limpiar_linea(50, 20);
 
     rlutil::locate(41, 14); /// DIA
-    fechaIngreso.setDia();
+    fechaIngreso.setDiaConValor();
 
     while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
         rlutil::setColor(rlutil::RED);
@@ -467,7 +516,7 @@ void Vendedor::modificar() {
     limpiar_linea(45, 20);
 
     rlutil::locate(44, 14); /// MES
-    fechaIngreso.setMes();
+    fechaIngreso.setMesConValor();
     while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(45, 20);
@@ -483,7 +532,7 @@ void Vendedor::modificar() {
     limpiar_linea(45, 20);
 
     rlutil::locate(47, 14); /// ANIO
-    fechaIngreso.setAnio();
+    fechaIngreso.setAnioConValor();
     while (fechaIngreso.getAnio() < 1) {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(45, 20);

@@ -93,8 +93,6 @@ void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
     T registro;
     if (gestor.leerPorID(id, registro)) {
         registro.mostrar();
-    } else {
-        std::cout << "Registro con ID " << id << " no encontrado." << std::endl;
     }
 
 }
@@ -109,30 +107,25 @@ void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
  */
 template <typename T>
 void modificarRegistro(ArchivoManager<T>& gestor){
-    int idModificar;
     std::string titulos[] = {"ID", "DATOS"};
-    size_t espacios[] = {10, 50};
+    size_t espacios[] = {10, 30};
     T registro;
-    registro.mostrar();
-    rlutil::locate(41, 24);
 
-    std::cout << "Ingrese el ID del registro a modificar: ";
-    idModificar = cargarInt(9);
+    int idModificar;
+    caja_eliminar(&idModificar, 52, 24);
 
     if (gestor.leerPorID(idModificar, registro)) {
-        std::cout << "Registro encontrado:" << std::endl;
-
         system("cls");
-
         registro.modificar();
-
         gestor.modificarPorId(idModificar, registro);
-
-        std::cout << "Registro modificado exitosamente." << std::endl;
-    } else {
-        std::cout << "Registro con ID " << idModificar << " no encontrado." << std::endl;
+        rlutil::setColor(rlutil::WHITE);
     }
-    std::cin.ignore();
+
+    else {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(43, 24+3);
+        cerr << "NO SE ENCONTRARON REGISTROS CON ID " << idModificar;
+    }
 }
 
 /** @brief Muestra los placeholders actuales en la interfaz

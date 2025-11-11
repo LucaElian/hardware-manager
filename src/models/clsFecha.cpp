@@ -16,6 +16,10 @@ void Fecha::setDia() { dia = cargarInt(2); }
 void Fecha::setMes() { mes = cargarInt(2); }
 void Fecha::setAnio() { anio = cargarInt(4); }
 
+void Fecha::setDiaConValor() { dia = cargarIntConValorFormateado(2, dia); }
+void Fecha::setMesConValor() { mes = cargarIntConValorFormateado(2, mes); }
+void Fecha::setAnioConValor() { anio = cargarIntConValorFormateado(4, anio); }
+
 ///Metodo para "pasarlo a date"
 void Fecha::MostrarF() const {
     string diaString;

@@ -28,7 +28,7 @@ const int ULTIMA_OPCION = 10;
 ///ESTA FUNCION MUESTRA EL MENU Y CONTROLA CON RLUTIL EL MOVIMIENTO DE LAS FLECHAS ---------------------------
 //recibe el archivo del gestor para pasarselo a todos los menues, y el class contexto con todos los objetos, tambien para pasarle a los menues
 void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) {
-    string opciones[6] = {"GESTIONAR PRODUCTOS", "GESTIONAR CLIENTES", "GESTIONAR VENDEDORES", "GESTIONAR VENTAS", "GESTIONAR REPORTES", "SALIR"};
+    string opciones[6] = {"PRODUCTOS", "CLIENTES", "VENDEDORES", "VENTAS", "REPORTES", "SALIR"};
 
     while(true) {
         rlutil::hidecursor();

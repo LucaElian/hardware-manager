@@ -216,7 +216,6 @@ public:
             }
         }
 
-        std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
         cerrarArchivo(archivo);
         return false;
     }
@@ -253,7 +252,6 @@ public:
         }
         cerrarArchivo(archivo);
         if (!encontrado){
-            std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
             return false;
         }return true;
     }

@@ -1,8 +1,11 @@
 #include<iostream>
 using namespace std;
+
 #include "clsVendedor.h"
+#include "clsFecha.h"
 #include "archivoManager.h"
 #include "artworks.h"
+
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
@@ -17,7 +20,6 @@ const int INICIO_OPCIONES = 7;
 const int CURSOR_MENU = 175;
 const int OPCION_ESPACIO = 2;
 const int ULTIMA_OPCION = 8;
-
 
 void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
     string opciones[OPCIONES] = {"AGREGAR VENDEDOR", "ELIMINAR VENDEDOR", "MODIFICAR VENDEDOR", "MOSTRAR VENDEDORES", "SALIR"};
@@ -56,7 +58,7 @@ void menuVendedor(Vendedor vendedor, ArchivoManager<Vendedor> gestor){
                     switch(opcion) {
                         case 0: agregarVendedor(vendedor, gestor); break;
                         case 2: eliminarVendedor(vendedor, gestor); break;
-                        case 4: modificarRegistro(gestor); break;
+                        case 4: modificarVendedor(vendedor, gestor); break;
                         case 6: vendedor.mostrar(); break;
                         case 8: return;
                     }
@@ -90,6 +92,20 @@ void eliminarVendedor(Vendedor vendedor, ArchivoManager<Vendedor> &gestor) {
             rlutil::locate(39, 24+3);
             cout << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
         }
+    }
+
+    else {
+        rlutil::locate(40, 15);
+        rlutil::setColor(rlutil::RED);
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+    }
+}
+
+void modificarVendedor(Vendedor vendedor, ArchivoManager<Vendedor>& gestor){
+    vendedor.mostrar();
+    
+    if(gestor.cantidadRegistros() > 0) {
+        modificarRegistro(gestor);
     }
 
     else {

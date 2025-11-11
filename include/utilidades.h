@@ -11,8 +11,12 @@
 using namespace std;
 
 void cargarCadena(char *, int);
+void cargarCadenaConValor(char *, int);
 int cargarInt(int);
+int cargarIntConValor(int, int);
+int cargarIntConValorFormateado(int, int);
 double cargarDouble(int, int);
+double cargarDoubleConValor(int, int, double);
 void toUpperCase(char *text);
 void centrar_texto(string palabra, char dato, size_t cantidad);
 

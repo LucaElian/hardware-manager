@@ -57,7 +57,7 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
                     curs = false;
                     switch(opcion) {
                         case 0: agregarCliente(cliente, gestor); break;
-                        case 2: modificarRegistro(gestor); break;
+                        case 2: modificarCliente(cliente, gestor); break;
                         case 4: cliente.mostrar(); break;
                         case 6: return;
                     }
@@ -71,5 +71,19 @@ void menuCliente(Cliente cliente, ArchivoManager<Cliente> gestor) {
 void agregarCliente(Cliente cliente, ArchivoManager<Cliente> &gestor) {
     cliente.cargar();
     gestor.escribir(&cliente);
+}
+
+void modificarCliente(Cliente cliente, ArchivoManager<Cliente> &gestor) {
+    cliente.mostrar();
+
+    if(gestor.cantidadRegistros() > 0) {
+        modificarRegistro(gestor);
+    }
+
+    else {
+        rlutil::locate(40, 15);
+        rlutil::setColor(rlutil::RED);
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+    }
 }
 

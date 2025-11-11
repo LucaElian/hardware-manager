@@ -231,7 +231,15 @@ public:
     }
 
     bool leerTodosDetalles(std::vector<DetalleVenta>& detalles) {
-        return _gestorDetalle.leerTodos(detalles); // Llama al ArchivoManager interno de detalles
+        return _gestorDetalle.leerTodos(detalles);
+    }
+
+    int cantidadRegistros() {
+        return _gestorVenta.cantidadRegistros();
+    }
+
+    int cantidadRegistrosActivos() {
+        return _gestorVenta.cantidadRegistrosActivos();
     }
 
 private:

@@ -1,30 +1,43 @@
-#include "clsVenta.h"
-#include <iostream>   // Para std::cout, std::endl
-#include <iomanip>    // Para std::fixed, std::setprecision
+#include <iostream>
+#include <iomanip>
 
-// Hack de rlutil
+using namespace std;
+
+#include "clsVenta.h"
+#include "clsCliente.h"
+#include "clsVendedor.h"
+#include "clsProducto.h"
+#include "utilidades.h"
+#include "ContextoGestores.h"
+#include "UiManager.h"
+#include "artworks.h"
+#include "constantes.h"
+
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
+const size_t OPCIONES = 6;
+const int INICIO_TITULO = 3;
+const int INICIO_TABLA = INICIO_TITULO + 5;
+const int CURSOR_START_X = 9;
+const int CURSOR_START_Y = 4;
+const int PAGINADO = 15;
+static ArchivoManager<Venta> archivo("ventas.dat");
 
-// Constructor
 Venta::Venta(int _id,
-             int _idVenta,
-             int _idCliente,
-             int _legajoVendedor,
-             double _total,
-             bool _estado,
-             Fecha _fechaVenta)
-    : Entidad(_id, _estado, _fechaVenta)  // 1. Inicializa la base con la fecha (puede ser 1/1/1)
-{
-    // 2. Setea los miembros normales
+            int _idVenta,
+            int _idCliente,
+            int _legajoVendedor,
+            double _total,
+            bool _estado,
+            Fecha _fechaVenta)
+    : Entidad(_id, _estado, _fechaVenta){
     idVenta = _idVenta;
     idCliente = _idCliente;
     legajoVendedor = _legajoVendedor;
     total = _total;
 
-    // 3. ¡AQUÍ ESTÁ EL ARREGLO!
     // Revisa si la fecha que llegó es la default (1/1/1)
     if (_fechaVenta.getDia() == 1 && _fechaVenta.getMes() == 1 && _fechaVenta.getAnio() == 1) {
 
@@ -48,83 +61,345 @@ Venta::~Venta() {}
 // --- Implementing pure virtual functions ---
 
 void Venta::cargar() {
-    // Implementación vacía, como la tenías
+    string datos[OPCIONES-1] = {
+                "ID CLIENTE: [           ]",
+                "LEGAJO VENDEDOR: [           ]",
+                "PAGADO: [    ]",
+                "FECHA: [ __/__/____ ]",
+                "ID VENTA: [           ]"};
+
+    agregar("A G R E G A R  V E N T A", INICIO_TITULO, OPCIONES-2);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 58);
+
+    rlutil::setColor(rlutil::RED);
+    rlutil::locate(55, 12);
+    cout << "SOLO ACEPTADO: SI/si o NO/no";
+
+    rlutil::locate(54, 14); 
+    cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
+    
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::showcursor();
+
+
+
+    ContextoGestores contexto;
+    int cantidad = contexto.gestorVenta.cantidadRegistros();
+    setIdVenta(cantidad + 1);
+    rlutil::locate(70, 8); /// ID VENTA
+    cout << idVenta;
+
+
+
+    bool valido = false;
+    Cliente cliente;
+
+    while(!valido){
+        rlutil::locate(46, 8); /// ID CLIENTE
+        idCliente = cargarInt(9);
+        
+        if(contexto.gestorC.leerPorID(idCliente, cliente)){
+            break;
+        } 
+    
+        else {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(44, 20);
+            cout << "ERROR: NO EXISTE CLIENTE CON ESE ID";
+            
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(46, 8);
+            cout << "          ";
+        }
+    }
+    limpiar_linea(44, 22);
+
+
+
+    Vendedor vendedor;
+
+    while(!valido){
+        rlutil::locate(51, 10); /// LEGAJO VENDEDOR
+        legajoVendedor = cargarInt(9);
+
+        if(contexto.gestorV.leerPorID(legajoVendedor, vendedor) && vendedor.getEstado()){
+            break;
+        } 
+
+        else {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(32, 20);
+            cout << "ERROR: NO EXISTE VENDEDOR CON ESE LEGAJO O ESTA INACTIVO";
+            
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(51, 10);
+            cout << "          ";
+        }
+    }
+    limpiar_linea(32, 22);
+
+
+    char est[3];
+    while(!valido){
+    rlutil::setColor(rlutil::MAGENTA);
+    rlutil::locate(42, 12); /// PAGADO (si) O ADEUDADO (no).
+    cargarCadena(est, 3);
+    toUpperCase(est);
+    if(strcmp(est, "SI") != 0 && strcmp(est, "NO") != 0){
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(47, 20);
+        cout << "ERROR: DEBE INGRESAR SI O NO";
+
+        rlutil::locate(42, 12);
+        cout << "  ";
+    } 
+    
+    else valido = true;
+
+    if(strcmp(est, "SI") == 0) estado = true;
+    else estado = false;
+    }
+    limpiar_linea(44, 20);
+
+
+
+    rlutil::locate(41, 14); /// DIA
+    fechaIngreso.setDia();
+
+    while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
+
+        rlutil::locate(41, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(41, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setDia();
+    }
+    limpiar_linea(43, 20);
+
+
+
+    rlutil::locate(44, 14); /// MES
+    fechaIngreso.setMes();
+    while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
+
+        rlutil::locate(44, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "__";
+        rlutil::locate(44, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setMes();
+    }
+    limpiar_linea(43, 20);
+
+
+
+    rlutil::locate(47, 14); /// ANIO
+    fechaIngreso.setAnio();
+    while (fechaIngreso.getAnio() < 1) {
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, 20);
+        cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
+
+        rlutil::locate(47, 14);
+        rlutil::setColor(rlutil::GREY);
+        cout << "____";
+        rlutil::locate(47, 14);
+        rlutil::setColor(rlutil::MAGENTA);
+        fechaIngreso.setAnio();
+    }
+    limpiar_linea(43, 20);
+
+///-------------------------------------------------------------------------
+    system("cls");
+
+    rlutil::hidecursor();
+
+    vector<Producto> productos;
+    contexto.gestorP.leerTodosActivos(productos);
+
+    struct ItemCarrito {
+        int idProducto;
+        string nombre;
+        int cantidad;
+        double precioUnitario;
+        double subtotal;
+    };
+    
+    vector<ItemCarrito> carrito;
+    int cantidadesPedidas[1000] = {0};
+    
+    int idProducto = -1;
+    int cantidadPedida = 0;
+    total = 0.0;
+    int terminacion = 0;
+    
+    Producto producto;
+    while(idProducto != 0 || cantidadPedida != 0 || cantidadPedida > 10) {        
+        system("cls");
+        rlutil::hidecursor();
+        producto.mostrar_activos();
+
+        cin.ignore();
+        system("cls");
+
+        rlutil::setColor(rlutil::WHITE);
+        rlutil::showcursor();
+        mostrar_carrito((int)carrito.size(), 5, &terminacion, total);
+        
+        int y = 5 + 5;
+        for(const auto& item : carrito) {
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(13, y);
+            cout << (char)ASCII_BARRA_VERTICAL << " ";
+            rlutil::setColor(rlutil::GREY);
+            cout << item.idProducto;
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(27, y);
+            cout << (char)ASCII_BARRA_VERTICAL << " ";
+            rlutil::setColor(rlutil::GREY);
+            cout << item.nombre;
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(59, y);
+            cout << (char)ASCII_BARRA_VERTICAL << " ";
+            rlutil::setColor(rlutil::GREY);
+            cout << item.cantidad;
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(71, y);
+            cout << (char)ASCII_BARRA_VERTICAL << " ";
+            rlutil::setColor(rlutil::GREY);
+            cout << item.precioUnitario;
+
+            rlutil::setColor(rlutil::MAGENTA);
+            rlutil::locate(89, y);
+            cout << (char)ASCII_BARRA_VERTICAL << " ";
+            rlutil::setColor(rlutil::GREY);
+            cout << item.subtotal;
+            y++;
+        }
+
+        terminacion+=5 + 5 + 6;
+        caja_producto_cantidad(&idProducto, &cantidadPedida, &terminacion);
+
+        if(idProducto == 0 && cantidadPedida > 0) break;
+
+        else if(idProducto == 0 && cantidadPedida == 0) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, terminacion + 4);
+            cout << "ERROR: NO SE HA INGRESADO NINGUN PRODUCTO";
+            rlutil::hidecursor();
+            cin.ignore();
+            idProducto = -1;
+            continue;
+        }
+        
+        Producto prod;
+        bool encontrado = false;
+        int stockDisponible = 0;
+        
+        for(const auto& p : productos) {
+            if(p.getID() == idProducto && p.getEstado()) {
+                prod = p;
+                encontrado = true;
+                stockDisponible = p.getStock() - cantidadesPedidas[idProducto];
+                break;
+            }
+        }
+        
+        if(!encontrado) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, terminacion + 4);
+            cout << "ERROR: PRODUCTO NO EXISTE O ESTA INACTIVO";
+            rlutil::hidecursor();
+            cin.ignore();
+            continue;
+        }
+        
+        if(cantidadPedida > stockDisponible) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, terminacion + 4);
+            cout << "ERROR: STOCK INSUFICIENTE. DISPONIBLE: " << stockDisponible;
+            rlutil::hidecursor();
+            cin.ignore();
+            continue;
+        }
+        
+        ItemCarrito item;
+        item.idProducto = idProducto;
+        item.nombre = prod.getNombre();
+        item.cantidad = cantidadPedida;
+        item.precioUnitario = prod.getPrecio();
+        item.subtotal = prod.getPrecio() * cantidadPedida;
+        
+        carrito.push_back(item);
+        cantidadesPedidas[idProducto] += cantidadPedida;
+        total += item.subtotal;
+        cantidadPedida++;
+
+        rlutil::locate(45, terminacion + 4);
+        cout << "ARTICULO AGREGADO EXITOSAMENTE";
+        rlutil::hidecursor();
+        cin.ignore();
+    }
+    
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(45, terminacion + 4);
+    cout << "VENTA REGISTRADA EXITOSAMENTE";
+    rlutil::hidecursor();
+    cin.ignore();
 }
+
 
 void Venta::mostrar() const {
-    std::cout << "Venta #" << idVenta << std::endl;
-    std::cout << "Cliente: " << idCliente << std::endl;
-    std::cout << "Vendedor: " << legajoVendedor << std::endl;
-    std::cout << "Total: $" << total << std::endl;
-    std::cout << "Fecha: ";
-    getFecha().MostrarF(); // Usamos el getter de Entidad
-    std::cout << std::endl;
+    string datos_titulo[OPCIONES] = {
+                            "   ID VENTA    ",
+                            "   ID CLIENTE    ",
+                            "   LEGAJO VENDEDOR    ",
+                            "       TOTAL        ",
+                            "   FECHA    ",
+                            "  ESTADO  "
+                            };
+
+    size_t datos_espacios[OPCIONES] = {15, 17, 22, 20, 12, 10};
+
+    rlutil::locate(50, 1);
+    rlutil::setColor(rlutil::MAGENTA);
+    std::cout << "CANTIDAD DE VENTAS: " << archivo.cantidadRegistros();
+
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
 }
 
+
 void Venta::mostrarFila(int posX, int posY) const {
+    rlutil::locate(posX, posY);
+    cout << char(186) << "               " /// ID VENTA
+                    << char(186) << "                 " /// ID CLIENTE
+                    << char(186) << "                      " /// LEGAJO VENDEDOR
+                    << char(186) << "                    " /// TOTAL
+                    << char(186) << "            " /// FECHA
+                    << char(186) << "          " /// ESTADO
+                    << char(186);
 
-    int currentX = posX;
-
-    // Col 1: ID VENTA (Ancho 10)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    std::cout << getIdVenta();
-    currentX += 10 + 1; // Avanza 10 (ancho) + 1 (borde)
-
-    // Col 2: ID CLIENTE (Ancho 12)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    std::cout << getIdCliente();
-    currentX += 12 + 1;
-
-    // Col 3: L.VENDEDOR (Ancho 10)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    std::cout << getLegajoVendedor();
-    currentX += 10 + 1;
-
-    // Col 4: TOTAL (Ancho 15)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    std::cout << std::fixed << std::setprecision(2) << getTotal();
-    currentX += 15 + 1;
-
-    // Col 5: FECHA (Ancho 12)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    getFecha().MostrarF();
-    currentX += 12 + 1;
-
-    // Col 6: ESTADO (Ancho 10)
-    rlutil::locate(currentX, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-    rlutil::setColor(rlutil::WHITE); // Data BLANCA
-    rlutil::locate(currentX + 1, posY);
-    std::cout << (getEstado() ? "ACTIVO" : "INACTIVO");
-    currentX += 10; // Avanza el último ancho (sin borde)
-
-    // Barra final
-    rlutil::locate(currentX + 1, posY);
-    rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
-
-    rlutil::setColor(rlutil::MAGENTA); // Resetea el color
+    rlutil::locate(posX, posY);
+    cout << char(186);
+    rlutil::setColor(rlutil::WHITE);
+    rlutil::locate(11, posY); cout << idVenta;
+    rlutil::locate(27, posY); cout << idCliente;
+    rlutil::locate(45, posY); cout << legajoVendedor;
+    rlutil::locate(68, posY); cout << fixed << setprecision(2) << total;
+    rlutil::locate(89, posY); getFecha().MostrarF(); // << "/" << fechaVenta.getMes() << "/" << fechaVenta.getAnio();
+    rlutil::locate(102, posY); cout << (getEstado() ? "PAGADO" : "ADEUDADO");
+    
+    rlutil::setColor(rlutil::MAGENTA);
 }
 
 
