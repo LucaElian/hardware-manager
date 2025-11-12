@@ -2,6 +2,8 @@
 #include <iostream>     // Para std::cout, std::endl
 #include <iomanip>      // Para std::fixed, std::setprecision
 
+#include "constantes.h"
+
 // Hack para rlutil en Windows
 #define byte windows_byte
 #include "rlutil.h"
@@ -32,7 +34,7 @@ DetalleVenta::~DetalleVenta() {}
 // --- Implementacion con los metodos virtuales ---
 
 void DetalleVenta::cargar() {
-    // Implementación vacía, como la tenías
+    // Implementación vacía
 }
 
 void DetalleVenta::mostrar() const {
@@ -47,14 +49,14 @@ void DetalleVenta::mostrar() const {
 void DetalleVenta::mostrarFila(int posX, int posY) const {
     rlutil::locate(posX, posY);
     // Estructura (7 campos) - Tipeado a mano para evitar "Encoding Changed"
-    std::cout << char(186) << "          " // ID (10)
-              << char(186) << "          " // ID VENTA (10)
-              << char(186) << "          " // ID PROD (10)
-              << char(186) << "        "   // CANT (8)
-              << char(186) << "               " // PRECIO (15)
-              << char(186) << "               " // SUBTOTAL (15)
-              << char(186) << "          " // ESTADO (10)
-              << char(186);
+    std::cout << char(ASCII_BARRA_VERTICAL) << "          " // ID (10)
+              << char(ASCII_BARRA_VERTICAL) << "          " // ID VENTA (10)
+              << char(ASCII_BARRA_VERTICAL) << "          " // ID PROD (10)
+              << char(ASCII_BARRA_VERTICAL) << "        "   // CANT (8)
+              << char(ASCII_BARRA_VERTICAL) << "               " // PRECIO (15)
+              << char(ASCII_BARRA_VERTICAL) << "               " // SUBTOTAL (15)
+              << char(ASCII_BARRA_VERTICAL) << "          " // ESTADO (10)
+              << char(ASCII_BARRA_VERTICAL);
 
     // Rellenar con datos
     // (Cambiado a MAGENTA para que coincida con tus otras tablas)
@@ -94,7 +96,7 @@ void DetalleVenta::mostrarFila(int posX, int posY) const {
    // Barra final
     rlutil::locate(currentX + 1, posY);
     rlutil::setColor(rlutil::MAGENTA); // Barrita VIOLETA
-    std::cout << (char)186; // ║
+    std::cout << (char)ASCII_BARRA_VERTICAL; // ║
 
     rlutil::setColor(rlutil::MAGENTA); // Resetea el color
 }

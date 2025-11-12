@@ -18,12 +18,6 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const size_t OPCIONES = 6;
-const int INICIO_TITULO = 3;
-const int INICIO_TABLA = INICIO_TITULO + 5;
-const int CURSOR_START_X = 9;
-const int CURSOR_START_Y = 4;
-const int PAGINADO = 15;
 static ArchivoManager<Venta> archivo(ARCHIVO_VENTAS);
 
 Venta::Venta(int _id,
@@ -230,8 +224,8 @@ void Venta::cargar() {
     while(idProducto != 0 || gestorVenta.cantidadPedida() != 0 || gestorVenta.cantidadPedida() > 10) {
         system("cls");
         rlutil::hidecursor();
-        //producto.mostrar();
-        gestorVenta.mostrarProductosDisponibles();
+        producto.mostrar();
+        //gestorVenta.mostrarProductosDisponibles();
 
         cin.ignore();
         system("cls");

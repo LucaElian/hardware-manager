@@ -15,12 +15,6 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const size_t OPCIONES = 7;
-const int INICIO_TITULO = 3;
-const int INICIO_TABLA = INICIO_TITULO + 5;
-const int CURSOR_START_X = 3;
-const int CURSOR_START_Y = 4;
-const int PAGINADO = 15;
 static ArchivoManager<Producto> archivo("productos.dat");
 
 void Producto::cargar() {
@@ -259,17 +253,17 @@ void Producto::mostrar_activos() const {
 
 void Producto::mostrarFila(int posX, int posY) const {
     rlutil::locate(posX, posY);
-    cout << char(186) << "          " /// ID
-                    << char(186) << "                                " /// NOMBRE
-                    << char(186) << "            " /// TIPO
-                    << char(186) << "           " /// STOCK
-                    << char(186) << "                    " /// PRECIO
-                    << char(186) << "   /  /     " /// FECHA
-                    << char(186) << "          " /// ESTADO
-                    << char(186);
+    cout << char(ASCII_BARRA_VERTICAL) << "          " /// ID
+                    << char(ASCII_BARRA_VERTICAL) << "                                " /// NOMBRE
+                    << char(ASCII_BARRA_VERTICAL) << "            " /// TIPO
+                    << char(ASCII_BARRA_VERTICAL) << "           " /// STOCK
+                    << char(ASCII_BARRA_VERTICAL) << "                    " /// PRECIO
+                    << char(ASCII_BARRA_VERTICAL) << "   /  /     " /// FECHA
+                    << char(ASCII_BARRA_VERTICAL) << "          " /// ESTADO
+                    << char(ASCII_BARRA_VERTICAL);
 
     rlutil::locate(posX, posY);
-    cout << char(186);
+    cout << char(ASCII_BARRA_VERTICAL);
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(5, posY); cout << id;
     rlutil::locate(16, posY); cout << getNombre();

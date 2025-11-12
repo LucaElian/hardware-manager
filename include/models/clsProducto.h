@@ -12,6 +12,14 @@ private:
     double precio;
     int stock;
 
+    //UI
+    static constexpr size_t OPCIONES = 7;
+    static constexpr int INICIO_TITULO = 3;
+    static constexpr int INICIO_TABLA = INICIO_TITULO + 5;
+    static constexpr int CURSOR_START_X = 3;
+    static constexpr int CURSOR_START_Y = 4;
+    static constexpr int PAGINADO = 15;
+
 public:
     // Constructor
     Producto(int _id = 0,
