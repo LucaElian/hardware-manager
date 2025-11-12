@@ -3,7 +3,7 @@
 #define ARCHIVO_CLIENTES "clientes.dat"
 #define ARCHIVO_PRODUCTOS "productos.dat"
 #define ARCHIVO_VENTAS "ventas.dat"
-#define ARCHIVO_DETALLE_VENTAS "detalle_ventas.dat"
+#define ARCHIVO_DETALLE_VENTAS "detalles_ventas.dat"
 // TECLAS
 #define TECLA_ARRIBA 14
 #define TECLA_ABAJO 15

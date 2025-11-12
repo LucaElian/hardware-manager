@@ -6,9 +6,10 @@
 #include "clsVenta.h"
 #include "clsDetalleVenta.h"
 #include "clsFecha.h"
+#include "constantes.h"
 
 void generarProductos() {
-    ArchivoManager<Producto> gestor("productos.dat");
+    ArchivoManager<Producto> gestor(ARCHIVO_PRODUCTOS);
 
     const char* nombres[] = {
         "MOUSE LOGITECH G502", "TECLADO MECANICO RGB", "MONITOR 27 PULGADAS",
@@ -40,7 +41,7 @@ void generarProductos() {
 }
 
 void generarClientes() {
-    ArchivoManager<Cliente> gestor("clientes.dat");
+    ArchivoManager<Cliente> gestor(ARCHIVO_CLIENTES);
 
     const char* nombres[] = {
         "JUAN PEREZ", "MARIA GONZALEZ", "CARLOS RODRIGUEZ",
@@ -65,7 +66,7 @@ void generarClientes() {
 }
 
 void generarVendedores() {
-    ArchivoManager<Vendedor> gestor("vendedores.dat");
+    ArchivoManager<Vendedor> gestor(ARCHIVO_VENDEDORES);
 
     const char* nombres[] = {
         "ROBERTO DIAZ", "FLORENCIA CASTRO", "MARTIN SILVA",
@@ -98,8 +99,8 @@ void generarVendedores() {
 }
 
 void generarVentas() {
-    ArchivoManager<Venta> gestorVenta("ventas.dat");
-    ArchivoManager<DetalleVenta> gestorDetalle("detalles_venta.dat");
+    ArchivoManager<Venta> gestorVenta(ARCHIVO_VENTAS);
+    ArchivoManager<DetalleVenta> gestorDetalle(ARCHIVO_DETALLE_VENTAS);
 
     int detalleID = 1;
 

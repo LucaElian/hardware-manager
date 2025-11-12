@@ -9,7 +9,7 @@
 template <typename T>
 class ArchivoManager{
 private:
-    char nombreArchivo[100];
+    char nombreArchivo[20];
 
     /** @brief Abre un archivo con el modo especificado y maneja errores 
      * @param modo Modo de apertura del archivo (por ejemplo, "rb", "wb", "ab", etc.)
@@ -216,7 +216,7 @@ public:
             }
         }
 
-        std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
+        //std::cerr << "Error: registro con ID " << id << " no encontrado." << std::endl;
         cerrarArchivo(archivo);
         return false;
     }

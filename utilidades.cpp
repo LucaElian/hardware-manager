@@ -68,7 +68,7 @@ void cargarCadenaConValor(char *cadena, int maxDigits) {
 }
 
 int cargarInt(int maxDigits) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     int i = 0;
     int key;
     char c;
@@ -96,7 +96,7 @@ int cargarInt(int maxDigits) {
 }
 
 int cargarIntConValor(int maxDigits, int valorActual) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     sprintf(buffer, "%d", valorActual);
     int i = strlen(buffer);
     cout << buffer;
@@ -126,7 +126,7 @@ int cargarIntConValor(int maxDigits, int valorActual) {
 }
 
 int cargarIntConValorFormateado(int maxDigits, int valorActual) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     if(maxDigits == 2) {
         sprintf(buffer, "%02d", valorActual);
     } else {
@@ -160,7 +160,7 @@ int cargarIntConValorFormateado(int maxDigits, int valorActual) {
 }
 
 double cargarDouble(int maxDigits, int maxDecimals) {
-    char buffer[maxDigits + maxDecimals + 2] = {0};
+    char buffer[10] = {0};
     int i = 0, decimales = 0;
     bool punto = false;
     int key;
@@ -206,7 +206,7 @@ double cargarDouble(int maxDigits, int maxDecimals) {
 }
 
 double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) {
-    char buffer[maxDigits + maxDecimals + 2] = {0};
+    char buffer[10] = {0};
     sprintf(buffer, "%.2f", valorActual);
     int i = strlen(buffer);
     cout << buffer;
@@ -272,16 +272,11 @@ void toUpperCase(char *texto) {
 }
 
 void centrar_texto(string palabra, char dato, size_t cantidad) {
-
-    // --- INICIO DEL ARREGLO ---
-    // Verificamos si la palabra es MÁS GRANDE que el espacio
     if (palabra.length() >= cantidad) {
         // Si es más grande, la cortamos y la imprimimos
         cout << palabra.substr(0, cantidad);
-        return; // Y nos vamos, sin hacer cuentas raras
+        return;
     }
-    // --- FIN DEL ARREGLO ---
-
     // Si la palabra SÍ entra, hacemos la lógica de centrado normal
     size_t espacios_izq = (cantidad - palabra.length()) / 2;
     size_t espacios_der = cantidad - palabra.length() - espacios_izq;
