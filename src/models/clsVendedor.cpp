@@ -193,60 +193,79 @@ void Vendedor::cargar() {
     limpiar_linea(47, 20);
 
 
-
-    rlutil::locate(41, 14); /// DIA
-    fechaIngreso.setDia();
-
-    while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
-
-        rlutil::locate(41, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "__";
-        rlutil::locate(41, 14);
+    valido = false;
+    while(!valido) {
         rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(41, 14); /// DIA
         fechaIngreso.setDia();
-    }
-    limpiar_linea(45, 20);
+
+        while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
+
+            rlutil::locate(41, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "__";
+            rlutil::locate(41, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setDia();
+        }
+        limpiar_linea(42, 20);
 
 
 
-    rlutil::locate(44, 14); /// MES
-    fechaIngreso.setMes();
-    while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
-
-        rlutil::locate(44, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "__";
-        rlutil::locate(44, 14);
-        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(44, 14); /// MES
         fechaIngreso.setMes();
-    }
-    limpiar_linea(45, 20);
+        while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
+
+            rlutil::locate(44, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "__";
+            rlutil::locate(44, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setMes();
+        }
+        limpiar_linea(42, 20);
 
 
 
-    rlutil::locate(47, 14); /// ANIO
-    fechaIngreso.setAnio();
-    while (fechaIngreso.getAnio() < 1) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
-
-        rlutil::locate(47, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "____";
-        rlutil::locate(47, 14);
-        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(47, 14); /// ANIO
         fechaIngreso.setAnio();
-    }
-    limpiar_linea(45, 20);
+        while (fechaIngreso.getAnio() < 1) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
 
+            rlutil::locate(47, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "____";
+            rlutil::locate(47, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setAnio();
+        }
+        limpiar_linea(42, 20);
+
+        int maxdia = Fecha::diasDelMes(fechaIngreso.getMes(), fechaIngreso.getAnio());
+
+        if (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > maxdia) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(42, 20);
+            cout << "ERROR: LA FECHA INGRESADA NO ES VALIDA";
+            rlutil::setColor(rlutil::GREY);
+            rlutil::locate(41, 14);
+            cout << "__";
+            rlutil::locate(44, 14);
+            cout << "__";
+            rlutil::locate(47, 14);
+            cout << "____";
+        } 
+
+        else  valido = true;
+    }
 
 
     rlutil::setColor(rlutil::WHITE);
@@ -498,54 +517,80 @@ void Vendedor::modificar() {
     }
     limpiar_linea(50, 20);
 
-    rlutil::locate(41, 14); /// DIA
-    fechaIngreso.setDiaConValor();
-
-    while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
-
-        rlutil::locate(41, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "__";
-        rlutil::locate(41, 14);
+    valido = false;
+    while(!valido) {
         rlutil::setColor(rlutil::MAGENTA);
-        fechaIngreso.setDia();
+        rlutil::locate(41, 14); /// DIA
+        fechaIngreso.setDiaConValor();
+
+        while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA DIA ENTRE 01 A 31";
+
+            rlutil::locate(41, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "__";
+            rlutil::locate(41, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setDia();
+        }
+        limpiar_linea(42, 20);
+
+
+
+        rlutil::locate(44, 14); /// MES
+        fechaIngreso.setMesConValor();
+        while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
+
+            rlutil::locate(44, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "__";
+            rlutil::locate(44, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setMes();
+        }
+        limpiar_linea(42, 20);
+
+
+
+        rlutil::locate(47, 14); /// ANIO
+        fechaIngreso.setAnioConValor();
+        while (fechaIngreso.getAnio() < 1) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(45, 20);
+            cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
+
+            rlutil::locate(47, 14);
+            rlutil::setColor(rlutil::GREY);
+            cout << "____";
+            rlutil::locate(47, 14);
+            rlutil::setColor(rlutil::MAGENTA);
+            fechaIngreso.setAnio();
+        }
+        limpiar_linea(42, 20);
+
+        int maxdia = Fecha::diasDelMes(fechaIngreso.getMes(), fechaIngreso.getAnio());
+
+        if(fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > maxdia) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(42, 20);
+            cout << "ERROR: LA FECHA INGRESADA NO ES VALIDA";
+            rlutil::setColor(rlutil::GREY);
+            rlutil::locate(41, 14);
+            cout << "__";
+            rlutil::locate(44, 14);
+            cout << "__";
+            rlutil::locate(47, 14);
+            cout << "____";
+        } 
+
+        else  valido = true;
     }
-    limpiar_linea(45, 20);
 
-    rlutil::locate(44, 14); /// MES
-    fechaIngreso.setMesConValor();
-    while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA MES ENTRE 01 A 12";
-
-        rlutil::locate(44, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "__";
-        rlutil::locate(44, 14);
-        rlutil::setColor(rlutil::MAGENTA);
-        fechaIngreso.setMes();
-    }
-    limpiar_linea(45, 20);
-
-    rlutil::locate(47, 14); /// ANIO
-    fechaIngreso.setAnioConValor();
-    while (fechaIngreso.getAnio() < 1) {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(45, 20);
-        cout << "ERROR: ESCRIBA UN ANIO MAYOR A 0";
-
-        rlutil::locate(47, 14);
-        rlutil::setColor(rlutil::GREY);
-        cout << "____";
-        rlutil::locate(47, 14);
-        rlutil::setColor(rlutil::MAGENTA);
-        fechaIngreso.setAnio();
-    }
-    limpiar_linea(45, 20);
 
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(46, 20);

@@ -28,6 +28,8 @@ class Fecha {
 
         /// METODOS
         void MostrarF() const;
+        static bool EsBisiesto(int y);
+        static int diasDelMes(int m, int y);
 };
 
 #endif // FECHA_H_INCLUDED

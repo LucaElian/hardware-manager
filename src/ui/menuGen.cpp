@@ -77,7 +77,7 @@ void MenuGen::mostrarMenuPrincipal(ContextoGestores gestores, Contexto objetos) 
                         case 2: menuCliente(objetos.cliente, gestores.gestorC); break;
                         case 4: menuVendedor(objetos.vendedor, gestores.gestorV); break;
                         case 6: menuVenta(gestores.gestorVenta, gestores); break;
-                        case 8: menuReports(objetos, gestores);
+                        case 8: menuReports(gestores);
                         case 10: return;
                     }
             }

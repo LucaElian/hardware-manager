@@ -36,4 +36,20 @@ void Fecha::MostrarF() const {
 
     cout << diaString + "/" + mesString + "/" + anioString;
 }
-// comentario para farmear una linea
+
+bool Fecha::EsBisiesto(int y) {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
+int Fecha::diasDelMes(int m, int y) {
+    switch (m) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12: // ENERO - MARZO - MAYO - JULIO - AGOSTO - OCTUBRE - DICIEMBRE
+            return 31; // 31 DIAS MAXIMO
+        case 4: case 6: case 9: case 11: // ABRIL - JUNIO - SEPTIEMBRE - NOVIEMBRE
+            return 30; // 30 DIAS MAXIMO
+        case 2: // FEBRERO
+            return EsBisiesto(y) ? 29 : 28; // SI ES ANIO BISIESTO 29, SINO 28
+        default:
+            return 0; // MES INVALIDO
+    }
+}

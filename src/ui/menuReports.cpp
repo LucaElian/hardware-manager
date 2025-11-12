@@ -38,7 +38,7 @@ DECLARACIONES LOCALES
 #include "menuReports.h"  // El .h de este .cpp. Contiene las declaraciones de 'menuReports()', 'opcion1()', 'opcion2()', etc.
 
 
-void menuReports(Contexto objetos, ContextoGestores& gestores) {
+void menuReports(ContextoGestores& gestores) {
     const int TAMANIO_MENU = 6;
     std::string opciones[TAMANIO_MENU] = {
         "VENTAS DEL ULTIMO CUATRIMESTRE",
@@ -88,25 +88,15 @@ void menuReports(Contexto objetos, ContextoGestores& gestores) {
                     system("cls");
                     cursorActivo = false;
                     switch(opcionSeleccionada) {
-                        case 0:
-                            opcion1(objetos,gestores);
-                            break;
-                        case 2:
-                            opcion2(objetos, gestores);
-                            break;
-                        case 4:
-                            opcion3(objetos, gestores);
-                            break;
-                        case 6:
-                            opcion4(objetos,gestores);
-                            break;
-                        case 8:
-                            opcion5(objetos, gestores);
-                            break;
-                        case 10:
-                            return;
+                        case 0: opcion1(gestores); break;
+                        case 2: opcion2(gestores); break;
+                        case 4: opcion3(gestores); break;
+                        case 6: opcion4(gestores); break;
+                        case 8: opcion5(gestores); break;
+                        case 10: return;
                     }
-                    system("pause");
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
             }
         }
     }
@@ -115,8 +105,7 @@ void menuReports(Contexto objetos, ContextoGestores& gestores) {
 
 //Opción 1: Ventas del último cuatrimestr
 
-void opcion1(Contexto objetos, ContextoGestores& gestor) {
-
+void opcion1(ContextoGestores& gestor) { 
     // --- 1. OBTENER FECHA ACTUAL Y LÍMITE ---
 
     // Obtenemos la fecha actual del sistema
@@ -212,7 +201,7 @@ void opcion1(Contexto objetos, ContextoGestores& gestor) {
 
 //opcion 2 cliente con mas productos elegidos en una venta
 
-void opcion2(Contexto objetos, ContextoGestores& gestor) {
+void opcion2(ContextoGestores& gestor) {
 
     // --- 1. READ DATA FROM FILES ---
 
@@ -326,13 +315,14 @@ void opcion2(Contexto objetos, ContextoGestores& gestor) {
                 break;
             }
         }
-      if(encontrada){
+        if(encontrada){
             rlutil::locate(17, 14); std::cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
             rlutil::locate(17, 15); std::cout << "- L. Vendedor: " << ventaInfoGanadora.getLegajoVendedor();
             rlutil::locate(17, 16); std::cout << "- Monto Total: $" << std::fixed << std::setprecision(2) << ventaInfoGanadora.getTotal();
             rlutil::locate(17, 17); std::cout << "- Fecha:       "; ventaInfoGanadora.getFecha().MostrarF();
-        } else {
-             rlutil::locate(17, 14); std::cout << "(No se encontraron detalles adicionales de la venta)";
+        } 
+        else {
+            rlutil::locate(17, 14); std::cout << "(No se encontraron detalles adicionales de la venta)";
         }
 
         // Ajusta también la posición final del cursor
@@ -345,15 +335,15 @@ void opcion2(Contexto objetos, ContextoGestores& gestor) {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(15, 6);
         std::cout << "ERROR: Se encontro la Venta ID #" << idVentaGanadora
-                  << " con " << maxItems << " items," << std::endl;
+                << " con " << maxItems << " items," << std::endl;
         rlutil::locate(15, 7);
         std::cout << "       pero no se pudo encontrar al Cliente ID #" << idClienteGanador
-                  << " en el archivo." << std::endl;
+                << " en el archivo." << std::endl;
     }
 }
 
 // --- Reporte 3: TOP 3 VENDEDORES ---
-void opcion3(Contexto objetos, ContextoGestores& gestor) {
+void opcion3(ContextoGestores& gestor) {
 
     // --- 1. LEER DATOS ---
     std::vector<Venta> ventas;
@@ -420,19 +410,22 @@ void opcion3(Contexto objetos, ContextoGestores& gestor) {
             topTotales[2] = topTotales[1]; topIndices[2] = topIndices[1];
             topTotales[1] = topTotales[0]; topIndices[1] = topIndices[0];
             // Ponemos el nuevo como 1ro
-            topTotales[0] = totalesVendedor[i]; topIndices[0] = i;
+            topTotales[0] = totalesVendedor[i]; 
+            topIndices[0] = static_cast<int>(i);
         }
         // Si no es mayor que el 1ro, pero sí mayor que el 2do...
         else if (totalesVendedor[i] > topTotales[1]) {
             // Bajamos el 2do a 3ro
             topTotales[2] = topTotales[1]; topIndices[2] = topIndices[1];
             // Ponemos el nuevo como 2do
-            topTotales[1] = totalesVendedor[i]; topIndices[1] = i;
+            topTotales[1] = totalesVendedor[i]; 
+            topIndices[1] = static_cast<int>(i);
         }
         // Si no es mayor que 1ro ni 2do, pero sí mayor que el 3ro...
         else if (totalesVendedor[i] > topTotales[2]) {
             // Lo ponemos como 3ro
-            topTotales[2] = totalesVendedor[i]; topIndices[2] = i;
+            topTotales[2] = totalesVendedor[i]; 
+            topIndices[2] = static_cast<int>(i);
         }
     }
 
@@ -477,7 +470,7 @@ void opcion3(Contexto objetos, ContextoGestores& gestor) {
 }
 
 // --- Reporte 4: PRODUCTO MÁS VENDIDO (Versión Simple) ---
-void opcion4(Contexto objetos, ContextoGestores& gestor) {
+void opcion4(ContextoGestores& gestor) {
 
     // --- 1. LEER DATOS ---
     std::vector<DetalleVenta> detalles;
@@ -555,7 +548,7 @@ void opcion4(Contexto objetos, ContextoGestores& gestor) {
     for (size_t i = 0; i < cantidadVendida.size(); ++i) {
         if (cantidadVendida[i] > maxCantidad) {
             maxCantidad = cantidadVendida[i];
-            indiceGanador = i;
+            indiceGanador = static_cast<int>(i);
         }
     }
 
@@ -592,7 +585,7 @@ void opcion4(Contexto objetos, ContextoGestores& gestor) {
 }
 
 // --- Reporte 5: VENTA CON MAYOR MONTO (Versión Simple) ---
-void opcion5(Contexto objetos, ContextoGestores& gestor) {
+void opcion5(ContextoGestores& gestor) {
 
     // --- 1. LEER DATOS ---
     std::vector<Venta> ventas;
@@ -616,7 +609,7 @@ void opcion5(Contexto objetos, ContextoGestores& gestor) {
         if (ventas[i].getEstado()) { // Solo ventas activas
             if (ventas[i].getTotal() > maxTotal) {
                 maxTotal = ventas[i].getTotal();
-                indiceVentaGanadora = i;
+                indiceVentaGanadora = static_cast<int>(i);
             }
         }
     }
