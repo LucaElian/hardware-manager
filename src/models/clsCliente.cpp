@@ -14,6 +14,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+//Constantes para el RLutil
 const size_t OPCIONES = 3;
 const int INICIO_TITULO = 3;
 const int INICIO_TABLA = INICIO_TITULO + 5;
@@ -21,6 +22,39 @@ const int CURSOR_START_X = 30;
 const int CURSOR_START_Y = 4;
 const int PAGINADO = 15;
 static ArchivoManager<Cliente> archivo("clientes.dat");
+
+// Constructor
+// NOTA: Los valores por defecto NO se repiten aquí.
+Cliente::Cliente(int _id, const char *_nombre, const char *_telefono)
+    : Entidad(_id, true, Fecha(1,1,1)) // <-- Arreglé el 'true' por una Fecha
+{
+    // El cuerpo del constructor va aquí
+    strcpy(nombre, _nombre);
+    strcpy(telefono, _telefono);
+}
+
+// Destructor
+Cliente::~Cliente() {
+    // Vacío, como estaba
+}
+
+// Setters especificos
+void Cliente::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Cliente::setTelefono(const char *_telefono) {
+    strcpy(telefono, _telefono);
+}
+
+// Getters especificos
+const char *Cliente::getNombre() const {
+    return nombre;
+}
+
+const char *Cliente::getTelefono() const {
+    return telefono;
+}
 
 void Cliente::cargar() {
     string datos[OPCIONES] = {
@@ -82,7 +116,7 @@ void Cliente::cargar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefono, MAX_TELEFONO);
-        
+
         size_t registros = clientes.size();
 
         size_t can = strlen(telefono);
@@ -230,9 +264,9 @@ void Cliente::modificar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadenaConValor(telefono, MAX_TELEFONO);
-        
+
         size_t registros = clientes.size();
-        
+
         size_t can = strlen(telefono);
         valido = true;
 

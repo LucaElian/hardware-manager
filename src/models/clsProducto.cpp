@@ -15,6 +15,7 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
+//Constantes para el RLutil
 const size_t OPCIONES = 7;
 const int INICIO_TITULO = 3;
 const int INICIO_TABLA = INICIO_TITULO + 5;
@@ -22,6 +23,64 @@ const int CURSOR_START_X = 3;
 const int CURSOR_START_Y = 4;
 const int PAGINADO = 15;
 static ArchivoManager<Producto> archivo("productos.dat");
+
+// Constructor
+// NOTA: Los valores por defecto NO se repiten aquí.
+Producto::Producto(int _id,
+                   const char *_nombre,
+                   const char _tipo,
+                   int _stock,
+                   double _precio,
+                   bool _estado,
+                   Fecha _fecha)
+    : Entidad(_id, _estado, _fecha) // La lista de inicialización va aquí
+{
+    // El cuerpo del constructor va aquí
+    strcpy(nombre, _nombre);
+    tipo = _tipo;
+    stock = _stock;
+    precio = _precio;
+}
+
+// Destructor
+Producto::~Producto() {
+    // Vacío, como estaba
+}
+
+// Setters especificos
+void Producto::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Producto::setTipo(const char _tipo) {
+    tipo = _tipo;
+}
+
+void Producto::setStock(int _stock) {
+    stock = _stock;
+}
+
+void Producto::setPrecio(double _precio) {
+    precio = _precio;
+}
+
+// Getters especificos
+const char *Producto::getNombre() const {
+    return nombre;
+}
+
+char Producto::getTipo() const {
+    return tipo;
+}
+
+double Producto::getPrecio() const {
+    return precio;
+}
+
+int Producto::getStock() const {
+    return stock;
+}
+
 
 void Producto::cargar() {
     string datos[OPCIONES-1] = {
@@ -67,7 +126,7 @@ void Producto::cargar() {
         size_t can = productos.size();
 
         repetido = false;
-        
+
         for(size_t x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0) {
                 repetido = true;
@@ -313,13 +372,13 @@ void Producto::modificar() {
     stringstream precioStream;
     precioStream << fixed << setprecision(2) << precio;
     string valoresActuales[5] = {
-        nombre, 
-        string(1, tipo), 
-        to_string(stock), 
-        precioStream.str(), 
+        nombre,
+        string(1, tipo),
+        to_string(stock),
+        precioStream.str(),
         fechaStr,
     };
-    
+
     mostrarPlaceholdersActuales(valoresActuales, 5, 32, INICIO_TABLA, 2);
 
     rlutil::locate(81, 8); /// ID
@@ -337,7 +396,7 @@ void Producto::modificar() {
         size_t can = productos.size();
 
         repetido = false;
-        
+
         for(size_t x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0 && productos[x].getID() != id) {
                 repetido = true;

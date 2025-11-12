@@ -31,7 +31,7 @@ void cargarCadena(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
-        else if (i < maxDigits - TECLA_ENTER && c >= 
+        else if (i < maxDigits - TECLA_ENTER && c >=
             TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
             cadena[i++] = c;
             cout << c;
@@ -59,7 +59,7 @@ void cargarCadenaConValor(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
-        else if (i < maxDigits - TECLA_ENTER && c >= 
+        else if (i < maxDigits - TECLA_ENTER && c >=
             TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
             cadena[i++] = c;
             cout << c;
@@ -68,7 +68,7 @@ void cargarCadenaConValor(char *cadena, int maxDigits) {
 }
 
 int cargarInt(int maxDigits) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     int i = 0;
     int key;
     char c;
@@ -96,7 +96,7 @@ int cargarInt(int maxDigits) {
 }
 
 int cargarIntConValor(int maxDigits, int valorActual) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     sprintf(buffer, "%d", valorActual);
     int i = strlen(buffer);
     cout << buffer;
@@ -126,7 +126,7 @@ int cargarIntConValor(int maxDigits, int valorActual) {
 }
 
 int cargarIntConValorFormateado(int maxDigits, int valorActual) {
-    char buffer[maxDigits + 1] = {0};
+    char buffer[10] = {0};
     if(maxDigits == 2) {
         sprintf(buffer, "%02d", valorActual);
     } else {
@@ -160,7 +160,7 @@ int cargarIntConValorFormateado(int maxDigits, int valorActual) {
 }
 
 double cargarDouble(int maxDigits, int maxDecimals) {
-    char buffer[maxDigits + maxDecimals + 2] = {0};
+    char buffer[10] = {0};
     int i = 0, decimales = 0;
     bool punto = false;
     int key;
@@ -206,11 +206,11 @@ double cargarDouble(int maxDigits, int maxDecimals) {
 }
 
 double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) {
-    char buffer[maxDigits + maxDecimals + 2] = {0};
+    char buffer[10] = {0};
     sprintf(buffer, "%.2f", valorActual);
     int i = strlen(buffer);
     cout << buffer;
-    
+
     int decimales = 0;
     bool punto = false;
     for(int j = 0; j < i; j++) {
@@ -220,7 +220,7 @@ double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) 
             decimales++;
         }
     }
-    
+
     int key;
     char c;
 

@@ -75,13 +75,11 @@ void Venta::cargar() {
     rlutil::locate(55, 12);
     cout << "SOLO ACEPTADO: SI/si o NO/no";
 
-    rlutil::locate(54, 14); 
+    rlutil::locate(54, 14);
     cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
-    
+
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
-
-
 
     ContextoGestores contexto;
     int cantidad = contexto.gestorVenta.cantidadRegistros();
@@ -97,16 +95,16 @@ void Venta::cargar() {
     while(!valido){
         rlutil::locate(46, 8); /// ID CLIENTE
         idCliente = cargarInt(9);
-        
+
         if(contexto.gestorC.leerPorID(idCliente, cliente)){
             break;
-        } 
-    
+        }
+
         else {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(44, 20);
             cout << "ERROR: NO EXISTE CLIENTE CON ESE ID";
-            
+
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(46, 8);
             cout << "          ";
@@ -124,13 +122,13 @@ void Venta::cargar() {
 
         if(contexto.gestorV.leerPorID(legajoVendedor, vendedor) && vendedor.getEstado()){
             break;
-        } 
+        }
 
         else {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(32, 20);
             cout << "ERROR: NO EXISTE VENDEDOR CON ESE LEGAJO O ESTA INACTIVO";
-            
+
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(51, 10);
             cout << "          ";
@@ -152,8 +150,8 @@ void Venta::cargar() {
 
         rlutil::locate(42, 12);
         cout << "  ";
-    } 
-    
+    }
+
     else valido = true;
 
     if(strcmp(est, "SI") == 0) estado = true;
@@ -231,17 +229,17 @@ void Venta::cargar() {
         double precioUnitario;
         double subtotal;
     };
-    
+
     vector<ItemCarrito> carrito;
     int cantidadesPedidas[1000] = {0};
-    
+
     int idProducto = -1;
     int cantidadPedida = 0;
     total = 0.0;
     int terminacion = 0;
-    
+
     Producto producto;
-    while(idProducto != 0 || cantidadPedida != 0 || cantidadPedida > 10) {        
+    while(idProducto != 0 || cantidadPedida != 0 || cantidadPedida > 10) {
         system("cls");
         rlutil::hidecursor();
         producto.mostrar_activos();
@@ -252,7 +250,7 @@ void Venta::cargar() {
         rlutil::setColor(rlutil::WHITE);
         rlutil::showcursor();
         mostrar_carrito((int)carrito.size(), 5, &terminacion, total);
-        
+
         int y = 5 + 5;
         for(const auto& item : carrito) {
             rlutil::setColor(rlutil::MAGENTA);
@@ -301,11 +299,11 @@ void Venta::cargar() {
             idProducto = -1;
             continue;
         }
-        
+
         Producto prod;
         bool encontrado = false;
         int stockDisponible = 0;
-        
+
         for(const auto& p : productos) {
             if(p.getID() == idProducto && p.getEstado()) {
                 prod = p;
@@ -314,7 +312,7 @@ void Venta::cargar() {
                 break;
             }
         }
-        
+
         if(!encontrado) {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
@@ -323,7 +321,7 @@ void Venta::cargar() {
             cin.ignore();
             continue;
         }
-        
+
         if(cantidadPedida > stockDisponible) {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
@@ -332,14 +330,14 @@ void Venta::cargar() {
             cin.ignore();
             continue;
         }
-        
+
         ItemCarrito item;
         item.idProducto = idProducto;
         item.nombre = prod.getNombre();
         item.cantidad = cantidadPedida;
         item.precioUnitario = prod.getPrecio();
         item.subtotal = prod.getPrecio() * cantidadPedida;
-        
+
         carrito.push_back(item);
         cantidadesPedidas[idProducto] += cantidadPedida;
         total += item.subtotal;
@@ -350,7 +348,7 @@ void Venta::cargar() {
         rlutil::hidecursor();
         cin.ignore();
     }
-    
+
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(45, terminacion + 4);
     cout << "VENTA REGISTRADA EXITOSAMENTE";
@@ -398,7 +396,7 @@ void Venta::mostrarFila(int posX, int posY) const {
     rlutil::locate(68, posY); cout << fixed << setprecision(2) << total;
     rlutil::locate(89, posY); getFecha().MostrarF(); // << "/" << fechaVenta.getMes() << "/" << fechaVenta.getAnio();
     rlutil::locate(102, posY); cout << (getEstado() ? "PAGADO" : "ADEUDADO");
-    
+
     rlutil::setColor(rlutil::MAGENTA);
 }
 

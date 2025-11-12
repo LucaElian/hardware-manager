@@ -23,12 +23,68 @@ const int CURSOR_START_Y = 4;
 const int PAGINADO = 15;
 static ArchivoManager<Vendedor> archivo("vendedores.dat");
 
+Vendedor::Vendedor(int _legajo,
+                   const char *_nombre,
+                   const char *_telefonoVendedor,
+                   const char *_dni,
+                   bool _estado,
+                   Fecha _fecha)
+    : Entidad(_legajo, _estado, _fecha) // El legajo se pasa como ID a la Entidad
+{
+    // El cuerpo del constructor va aquí
+    legajo = _legajo; // Asigna también al miembro 'legajo' local
+    strcpy(nombre, _nombre);
+    strcpy(telefonoVendedor, _telefonoVendedor);
+    strcpy(dni, _dni);
+}
+
+// Destructor
+Vendedor::~Vendedor() {
+    // Vacío, como estaba
+}
+
+// Setters especificos
+void Vendedor::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Vendedor::setLegajo(int _legajo) {
+    legajo = _legajo;
+    // Quizás también quieras actualizar el ID de la Entidad base:
+    // setID(_legajo);
+}
+
+void Vendedor::setTelefonoVendedor(const char *_telefonoVendedor) {
+    strcpy(telefonoVendedor, _telefonoVendedor);
+}
+
+void Vendedor::setDni(const char *_dni) {
+    strcpy(dni, _dni);
+}
+
+// Getters especificos
+const char *Vendedor::getNombre() const {
+    return nombre;
+}
+
+const char *Vendedor::getTelefonoVendedor() const {
+    return telefonoVendedor;
+}
+
+const char *Vendedor::getDni() const {
+    return dni;
+}
+
+int Vendedor::getLegajo() const {
+    return legajo;
+}
+
 void Vendedor::cargar() {
     string datos[OPCIONES-1] = {
-        "NOMBRE: [                                ]", 
+        "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
-        "FECHA: [ __/__/____ ]"                     ,  
+        "FECHA: [ __/__/____ ]"                     ,
         "ID: [          ]"                          };
 
     agregar("A G R E G A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
@@ -95,7 +151,7 @@ void Vendedor::cargar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefonoVendedor, MAX_TELEFONO);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(telefonoVendedor);
@@ -146,7 +202,7 @@ void Vendedor::cargar() {
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
         cargarCadena(dni, MAX_DNI);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(dni);
@@ -326,7 +382,7 @@ void Vendedor::mostrarFila(int posX, int posY) const {
 
 void Vendedor::modificar() {
     string datos[OPCIONES-1] = {
-        "NOMBRE: [                                ]", 
+        "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
         "FECHA: [ __/__/____ ]"                     };
@@ -355,7 +411,7 @@ void Vendedor::modificar() {
     string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
     string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
     string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
-    
+
     string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
     mostrarPlaceholdersActuales(valoresActuales, 4, 32, INICIO_TABLA, 2);
 
@@ -401,7 +457,7 @@ void Vendedor::modificar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadenaConValor(telefonoVendedor, MAX_TELEFONO);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(telefonoVendedor);
@@ -452,7 +508,7 @@ void Vendedor::modificar() {
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
         cargarCadenaConValor(dni, MAX_DNI);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(dni);
