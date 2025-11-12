@@ -29,7 +29,7 @@ void Cliente::cargar() {
                 "ID: [          ]"                          };
 
     agregar("A G R E G A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1]);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -45,7 +45,8 @@ void Cliente::cargar() {
     cout << id;
 
 
-
+    vector<Cliente> clientes;
+    archivo.leer(clientes);
     bool valido = false;
 
     while(!valido) {
@@ -54,7 +55,6 @@ void Cliente::cargar() {
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
-
         valido = true;
 
         for(size_t x = 0; x < can; x++) {
@@ -77,9 +77,6 @@ void Cliente::cargar() {
     }
     limpiar_linea(52, 16);
 
-
-    vector<Cliente> clientes;
-    archivo.leer(clientes);
     valido = false;
 
     while(!valido) {
@@ -172,12 +169,15 @@ void Cliente::mostrarFila(int posX, int posY) const {
 }
 
 void Cliente::modificar() {
-    string datos[OPCIONES-1] = {
-        "NOMBRE: [                                ]",
-        "TELEFONO: [                 ]"             };
+    string datos[OPCIONES] = {
+            "NOMBRE: [                                ]",
+            "TELEFONO: [                 ]"             ,
+            "ID: [          ]"  };
+
+    rlutil::setColor(rlutil::MAGENTA);
 
     agregar("M O D I F I C A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-2]);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -187,13 +187,19 @@ void Cliente::modificar() {
     rlutil::showcursor();
 
     string valoresActuales[2] = {nombre, telefono};
-    mostrarPlaceholdersActuales(valoresActuales, 2, 32, 8, 2);
+    mostrarPlaceholdersActuales(valoresActuales, 2, 32, INICIO_TABLA, 2);
 
+    rlutil::locate(81, 8); /// ID
+    cout << id;
+
+
+    vector<Cliente> clientes;
+    archivo.leer(clientes);
     bool valido = false;
 
     while(!valido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, MAX_NOMBRE);
+        cargarCadenaConValor(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
         size_t can = strlen(nombre);
@@ -218,25 +224,31 @@ void Cliente::modificar() {
         }
     }
     limpiar_linea(52, 16);
+
     valido = false;
 
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
-        cargarCadena(telefono, MAX_TELEFONO);
+        cargarCadenaConValor(telefono, MAX_TELEFONO);
+        
+        size_t registros = clientes.size();
         
         size_t can = strlen(telefono);
         valido = true;
 
         if(can < 10) {
             rlutil::setColor(rlutil::RED);
+            limpiar_linea(47, 16);
             rlutil::locate(49, 16);
             cout << "ERROR: MINIMO 10 NUMEROS";
             valido = false;
         }
+
         else {
             for(size_t x = 0; x < can; x++) {
                 if(!(telefono[x] >= '0' && telefono[x] <= '9')) {
                     rlutil::setColor(rlutil::RED);
+                    limpiar_linea(47, 16);
                     rlutil::locate(52, 16);
                     cout << "ERROR: SOLO NUMEROS";
                     valido = false;
@@ -245,17 +257,28 @@ void Cliente::modificar() {
             }
         }
 
+        for(size_t x = 0; x < registros; x++) {
+            if(strcmp(clientes[x].getTelefono(), telefono) == 0 && clientes[x].getID() != id) {
+                rlutil::setColor(rlutil::RED);
+                limpiar_linea(47, 16);
+                rlutil::locate(47, 16);
+                cout << "ERROR: TELEFONO YA EXISTENTE";
+                valido = false;
+                break;
+            }
+        }
+
         if(!valido) {
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(44, 10);
-            cout << "                         ";
+            cout << "               ";
         }
     }
+    limpiar_linea(47, 16);
 
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(46, 16);
     cout << "CLIENTE MODIFICADO EXITOSAMENTE";
 
     rlutil::hidecursor();
-    estado = true;
 }

@@ -28,11 +28,39 @@ void cargarCadena(char *cadena, int maxDigits) {
 
         if (c == TECLA_BACKSPACE && i > 0) {
             i--;
-            cout << "\b \b"; /// BORRA CARACTER EN PANTALLA
+            cout << "\b \b";
         }
 
         else if (i < maxDigits - TECLA_ENTER && c >= 
-            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) { /// CARACTERES IMPRIMIBLES
+            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
+            cadena[i++] = c;
+            cout << c;
+        }
+    }
+}
+
+void cargarCadenaConValor(char *cadena, int maxDigits) {
+    int i = strlen(cadena);
+    cout << cadena;
+    int key;
+    char c;
+
+    while (true) {
+        key = rlutil::getkey();
+        c = static_cast<char>(key);
+
+        if (c == TECLA_ENTER && i > 0) {
+            cadena[i] = '\0';
+            break;
+        }
+
+        if (c == TECLA_BACKSPACE && i > 0) {
+            i--;
+            cout << "\b \b";
+        }
+
+        else if (i < maxDigits - TECLA_ENTER && c >= 
+            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
             cadena[i++] = c;
             cout << c;
         }
@@ -40,7 +68,7 @@ void cargarCadena(char *cadena, int maxDigits) {
 }
 
 int cargarInt(int maxDigits) {
-    char buffer[maxDigits] = {0};
+    char buffer[maxDigits + 1] = {0};
     int i = 0;
     int key;
     char c;
@@ -67,10 +95,132 @@ int cargarInt(int maxDigits) {
     return atoi(buffer);
 }
 
+int cargarIntConValor(int maxDigits, int valorActual) {
+    char buffer[maxDigits + 1] = {0};
+    sprintf(buffer, "%d", valorActual);
+    int i = strlen(buffer);
+    cout << buffer;
+    int key;
+    char c;
+
+    while (true) {
+        key = rlutil::getkey();
+        c = static_cast<char>(key);
+
+        if (c == TECLA_ENTER && i > 0) {
+            buffer[i] = '\0';
+            break;
+        }
+
+        if (c == TECLA_BACKSPACE && i > 0) {
+            i--;
+            cout << "\b \b";
+        }
+
+        else if (i < maxDigits && c >= '0' && c <= '9') {
+            buffer[i++] = c;
+            cout << c;
+        }
+    }
+    return atoi(buffer);
+}
+
+int cargarIntConValorFormateado(int maxDigits, int valorActual) {
+    char buffer[maxDigits + 1] = {0};
+    if(maxDigits == 2) {
+        sprintf(buffer, "%02d", valorActual);
+    } else {
+        sprintf(buffer, "%d", valorActual);
+    }
+    int i = strlen(buffer);
+    cout << buffer;
+    int key;
+    char c;
+
+    while (true) {
+        key = rlutil::getkey();
+        c = static_cast<char>(key);
+
+        if (c == TECLA_ENTER && i > 0) {
+            buffer[i] = '\0';
+            break;
+        }
+
+        if (c == TECLA_BACKSPACE && i > 0) {
+            i--;
+            cout << "\b \b";
+        }
+
+        else if (i < maxDigits && c >= '0' && c <= '9') {
+            buffer[i++] = c;
+            cout << c;
+        }
+    }
+    return atoi(buffer);
+}
+
 double cargarDouble(int maxDigits, int maxDecimals) {
-    char buffer[maxDigits + maxDecimals + 2] = {0}; // Extra espacio para el punto decimal y el terminador nulo
+    char buffer[maxDigits + maxDecimals + 2] = {0};
     int i = 0, decimales = 0;
     bool punto = false;
+    int key;
+    char c;
+
+    while (true) {
+        key = rlutil::getkey();
+        c = static_cast<char>(key);
+
+        if (c == TECLA_ENTER && i > 0) {
+            buffer[i] = '\0';
+            break;
+        }
+
+        if (c == TECLA_BACKSPACE && i > 0) {
+            i--;
+            if (buffer[i] == '.') punto = false;
+            else if (punto && decimales > 0) decimales--;
+            cout << "\b \b";
+        }
+
+        else if ((c == '.' || c == ',') && !punto && i > 0 && i < maxDigits - 1) {
+            buffer[i++] = '.';
+            punto = true;
+            cout << c;
+        }
+
+        else if ((c >= '0' && c <= '9') && i < maxDigits) {
+            if (!punto) {
+                buffer[i++] = c;
+                cout << c;
+            }
+            else {
+                if (decimales < maxDecimals) {
+                    buffer[i++] = c;
+                decimales++;
+                    cout << c;
+                }
+            }
+        }
+    }
+    return atof(buffer);
+}
+
+double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) {
+    char buffer[maxDigits + maxDecimals + 2] = {0};
+    sprintf(buffer, "%.2f", valorActual);
+    int i = strlen(buffer);
+    cout << buffer;
+    
+    int decimales = 0;
+    bool punto = false;
+    for(int j = 0; j < i; j++) {
+        if(buffer[j] == '.') {
+            punto = true;
+        } else if(punto) {
+            decimales++;
+        }
+    }
+    
     int key;
     char c;
 

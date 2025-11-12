@@ -33,7 +33,7 @@ void Producto::cargar() {
                 "ID: [          ]"                          };
 
     agregar("A G R E G A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2]);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
@@ -283,7 +283,7 @@ void Producto::mostrarFila(int posX, int posY) const {
 }
 
 void Producto::modificar() {
-    string datos[OPCIONES] = {
+    string datos[OPCIONES-1] = {
                 "NOMBRE: [                                ]",
                 "TIPO: [   ]"                               ,
                 "STOCK: [           ]"                      ,
@@ -291,8 +291,10 @@ void Producto::modificar() {
                 "FECHA: [ __/__/____ ]"                     ,
                 "ID: [          ]"                          };
 
-    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1]);
+    rlutil::setColor(rlutil::MAGENTA);
+
+    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
+    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
@@ -304,39 +306,39 @@ void Producto::modificar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-    // Mostrar datos ACTUALES como placeholders
     string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
     string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
     string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
-    
+
     stringstream precioStream;
     precioStream << fixed << setprecision(2) << precio;
-    string valoresActuales[6] = {
+    string valoresActuales[5] = {
         nombre, 
         string(1, tipo), 
         to_string(stock), 
         precioStream.str(), 
         fechaStr,
-        to_string(id)
     };
     
-    mostrarPlaceholdersActuales(valoresActuales, 6, 32, INICIO_TABLA, 2); // Cambiar de 33 a 32
+    mostrarPlaceholdersActuales(valoresActuales, 5, 32, INICIO_TABLA, 2);
 
+    rlutil::locate(81, 8); /// ID
+    cout << id;
+
+    vector<Producto> productos;
+    archivo.leer(productos);
     bool repetido = true;
 
     while(repetido) {
         rlutil::locate(42, 8); /// NOMBRE
-        cargarCadena(nombre, 31);
+        cargarCadenaConValor(nombre, MAX_NOMBRE);
         toUpperCase(nombre);
 
-        vector<Producto> productos;
-        archivo.leer(productos);
         size_t can = productos.size();
 
         repetido = false;
         
         for(size_t x = 0; x < can; x++) {
-            // NO REPETIR CON EL MISMO ID (es el que estamos modificando)
             if(strcmp(productos[x].getNombre(), nombre) == 0 && productos[x].getID() != id) {
                 repetido = true;
                 break;
@@ -350,7 +352,7 @@ void Producto::modificar() {
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(42, 8);
-            cout << "                                  ";
+            cout << "                              ";
         }
     }
     limpiar_linea(43, 22);
@@ -358,7 +360,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(40, 10); /// TIPO
-    cargarCadena(&tipo, 2);
+    cargarCadenaConValor(&tipo, 2);
     toUpperCase(&tipo);
 
     while(tipo != 'A' && tipo != 'B'){
@@ -379,7 +381,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(41, 12); /// STOCK
-    stock = cargarInt(9);
+    stock = cargarIntConValor(9, stock);
 
     while(stock <= 0) {
         rlutil::setColor(rlutil::RED);
@@ -398,7 +400,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(42, 14); /// PRECIO
-    precio = cargarDouble(15, 2);
+    precio = cargarDoubleConValor(15, 2, precio);
 
     while(precio <= 0) {
         rlutil::setColor(rlutil::RED);
@@ -417,7 +419,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(41, 16); /// DIA
-    fechaIngreso.setDia();
+    fechaIngreso.setDiaConValor();
 
     while (fechaIngreso.getDia() < 1 || fechaIngreso.getDia() > 31) {
         rlutil::setColor(rlutil::RED);
@@ -436,7 +438,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(44, 16); /// MES
-    fechaIngreso.setMes();
+    fechaIngreso.setMesConValor();
     while (fechaIngreso.getMes() < 1 || fechaIngreso.getMes() > 12) {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(45, 22);
@@ -454,7 +456,7 @@ void Producto::modificar() {
 
 
     rlutil::locate(47, 16); /// ANIO
-    fechaIngreso.setAnio();
+    fechaIngreso.setAnioConValor();
     while (fechaIngreso.getAnio() < 1) {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(45, 22);

@@ -15,17 +15,17 @@ private:
 public:
     // Constructor (solo declaración, valores por defecto van aquí)
     Venta(int _id = 0,
-          int _idVenta = 0,
-          int _idCliente = 0,
-          int _legajoVendedor = 0,
-          double _total = 0.0,
-          bool _estado = true,
-          Fecha _fechaVenta = Fecha());
+        int _idVenta = 0,
+        int _idCliente = 0,
+        int _legajoVendedor = 0,
+        double _total = 0.0,
+        bool _estado = true,
+        Fecha _fechaVenta = Fecha());
 
     // Destructor
     ~Venta();
 
-    // MÃ©todos virtuales heredados
+    // Metodos virtuales heredados
     void cargar() override;
     void mostrar() const override;
     void mostrarFila(int posX, int posY) const override;

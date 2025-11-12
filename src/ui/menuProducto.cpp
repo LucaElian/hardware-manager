@@ -58,7 +58,7 @@ void menuProducto(Producto producto, ArchivoManager<Producto> gestor) {
                     switch(opcion) {
                         case 0: agregarProducto(producto, gestor); break;
                         case 2: eliminarProducto(producto, gestor); break;
-                        case 4: modificarRegistro(gestor); break;
+                        case 4: modificarProducto(producto, gestor); break;
                         case 6: producto.mostrar(); break;
                         case 8: return;
                     }
@@ -74,10 +74,11 @@ void agregarProducto(Producto producto, ArchivoManager<Producto> &gestor) {
     gestor.escribir(&producto);
 }
 
-void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor) {
-    producto.mostrar_activos();
 
-    if(gestor.cantidadRegistrosActivos() > 0) {
+void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor) {
+    producto.mostrar();
+
+    if(gestor.cantidadRegistros() > 0) {
         int idEliminar;
         caja_eliminar(&idEliminar, 52, 24);
 
@@ -90,8 +91,23 @@ void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor) {
         else {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, 24+3);
-            cout << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
+            cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
         }
+    }
+
+    else {
+        rlutil::locate(40, 15);
+        rlutil::setColor(rlutil::RED);
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+    }
+}
+
+
+void modificarProducto(Producto producto, ArchivoManager<Producto>& gestor){
+    producto.mostrar();
+    
+    if(gestor.cantidadRegistros() > 0) {
+        modificarRegistro(gestor);
     }
 
     else {

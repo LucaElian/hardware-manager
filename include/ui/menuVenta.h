@@ -5,6 +5,5 @@
 #include "ContextoGestores.h"
 
 void menuVenta(GestorVenta& gestor, ContextoGestores& contexto);
-void procesarVenta(ContextoGestores& contexto, GestorVenta& gestor);
 
 #endif // MENUVENTA_H_INCLUDED

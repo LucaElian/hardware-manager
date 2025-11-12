@@ -3,5 +3,6 @@
 
 void menuCliente(Cliente, ArchivoManager<Cliente>);
 void agregarCliente(Cliente cliente, ArchivoManager<Cliente> &gestor);
+void modificarCliente(Cliente cliente, ArchivoManager<Cliente> &gestor);
 
 #endif // MENUCLIENTE_H_INCLUDED
