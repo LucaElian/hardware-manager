@@ -21,20 +21,22 @@ using namespace std;
 static ArchivoManager<Venta> archivo(ARCHIVO_VENTAS);
 
 Venta::Venta(int _id,
-            int _idVenta,
-            int _idCliente,
-            int _legajoVendedor,
-            double _total,
-            bool _estado,
-            Fecha _fechaVenta)
-    : Entidad(_id, _estado, _fechaVenta){
+             int _idVenta,
+             int _idCliente,
+             int _legajoVendedor,
+             double _total,
+             bool _estado,
+             Fecha _fechaVenta)
+    : Entidad(_id, _estado, _fechaVenta)
+{
     idVenta = _idVenta;
     idCliente = _idCliente;
     legajoVendedor = _legajoVendedor;
     total = _total;
 
     // Revisa si la fecha que llegó es la default (1/1/1)
-    if (_fechaVenta.getDia() == 1 && _fechaVenta.getMes() == 1 && _fechaVenta.getAnio() == 1) {
+    if (_fechaVenta.getDia() == 1 && _fechaVenta.getMes() == 1 && _fechaVenta.getAnio() == 1)
+    {
 
         // 4. Si era default, la pisa con la fecha actual del sistema
         time_t now = time(0);
@@ -44,7 +46,9 @@ Venta::Venta(int _id,
         this->fechaVenta = fechaActual; // Actualiza el miembro local
         setFecha(fechaActual.getDia(), fechaActual.getMes(), fechaActual.getAnio()); // Actualiza el miembro de la clase base (Entidad)
 
-    } else {
+    }
+    else
+    {
         // 5. Si no era default, solo setea el miembro local
         this->fechaVenta = _fechaVenta;
     }
@@ -55,24 +59,27 @@ Venta::~Venta() {}
 
 // Metodos virtuales heredados
 
-void Venta::cargar() {
-    string datos[OPCIONES-1] = {
-                "ID CLIENTE: [           ]",
-                "LEGAJO VENDEDOR: [           ]",
-                "PAGADO: [    ]",
-                "FECHA: [ __/__/____ ]",
-                "ID VENTA: [           ]"};
+void Venta::cargar()
+{
+    string datos[VENTA_OPCIONES-1] =
+    {
+        "ID CLIENTE: [           ]",
+        "LEGAJO VENDEDOR: [           ]",
+        "PAGADO: [    ]",
+        "FECHA: [ __/__/____ ]",
+        "ID VENTA: [           ]"
+    };
 
-    agregar("A G R E G A R  V E N T A", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 58);
+    agregar("A G R E G A R  V E N T A", VENTA_INICIO_TITULO, VENTA_OPCIONES-2);
+    agregar_opciones(datos, VENTA_INICIO_TABLA, VENTA_OPCIONES-1, datos[VENTA_OPCIONES-2], 58);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(55, 12);
     cout << "SOLO ACEPTADO: SI/si o NO/no";
 
-    rlutil::locate(54, 14); 
+    rlutil::locate(54, 14);
     cout << "FECHA ACEPTADA: dd/mm/aaaa o d/m/aaaa";
-    
+
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
@@ -85,43 +92,46 @@ void Venta::cargar() {
     bool valido = false;
     Cliente cliente;
 
-    while(!valido){
+    while(!valido)
+    {
         rlutil::locate(46, 8); /// ID CLIENTE
         idCliente = cargarInt(9);
-        
-        if(contexto.gestorC.leerPorID(idCliente, cliente)){
+
+        if(contexto.gestorC.leerPorID(idCliente, cliente))
+        {
             break;
-        } 
-    
-        else {
+        }
+
+        else
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(44, 20);
             cout << "ERROR: NO EXISTE CLIENTE CON ESE ID";
-            
+
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(46, 8);
             cout << "          ";
         }
     }
     limpiar_linea(44, 22);
-
-
-
     Vendedor vendedor;
 
-    while(!valido){
+    while(!valido)
+    {
         rlutil::locate(51, 10); /// LEGAJO VENDEDOR
         legajoVendedor = cargarInt(9);
 
-        if(contexto.gestorV.leerPorID(legajoVendedor, vendedor) && vendedor.getEstado()){
+        if(contexto.gestorV.leerPorID(legajoVendedor, vendedor) && vendedor.getEstado())
+        {
             break;
-        } 
+        }
 
-        else {
+        else
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(32, 20);
             cout << "ERROR: NO EXISTE VENDEDOR CON ESE LEGAJO O ESTA INACTIVO";
-            
+
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(51, 10);
             cout << "          ";
@@ -131,24 +141,26 @@ void Venta::cargar() {
 
 
     char est[3];
-    while(!valido){
-    rlutil::setColor(rlutil::MAGENTA);
-    rlutil::locate(42, 12); /// PAGADO (si) O ADEUDADO (no).
-    cargarCadena(est, 3);
-    toUpperCase(est);
-    if(strcmp(est, "SI") != 0 && strcmp(est, "NO") != 0){
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(47, 20);
-        cout << "ERROR: DEBE INGRESAR SI O NO";
+    while(!valido)
+    {
+        rlutil::setColor(rlutil::MAGENTA);
+        rlutil::locate(42, 12); /// PAGADO (si) O ADEUDADO (no).
+        cargarCadena(est, 3);
+        toUpperCase(est);
+        if(strcmp(est, "SI") != 0 && strcmp(est, "NO") != 0)
+        {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(47, 20);
+            cout << "ERROR: DEBE INGRESAR SI O NO";
 
-        rlutil::locate(42, 12);
-        cout << "  ";
-    } 
-    
-    else valido = true;
+            rlutil::locate(42, 12);
+            cout << "  ";
+        }
 
-    if(strcmp(est, "SI") == 0) estado = true;
-    else estado = false;
+        else valido = true;
+
+        if(strcmp(est, "SI") == 0) estado = true;
+        else estado = false;
     }
     limpiar_linea(44, 20);
 
@@ -240,9 +252,10 @@ void Venta::cargar() {
     gestorVenta.iniciarNuevaVenta(idCliente, legajoVendedor);
     int idProducto = -1;
     int terminacion = 0;
-    
+
     Producto producto;
-    while(idProducto != 0 || gestorVenta.cantidadPedida() != 0 || gestorVenta.cantidadPedida() > 10) {
+    while(idProducto != 0 || gestorVenta.cantidadPedida() != 0 || gestorVenta.cantidadPedida() > 10)
+    {
         system("cls");
         rlutil::hidecursor();
         producto.mostrar();
@@ -254,9 +267,10 @@ void Venta::cargar() {
         rlutil::setColor(rlutil::WHITE);
         rlutil::showcursor();
         mostrar_carrito((int)gestorVenta.getCarrito().size(), 5, &terminacion, gestorVenta.getTotalCarrito());
-        
-        int y = 5 + 5;
-        for(const auto& item : gestorVenta.getCarrito()) {
+
+        int y = 10;
+        for(const auto& item : gestorVenta.getCarrito())
+        {
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(13, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
@@ -284,18 +298,41 @@ void Venta::cargar() {
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(89, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
+
             rlutil::setColor(rlutil::GREY);
             cout << item.getSubtotal();
             y++;
         }
 
         terminacion+=5 + 5 + 6;
+        int posY_hint = terminacion + 4;
+        rlutil::setColor(rlutil::GREY);
+        rlutil::locate(39, posY_hint);
+        cout << "(Ingrese ID Producto = 0, o Cantidad = 0 para cerrar el carrito)";
+        rlutil::setColor(rlutil::MAGENTA);
+
         int cantidadActual = gestorVenta.cantidadPedida();
         caja_producto_cantidad(&idProducto, &cantidadActual, &terminacion);
 
-        if(idProducto == 0 && cantidadActual > 0) break;
+        if(idProducto == 0 || cantidadActual == 0){
+           limpiar_linea(39, posY_hint);
+           cout << "                                   ";
+           if (gestorVenta.cantidadPedida() == 0)
+                {
+                    rlutil::setColor(rlutil::RED);
+                    rlutil::locate(39, posY_hint);
+                    cout << "ERROR: No hay productos. Agregue al menos uno para finalizar.";
+                    rlutil::hidecursor();
+                    cin.ignore();
 
-        else if(idProducto == 0 && cantidadActual == 0) {
+                    idProducto = -1; // Resetea para que el while(true) no termine
+                    continue; // Vuelve al inicio del bucle de agregar productos
+                }
+            break;
+        }
+
+        else if(idProducto == 0 && cantidadActual == 0)
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
             cout << "ERROR: NO SE HA INGRESADO NINGUN PRODUCTO";
@@ -308,17 +345,20 @@ void Venta::cargar() {
         Producto prod;
         bool encontrado = false;
         int stockDisponible = 0;
-        
-        for(const auto& p : productos) {
-            if(p.getID() == idProducto && p.getEstado()) {
+
+        for(const auto& p : productos)
+        {
+            if(p.getID() == idProducto && p.getEstado())
+            {
                 prod = p;
                 encontrado = true;
                 stockDisponible = gestorVenta.stockDisponible(idProducto);
                 break;
             }
         }
-        
-        if(!encontrado) {
+
+        if(!encontrado)
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
             cout << "ERROR: PRODUCTO NO EXISTE O ESTA INACTIVO";
@@ -327,7 +367,8 @@ void Venta::cargar() {
             continue;
         }
 
-        if(gestorVenta.cantidadPedida() > stockDisponible) {
+        if(gestorVenta.cantidadPedida() > stockDisponible)
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
             cout << "ERROR: STOCK INSUFICIENTE. DISPONIBLE: " << stockDisponible;
@@ -336,10 +377,13 @@ void Venta::cargar() {
             continue;
         }
 
-        if (gestorVenta.agregarProducto(idProducto, cantidadActual)) {
+        if (gestorVenta.agregarProducto(idProducto, cantidadActual))
+        {
             rlutil::locate(45, terminacion + 4);
             cout << "ARTICULO AGREGADO EXITOSAMENTE";
-        } else {
+        }
+        else
+        {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
             cout << "ERROR: NO SE PUDO AGREGAR EL ARTICULO";
@@ -347,44 +391,78 @@ void Venta::cargar() {
         rlutil::hidecursor();
         cin.ignore();
     }
-    gestorVenta.finalizarVenta();
+
+    int posY_decision = terminacion + 4;
+
     rlutil::setColor(rlutil::WHITE);
-    rlutil::locate(45, terminacion + 4);
-    cout << "VENTA REGISTRADA EXITOSAMENTE";
+    rlutil::locate(39, posY_decision);
+    cout << "CARRITO CERRADO.";
+    rlutil::locate(39, posY_decision + 1);
+    cout << "1. FINALIZAR VENTA";
+    rlutil::locate(39, posY_decision + 2);
+    cout << "2. CANCELAR VENTA (cualquier otra tecla)";
+    rlutil::locate(39, posY_decision + 3);
+    cout << "Opcion: ";
+
+    rlutil::showcursor();
+    int opcionFinal = cargarInt(1);
     rlutil::hidecursor();
+
+    if (opcionFinal == 1)
+    {
+        this->total = gestorVenta.getTotalCarrito();
+        gestorVenta.finalizarVenta();
+        rlutil::setColor(rlutil::WHITE);
+        rlutil::locate(45, posY_decision + 5);
+        cout << "VENTA REGISTRADA EXITOSAMENTE";
+    }
+    else
+    {
+        gestorVenta.cancelarVenta();
+        rlutil::setColor(rlutil::RED);
+        rlutil::locate(45, posY_decision + 5);
+        cout << "VENTA CANCELADA. No se guardo ningun registro.";
+        this->estado = false;
+    }
+
+    rlutil::hidecursor();
+    rlutil::locate(45, posY_decision + 7);
     cin.ignore();
 }
 
 
-void Venta::mostrar() const {
-    string datos_titulo[OPCIONES] = {
-                            "   ID VENTA    ",
-                            "   ID CLIENTE    ",
-                            "   LEGAJO VENDEDOR    ",
-                            "       TOTAL        ",
-                            "   FECHA    ",
-                            "  ESTADO  "
-                            };
+void Venta::mostrar() const
+{
+    string datos_titulo[VENTA_OPCIONES] =
+    {
+        "   ID VENTA    ",
+        "   ID CLIENTE    ",
+        "   LEGAJO VENDEDOR    ",
+        "       TOTAL        ",
+        "   FECHA    ",
+        "  ESTADO  "
+    };
 
-    size_t datos_espacios[OPCIONES] = {15, 17, 22, 20, 12, 10};
+    size_t datos_espacios[VENTA_OPCIONES] = {15, 17, 22, 20, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
     std::cout << "CANTIDAD DE VENTAS: " << archivo.cantidadRegistros();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, VENTA_CURSOR_START_X, VENTA_CURSOR_START_Y, VENTA_PAGINADO, VENTA_OPCIONES, 1);
 }
 
 
-void Venta::mostrarFila(int posX, int posY) const {
+void Venta::mostrarFila(int posX, int posY) const
+{
     rlutil::locate(posX, posY);
     cout << char(186) << "               " /// ID VENTA
-                    << char(186) << "                 " /// ID CLIENTE
-                    << char(186) << "                      " /// LEGAJO VENDEDOR
-                    << char(186) << "                    " /// TOTAL
-                    << char(186) << "            " /// FECHA
-                    << char(186) << "          " /// ESTADO
-                    << char(186);
+         << char(186) << "                 " /// ID CLIENTE
+         << char(186) << "                      " /// LEGAJO VENDEDOR
+         << char(186) << "                    " /// TOTAL
+         << char(186) << "            " /// FECHA
+         << char(186) << "          " /// ESTADO
+         << char(186);
 
     rlutil::locate(posX, posY);
     cout << char(186);
@@ -402,19 +480,24 @@ void Venta::mostrarFila(int posX, int posY) const {
 
 // --- Setters ---
 
-void Venta::setIdVenta(int _idVenta) {
+void Venta::setIdVenta(int _idVenta)
+{
     idVenta = _idVenta;
 }
-void Venta::setIdCliente(int _idCliente) {
+void Venta::setIdCliente(int _idCliente)
+{
     idCliente = _idCliente;
 }
-void Venta::setLegajoVendedor(int _legajoVendedor) {
+void Venta::setLegajoVendedor(int _legajoVendedor)
+{
     legajoVendedor = _legajoVendedor;
 }
-void Venta::setTotal(double _total) {
+void Venta::setTotal(double _total)
+{
     total = _total;
 }
-void Venta::setFechaVenta(Fecha _fechaVenta) {
+void Venta::setFechaVenta(Fecha _fechaVenta)
+{
     fechaVenta = _fechaVenta;
     // Sincroniza también la fecha de la Entidad base
     setFecha(_fechaVenta.getDia(), _fechaVenta.getMes(), _fechaVenta.getAnio());
@@ -422,15 +505,19 @@ void Venta::setFechaVenta(Fecha _fechaVenta) {
 
 // --- Getters ---
 
-int Venta::getIdVenta() const {
+int Venta::getIdVenta() const
+{
     return idVenta;
 }
-int Venta::getIdCliente() const {
+int Venta::getIdCliente() const
+{
     return idCliente;
 }
-int Venta::getLegajoVendedor() const {
+int Venta::getLegajoVendedor() const
+{
     return legajoVendedor;
 }
-double Venta::getTotal() const {
+double Venta::getTotal() const
+{
     return total;
 }

@@ -1,3 +1,10 @@
+#ifndef CONSTANTES_H_INCLUDED
+#define CONSTANTES_H_INCLUDED
+
+/* ===================================================================
+ * DEFINES DE PREPROCESADOR
+ * ===================================================================*/
+
 // ARCHIVOS
 #define ARCHIVO_VENDEDORES "vendedores.dat"
 #define ARCHIVO_CLIENTES "clientes.dat"
@@ -41,10 +48,50 @@
     #define ASCII_BARRA_EMPALME_ABAJO "╦"
 #endif
 
-// En clsVendedor.h, clsCliente.h, clsProducto.h
+// MODELOS
 #define MAX_NOMBRE 31
 #define MAX_TELEFONO 16
 #define MAX_DNI 9
-
-// En clsVendedor.cpp (validación de teléfono)
 #define TELEFONO_MIN_DIGITOS 10
+
+// CONSTANTES DE UI PARA PRODUCTO
+#define PRODUCTO_OPCIONES_MENU 5
+#define PRODUCTO_OPCIONES_CARGA 7
+#define PRODUCTO_INICIO_TITULO 3
+#define PRODUCTO_INICIO_TABLA (PRODUCTO_INICIO_TITULO + 5)
+#define PRODUCTO_CURSOR_START_X 3
+#define PRODUCTO_CURSOR_START_Y 4
+#define PRODUCTO_PAGINADO 15
+
+// CONSTANTES DE UI PARA CLIENTE
+#define CLIENTE_OPCIONES_MENU 4
+#define CLIENTE_OPCIONES_CARGA 3
+#define CLIENTE_INICIO_TITULO 3
+#define CLIENTE_INICIO_TABLA (CLIENTE_INICIO_TITULO + 5)
+#define CLIENTE_CURSOR_START_X 30
+#define CLIENTE_CURSOR_START_Y 4
+#define CLIENTE_PAGINADO 15
+
+// CONSTANTES DE UI PARA VENDEDOR
+#define VENDEDOR_OPCIONES_MENU 5
+#define VENDEDOR_OPCIONES_CARGA 6
+#define VENDEDOR_INICIO_TITULO 3
+#define VENDEDOR_INICIO_TABLA (VENDEDOR_INICIO_TITULO + 5)
+#define VENDEDOR_CURSOR_START_X 12
+#define VENDEDOR_CURSOR_START_Y 4
+#define VENDEDOR_PAGINADO 15
+
+// CONSTANTES DE UI PARA VENTA
+#define VENTA_OPCIONES 6 // Usado en cargar() y mostrar()
+#define VENTA_INICIO_TITULO 3
+#define VENTA_INICIO_TABLA (VENTA_INICIO_TITULO + 5)
+#define VENTA_CURSOR_START_X 9
+#define VENTA_CURSOR_START_Y 4
+#define VENTA_PAGINADO 15
+
+// CONSTANTES DE UI PARA menuVenta
+#define MENU_VENTA_OPCIONES 4 // (Agregar, Mostrar, Info, Salir)
+
+
+
+#endif // CONSTANTES_H_INCLUDED

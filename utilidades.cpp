@@ -31,7 +31,8 @@ void cargarCadena(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
-        else if (i < maxDigits - TECLA_ENTER && c >= 
+
+        else if (i < maxDigits - TECLA_ENTER && c >=
             TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
             cadena[i++] = c;
             cout << c;
@@ -59,8 +60,10 @@ void cargarCadenaConValor(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
-        else if (i < maxDigits - TECLA_ENTER && c >= 
-            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
+
+        else if (i < maxDigits - TECLA_ENTER && c >=
+            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) { /// CARACTERES IMPRIMIBLES
+
             cadena[i++] = c;
             cout << c;
         }
@@ -210,7 +213,7 @@ double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) 
     sprintf(buffer, "%.2f", valorActual);
     int i = strlen(buffer);
     cout << buffer;
-    
+
     int decimales = 0;
     bool punto = false;
     for(int j = 0; j < i; j++) {
@@ -220,7 +223,7 @@ double cargarDoubleConValor(int maxDigits, int maxDecimals, double valorActual) 
             decimales++;
         }
     }
-    
+
     int key;
     char c;
 

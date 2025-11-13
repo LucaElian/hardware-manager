@@ -16,14 +16,47 @@ using namespace std;
 
 static ArchivoManager<Cliente> archivo("clientes.dat");
 
+// Constructor
+// NOTA: Los valores por defecto NO se repiten aqu�.
+Cliente::Cliente(int _id, const char *_nombre, const char *_telefono)
+    : Entidad(_id, true, Fecha(1,1,1)) // <-- Arregl� el 'true' por una Fecha
+{
+    // El cuerpo del constructor va aqu�
+    strcpy(nombre, _nombre);
+    strcpy(telefono, _telefono);
+}
+
+// Destructor
+Cliente::~Cliente() {
+    // Vac�o, como estaba
+}
+
+// Setters especificos
+void Cliente::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Cliente::setTelefono(const char *_telefono) {
+    strcpy(telefono, _telefono);
+}
+
+// Getters especificos
+const char *Cliente::getNombre() const {
+    return nombre;
+}
+
+const char *Cliente::getTelefono() const {
+    return telefono;
+}
+
 void Cliente::cargar() {
-    string datos[OPCIONES] = {
+    string datos[CLIENTE_OPCIONES_CARGA] = {
                 "NOMBRE: [                                ]",
                 "TELEFONO: [                 ]"             ,
                 "ID: [          ]"                          };
 
-    agregar("A G R E G A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-1], 75);
+    agregar("A G R E G A R  C L I E N T E", CLIENTE_INICIO_TITULO, CLIENTE_OPCIONES_CARGA-1);
+    agregar_opciones(datos, CLIENTE_INICIO_TABLA, CLIENTE_OPCIONES_CARGA, datos[CLIENTE_OPCIONES_CARGA-1], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -76,7 +109,7 @@ void Cliente::cargar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefono, MAX_TELEFONO);
-        
+
         size_t registros = clientes.size();
 
         size_t can = strlen(telefono);
@@ -130,19 +163,19 @@ void Cliente::cargar() {
 }
 
 void Cliente::mostrar() const {
-    string datos_titulo[OPCIONES] = {
+    string datos_titulo[CLIENTE_OPCIONES_CARGA] = {
                             "    ID    ",
                             "          N O M B R E           ",
                             "    TELEFONO     "
                             };
 
-    size_t datos_espacios[OPCIONES] = {10, 32, 17};
+    size_t datos_espacios[CLIENTE_OPCIONES_CARGA] = {10, 32, 17};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
     cout << "CANTIDAD DE CLIENTES: " << archivo.cantidadRegistros();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, CLIENTE_CURSOR_START_X, CLIENTE_CURSOR_START_Y, CLIENTE_PAGINADO, CLIENTE_OPCIONES_CARGA, 1);
 }
 
 void Cliente::mostrarFila(int posX, int posY) const {
@@ -163,15 +196,15 @@ void Cliente::mostrarFila(int posX, int posY) const {
 }
 
 void Cliente::modificar() {
-    string datos[OPCIONES] = {
+    string datos[CLIENTE_OPCIONES_CARGA] = {
             "NOMBRE: [                                ]",
             "TELEFONO: [                 ]"             ,
             "ID: [          ]"  };
 
     rlutil::setColor(rlutil::MAGENTA);
 
-    agregar("M O D I F I C A R  C L I E N T E", INICIO_TITULO, OPCIONES-1);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES, datos[OPCIONES-2], 75);
+    agregar("M O D I F I C A R  C L I E N T E", CLIENTE_INICIO_TITULO, CLIENTE_OPCIONES_CARGA-1);
+    agregar_opciones(datos, CLIENTE_INICIO_TABLA, CLIENTE_OPCIONES_CARGA, datos[CLIENTE_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -181,7 +214,7 @@ void Cliente::modificar() {
     rlutil::showcursor();
 
     string valoresActuales[2] = {nombre, telefono};
-    mostrarPlaceholdersActuales(valoresActuales, 2, 32, INICIO_TABLA, 2);
+    mostrarPlaceholdersActuales(valoresActuales, 2, 32, CLIENTE_INICIO_TABLA, 2);
 
     rlutil::locate(81, 8); /// ID
     cout << id;
@@ -224,9 +257,9 @@ void Cliente::modificar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadenaConValor(telefono, MAX_TELEFONO);
-        
+
         size_t registros = clientes.size();
-        
+
         size_t can = strlen(telefono);
         valido = true;
 
