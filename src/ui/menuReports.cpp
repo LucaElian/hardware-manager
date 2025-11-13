@@ -116,7 +116,7 @@ void menuReports(ContextoGestores& gestores) {
 
 //--- OPCIONES DE REPORTES ---
 
-void opcion1(Contexto objetos, ContextoGestores& gestor)
+void opcion1(ContextoGestores& gestor)
 {
     // Obtenemos la fecha actual
     time_t now = time(0);
@@ -219,8 +219,6 @@ void opcion1(Contexto objetos, ContextoGestores& gestor)
         rlutil::locate(currentX + 1, currentY); std::cout << std::fixed << std::setprecision(2) << venta.getTotal();
         currentX += espacios[3] + 1; // Avanza 15 + 1
 
-void opcion2(ContextoGestores& gestor) {
-
         //ESTADO (Ancho 10)
         rlutil::locate(currentX, currentY);
         rlutil::setColor(rlutil::MAGENTA); std::cout << (char)ASCII_BARRA_VERTICAL;
@@ -233,13 +231,13 @@ void opcion2(ContextoGestores& gestor) {
         rlutil::setColor(rlutil::MAGENTA); std::cout << (char)ASCII_BARRA_VERTICAL;
 
         cont_lineas++;
-    }
+    } // end for (mostrar filas)
 
     barra_final(OPCIONES, posX, posY + 3 + cont_lineas, espacios);
     rlutil::locate(posX, posY + 3 + cont_lineas + 2);
-}
+} // end opcion1
 
-void opcion2(Contexto objetos, ContextoGestores& gestor)
+void opcion2(ContextoGestores& gestor)
 {
     vector<DetalleVenta> detalles;
     gestor.gestorVenta.leerTodosDetalles(detalles);
@@ -327,35 +325,11 @@ void opcion2(Contexto objetos, ContextoGestores& gestor)
         rlutil::locate(15, 12);
         std::cout << "Compro un total de " << maxItems << " items en la Venta ID #" << idVentaGanadora << ".";
 
-        // Buscamos la venta ganadora en el vector 'ventas' para mostrar sus detalles
-        Venta ventaInfoGanadora; // Objeto temporal para guardar la venta
-        bool encontrada = false;
-        for(const Venta& v : ventas){
-            if(v.getIdVenta() == idVentaGanadora){
-                ventaInfoGanadora = v;
-                encontrada = true;
-                break;
-            }
-        }
-        if(encontrada){
-            rlutil::locate(17, 14); std::cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
-            rlutil::locate(17, 15); std::cout << "- L. Vendedor: " << ventaInfoGanadora.getLegajoVendedor();
-            rlutil::locate(17, 16); std::cout << "- Monto Total: $" << std::fixed << std::setprecision(2) << ventaInfoGanadora.getTotal();
-            rlutil::locate(17, 17); std::cout << "- Fecha:       "; ventaInfoGanadora.getFecha().MostrarF();
-        } 
-        else {
-            rlutil::locate(17, 14); std::cout << "(No se encontraron detalles adicionales de la venta)";
-        }
-
-        rlutil::locate(17, 14);
-        cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
-        rlutil::locate(17, 15);
-        cout << "- L. Vendedor: " << ventaInfoGanadora.getLegajoVendedor();
-        rlutil::locate(17, 16);
-        cout << "- Monto Total: $" << fixed << setprecision(2) << ventaInfoGanadora.getTotal();
-        rlutil::locate(17, 17);
-        cout << "- Fecha:       ";
-        ventaInfoGanadora.getFecha().MostrarF();
+        // usamos ventaInfoGanadora ya obtenido arriba
+        rlutil::locate(17, 14); std::cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
+        rlutil::locate(17, 15); std::cout << "- L. Vendedor: " << ventaInfoGanadora.getLegajoVendedor();
+        rlutil::locate(17, 16); std::cout << "- Monto Total: $" << std::fixed << std::setprecision(2) << ventaInfoGanadora.getTotal();
+        rlutil::locate(17, 17); std::cout << "- Fecha:       "; ventaInfoGanadora.getFecha().MostrarF();
 
         rlutil::locate(15, 19);
 
