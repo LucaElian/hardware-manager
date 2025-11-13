@@ -10,16 +10,15 @@
 #include "ContextoGestores.h"
 #include "Contexto.h"
 
-void menuReports(Contexto objetos, ContextoGestores& gestores);
+void menuReports(ContextoGestores& gestores);
+void opcion1(ContextoGestores& gestores);
 
-void opcion1(Contexto objetos, ContextoGestores& gestores);
+void opcion2(ContextoGestores& gestores);
 
-void opcion2(Contexto objetos, ContextoGestores& gestores);
+void opcion3(ContextoGestores& gestores);
 
-void opcion3(Contexto objetos, ContextoGestores& gestores);
+void opcion4(ContextoGestores& gestores);
 
-void opcion4(Contexto objetos, ContextoGestores& gestores);
-
-void opcion5(Contexto objetos, ContextoGestores& gestores);
+void opcion5(ContextoGestores& gestores);
 
 #endif // MENU_REPORTS_H

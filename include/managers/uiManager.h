@@ -107,8 +107,6 @@ void mostrarRegistro(ArchivoManager<T>& gestor, int id) {
  */
 template <typename T>
 void modificarRegistro(ArchivoManager<T>& gestor){
-    std::string titulos[] = {"ID", "DATOS"};
-    size_t espacios[] = {10, 30};
     T registro;
 
     int idModificar;

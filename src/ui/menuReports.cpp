@@ -45,8 +45,7 @@ DECLARACIONES LOCALES
 
 using namespace std;
 
-void menuReports(Contexto objetos, ContextoGestores& gestores)
-{
+void menuReports(ContextoGestores& gestores) {
     const int TAMANIO_MENU = 6;
     string opciones[TAMANIO_MENU] =
     {
@@ -97,30 +96,18 @@ void menuReports(Contexto objetos, ContextoGestores& gestores)
                 if(opcionSeleccionada > OPCION_MAXIMA) opcionSeleccionada = 0;
                 break;
 
-            case TECLA_ENTER:
-                system("cls");
-                cursorActivo = false;
-                switch(opcionSeleccionada)
-                {
-                case 0:
-                    opcion1(objetos, gestores);
-                    break;
-                case 2:
-                    opcion2(objetos, gestores);
-                    break;
-                case 4:
-                    opcion3(objetos, gestores);
-                    break;
-                case 6:
-                    opcion4(objetos, gestores);
-                    break;
-                case 8:
-                    opcion5(objetos, gestores);
-                    break;
-                case 10:
-                    return;
-                }
-                rlutil::setColor(rlutil::BLACK); // Reset de color
+                case 1: // Enter
+                    system("cls");
+                    cursorActivo = false;
+                    switch(opcionSeleccionada) {
+                        case 0: opcion1(gestores); break;
+                        case 2: opcion2(gestores); break;
+                        case 4: opcion3(gestores); break;
+                        case 6: opcion4(gestores); break;
+                        case 8: opcion5(gestores); break;
+                        case 10: return;
+                    }
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
             }
         }
@@ -232,12 +219,7 @@ void opcion1(Contexto objetos, ContextoGestores& gestor)
         rlutil::locate(currentX + 1, currentY); std::cout << std::fixed << std::setprecision(2) << venta.getTotal();
         currentX += espacios[3] + 1; // Avanza 15 + 1
 
-        //FECHA (Ancho 12)
-        rlutil::locate(currentX, currentY);
-        rlutil::setColor(rlutil::MAGENTA); std::cout << (char)ASCII_BARRA_VERTICAL;
-        rlutil::setColor(rlutil::WHITE);
-        rlutil::locate(currentX + 1, currentY); venta.getFecha().MostrarF();
-        currentX += espacios[4] + 1; // Avanza 12 + 1
+void opcion2(ContextoGestores& gestor) {
 
         //ESTADO (Ancho 10)
         rlutil::locate(currentX, currentY);
@@ -343,7 +325,27 @@ void opcion2(Contexto objetos, ContextoGestores& gestor)
         cout << "Telefono:   " << clienteGanador.getTelefono();
 
         rlutil::locate(15, 12);
-        cout << "Compro un total de " << maxItems << " items en la Venta ID #" << idVentaGanadora << ":";
+        std::cout << "Compro un total de " << maxItems << " items en la Venta ID #" << idVentaGanadora << ".";
+
+        // Buscamos la venta ganadora en el vector 'ventas' para mostrar sus detalles
+        Venta ventaInfoGanadora; // Objeto temporal para guardar la venta
+        bool encontrada = false;
+        for(const Venta& v : ventas){
+            if(v.getIdVenta() == idVentaGanadora){
+                ventaInfoGanadora = v;
+                encontrada = true;
+                break;
+            }
+        }
+        if(encontrada){
+            rlutil::locate(17, 14); std::cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
+            rlutil::locate(17, 15); std::cout << "- L. Vendedor: " << ventaInfoGanadora.getLegajoVendedor();
+            rlutil::locate(17, 16); std::cout << "- Monto Total: $" << std::fixed << std::setprecision(2) << ventaInfoGanadora.getTotal();
+            rlutil::locate(17, 17); std::cout << "- Fecha:       "; ventaInfoGanadora.getFecha().MostrarF();
+        } 
+        else {
+            rlutil::locate(17, 14); std::cout << "(No se encontraron detalles adicionales de la venta)";
+        }
 
         rlutil::locate(17, 14);
         cout << "- ID Venta:    " << ventaInfoGanadora.getIdVenta();
@@ -362,16 +364,33 @@ void opcion2(Contexto objetos, ContextoGestores& gestor)
     {
         rlutil::setColor(rlutil::RED);
         rlutil::locate(15, 6);
-        cout << "ERROR: Venta #" << idVentaGanadora << " encontrada, pero Cliente ID #" << idClienteGanador << " no." << endl;
+        std::cout << "ERROR: Se encontro la Venta ID #" << idVentaGanadora
+                << " con " << maxItems << " items," << std::endl;
+        rlutil::locate(15, 7);
+        std::cout << "       pero no se pudo encontrar al Cliente ID #" << idClienteGanador
+                << " en el archivo." << std::endl;
     }
 }
 
-void opcion3(Contexto objetos, ContextoGestores& gestor)
-{
-    vector<Venta> ventas;
-    gestor.gestorVenta.leerTodos(ventas);
-    vector<Vendedor> vendedores;
-    gestor.gestorV.leerTodos(vendedores);
+// --- Reporte 3: TOP 3 VENDEDORES ---
+void opcion3(ContextoGestores& gestor) {
+
+    // --- 1. LEER DATOS ---
+    std::vector<Venta> ventas;
+    if (!gestor.gestorVenta.leerTodos(ventas)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo ventas.dat." << std::endl;
+        return;
+    }
+
+    std::vector<Vendedor> vendedores;
+    // Leemos TODOS los vendedores (activos e inactivos)
+    // porque una venta vieja podría apuntar a un vendedor ahora inactivo.
+    if (!gestor.gestorV.leerTodos(vendedores)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo vendedores.dat." << std::endl;
+        return;
+    }
 
     if (ventas.empty() || vendedores.empty())
     {
@@ -411,30 +430,32 @@ void opcion3(Contexto objetos, ContextoGestores& gestor)
 
     // Búsqueda manual del Top 3
     int topIndices[3] = {-1, -1, -1};
-    double topTotales[3] = {-1.0, -1.0, -1.0};
+    // Guardamos los totales de esos 3 mejores
+    double topTotales[3] = {-1.0, -1.0, -1.0}; // Usamos -1 para saber si encontramos alguno
 
-    for (size_t i = 0; i < totalesVendedor.size(); ++i)
-    {
-        if (totalesVendedor[i] > topTotales[0])
-        {
-            topTotales[2] = topTotales[1];
-            topIndices[2] = topIndices[1];
-            topTotales[1] = topTotales[0];
-            topIndices[1] = topIndices[0];
-            topTotales[0] = totalesVendedor[i];
-            topIndices[0] = i;
+    for (size_t i = 0; i < totalesVendedor.size(); ++i) {
+        // Si el total actual es mayor que el 1ro del ranking...
+        if (totalesVendedor[i] > topTotales[0]) {
+            // Bajamos el 1ro a 2do, y el 2do a 3ro
+            topTotales[2] = topTotales[1]; topIndices[2] = topIndices[1];
+            topTotales[1] = topTotales[0]; topIndices[1] = topIndices[0];
+            // Ponemos el nuevo como 1ro
+            topTotales[0] = totalesVendedor[i]; 
+            topIndices[0] = static_cast<int>(i);
         }
-        else if (totalesVendedor[i] > topTotales[1])
-        {
-            topTotales[2] = topTotales[1];
-            topIndices[2] = topIndices[1];
-            topTotales[1] = totalesVendedor[i];
-            topIndices[1] = i;
+        // Si no es mayor que el 1ro, pero sí mayor que el 2do...
+        else if (totalesVendedor[i] > topTotales[1]) {
+            // Bajamos el 2do a 3ro
+            topTotales[2] = topTotales[1]; topIndices[2] = topIndices[1];
+            // Ponemos el nuevo como 2do
+            topTotales[1] = totalesVendedor[i]; 
+            topIndices[1] = static_cast<int>(i);
         }
-        else if (totalesVendedor[i] > topTotales[2])
-        {
-            topTotales[2] = totalesVendedor[i];
-            topIndices[2] = i;
+        // Si no es mayor que 1ro ni 2do, pero sí mayor que el 3ro...
+        else if (totalesVendedor[i] > topTotales[2]) {
+            // Lo ponemos como 3ro
+            topTotales[2] = totalesVendedor[i]; 
+            topIndices[2] = static_cast<int>(i);
         }
     }
 
@@ -475,20 +496,36 @@ void opcion3(Contexto objetos, ContextoGestores& gestor)
     rlutil::locate(15, 8 + vendedoresMostrados + 1);
 }
 
-void opcion4(Contexto objetos, ContextoGestores& gestor)
-{
-    vector<DetalleVenta> detalles;
-    gestor.gestorVenta.leerTodosDetalles(detalles);
-    vector<Producto> productos;
-    gestor.gestorP.leerTodos(productos);
-    vector<Venta> ventas;
-    gestor.gestorVenta.leerTodos(ventas);
+// --- Reporte 4: PRODUCTO MÁS VENDIDO (Versión Simple) ---
+void opcion4(ContextoGestores& gestor) {
 
-    if (detalles.empty() || productos.empty())
-    {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(15, 6);
-        cout << "No hay detalles de venta o productos registrados." << endl;
+    // --- 1. LEER DATOS ---
+    std::vector<DetalleVenta> detalles;
+    if (!gestor.gestorVenta.leerTodosDetalles(detalles)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo detalles_venta.dat." << std::endl;
+        return;
+    }
+
+    std::vector<Producto> productos;
+    // Leemos TODOS los productos
+    if (!gestor.gestorP.leerTodos(productos)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo productos.dat." << std::endl;
+        return;
+    }
+
+    std::vector<Venta> ventas;
+    // Leemos todas las ventas para chequear el estado
+    if (!gestor.gestorVenta.leerTodos(ventas)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo ventas.dat." << std::endl;
+        return;
+    }
+
+    if (detalles.empty() || productos.empty()) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "No hay detalles de venta o productos registrados." << std::endl;
         return;
     }
 
@@ -543,7 +580,7 @@ void opcion4(Contexto objetos, ContextoGestores& gestor)
         if (cantidadVendida[i] > maxCantidad)
         {
             maxCantidad = cantidadVendida[i];
-            indiceGanador = i;
+            indiceGanador = static_cast<int>(i);
         }
     }
 
@@ -578,14 +615,14 @@ void opcion4(Contexto objetos, ContextoGestores& gestor)
     }
 }
 
-void opcion5(Contexto objetos, ContextoGestores& gestor)
-{
-    vector<Venta> ventas;
-    if (!gestor.gestorVenta.leerTodos(ventas))
-    {
-        rlutil::setColor(rlutil::RED);
-        rlutil::locate(15, 6);
-        cout << "Error: No se pudo leer el archivo ventas.dat." << endl;
+// --- Reporte 5: VENTA CON MAYOR MONTO (Versión Simple) ---
+void opcion5(ContextoGestores& gestor) {
+
+    // --- 1. LEER DATOS ---
+    std::vector<Venta> ventas;
+    if (!gestor.gestorVenta.leerTodos(ventas)) {
+        rlutil::setColor(rlutil::RED); rlutil::locate(15, 6);
+        std::cout << "Error: No se pudo leer el archivo ventas.dat." << std::endl;
         return;
     }
 
@@ -601,12 +638,12 @@ void opcion5(Contexto objetos, ContextoGestores& gestor)
     double maxTotal = -1.0;
     int indiceVentaGanadora = -1;
 
-    for (size_t i = 0; i < ventas.size(); ++i)
-    {
-        if (ventas[i].getEstado() && ventas[i].getTotal() > maxTotal)
-        {
-            maxTotal = ventas[i].getTotal();
-            indiceVentaGanadora = i;
+    for (size_t i = 0; i < ventas.size(); ++i) {
+        if (ventas[i].getEstado()) { // Solo ventas activas
+            if (ventas[i].getTotal() > maxTotal) {
+                maxTotal = ventas[i].getTotal();
+                indiceVentaGanadora = static_cast<int>(i);
+            }
         }
     }
 
