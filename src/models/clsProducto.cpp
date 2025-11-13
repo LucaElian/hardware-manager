@@ -18,7 +18,7 @@ using namespace std;
 static ArchivoManager<Producto> archivo("productos.dat");
 
 void Producto::cargar() {
-    string datos[OPCIONES-1] = {
+    string datos[PRODUCTO_OPCIONES_CARGA-1] = {
                 "NOMBRE: [                                ]",
                 "TIPO: [   ]"                               ,
                 "STOCK: [           ]"                      ,
@@ -26,8 +26,8 @@ void Producto::cargar() {
                 "FECHA: [ __/__/____ ]"                     ,
                 "ID: [          ]"                          };
 
-    agregar("A G R E G A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("A G R E G A R  P R O D U C T O", PRODUCTO_INICIO_TITULO, PRODUCTO_OPCIONES_CARGA-2);
+    agregar_opciones(datos, PRODUCTO_INICIO_TABLA, PRODUCTO_OPCIONES_CARGA-1, datos[PRODUCTO_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
@@ -61,7 +61,7 @@ void Producto::cargar() {
         size_t can = productos.size();
 
         repetido = false;
-        
+
         for(size_t x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0) {
                 repetido = true;
@@ -206,7 +206,7 @@ void Producto::cargar() {
 
 
 void Producto::mostrar() const {
-    string datos_titulo[OPCIONES] = {
+    string datos_titulo[PRODUCTO_OPCIONES_CARGA] = {
                             "    ID    ",
                             "          N O M B R E           ",
                             "    TIPO    ",
@@ -216,7 +216,7 @@ void Producto::mostrar() const {
                             "  ESTADO  "
                             };
 
-    size_t datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
+    size_t datos_espacios[PRODUCTO_OPCIONES_CARGA] = {10, 32, 12, 11, 20, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -224,11 +224,11 @@ void Producto::mostrar() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1); /// AGREGAR
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, PRODUCTO_CURSOR_START_X, PRODUCTO_CURSOR_START_Y, PRODUCTO_PAGINADO, PRODUCTO_OPCIONES_CARGA, 1); /// AGREGAR
 }
 
 void Producto::mostrar_activos() const {
-    string datos_titulo[OPCIONES] = {
+    string datos_titulo[PRODUCTO_OPCIONES_CARGA] = {
                             "    ID    ",
                             "          N O M B R E           ",
                             "    TIPO    ",
@@ -238,7 +238,7 @@ void Producto::mostrar_activos() const {
                             "  ESTADO  "
                             };
 
-    size_t datos_espacios[OPCIONES] = {10, 32, 12, 11, 20, 12, 10};
+    size_t datos_espacios[PRODUCTO_OPCIONES_CARGA] = {10, 32, 12, 11, 20, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -246,7 +246,7 @@ void Producto::mostrar_activos() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 0); /// ELIMINAR
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, PRODUCTO_CURSOR_START_X, PRODUCTO_CURSOR_START_Y, PRODUCTO_PAGINADO, PRODUCTO_OPCIONES_CARGA, 0); /// ELIMINAR
 }
 
 
@@ -277,7 +277,7 @@ void Producto::mostrarFila(int posX, int posY) const {
 }
 
 void Producto::modificar() {
-    string datos[OPCIONES-1] = {
+    string datos[PRODUCTO_OPCIONES_CARGA-1] = {
                 "NOMBRE: [                                ]",
                 "TIPO: [   ]"                               ,
                 "STOCK: [           ]"                      ,
@@ -287,8 +287,8 @@ void Producto::modificar() {
 
     rlutil::setColor(rlutil::MAGENTA);
 
-    agregar("M O D I F I C A R  P R O D U C T O", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("M O D I F I C A R  P R O D U C T O", PRODUCTO_INICIO_TITULO, PRODUCTO_OPCIONES_CARGA-2);
+    agregar_opciones(datos, PRODUCTO_INICIO_TABLA, PRODUCTO_OPCIONES_CARGA-1, datos[PRODUCTO_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(47, 10);
@@ -307,14 +307,14 @@ void Producto::modificar() {
     stringstream precioStream;
     precioStream << fixed << setprecision(2) << precio;
     string valoresActuales[5] = {
-        nombre, 
-        string(1, tipo), 
-        to_string(stock), 
-        precioStream.str(), 
+        nombre,
+        string(1, tipo),
+        to_string(stock),
+        precioStream.str(),
         fechaStr,
     };
-    
-    mostrarPlaceholdersActuales(valoresActuales, 5, 32, INICIO_TABLA, 2);
+
+    mostrarPlaceholdersActuales(valoresActuales, 5, 32, PRODUCTO_INICIO_TABLA, 2);
 
     rlutil::locate(81, 8); /// ID
     cout << id;
@@ -331,7 +331,7 @@ void Producto::modificar() {
         size_t can = productos.size();
 
         repetido = false;
-        
+
         for(size_t x = 0; x < can; x++) {
             if(strcmp(productos[x].getNombre(), nombre) == 0 && productos[x].getID() != id) {
                 repetido = true;

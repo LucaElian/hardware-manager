@@ -18,15 +18,15 @@ using namespace std;
 static ArchivoManager<Vendedor> archivo("vendedores.dat");
 
 void Vendedor::cargar() {
-    string datos[OPCIONES-1] = {
-        "NOMBRE: [                                ]", 
+    string datos[VENDEDOR_OPCIONES_CARGA-1] = {
+        "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
-        "FECHA: [ __/__/____ ]"                     ,  
+        "FECHA: [ __/__/____ ]"                     ,
         "ID: [          ]"                          };
 
-    agregar("A G R E G A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("A G R E G A R  V E N D E D O R", VENDEDOR_INICIO_TITULO, VENDEDOR_OPCIONES_CARGA-2);
+    agregar_opciones(datos, VENDEDOR_INICIO_TABLA, VENDEDOR_OPCIONES_CARGA-1, datos[VENDEDOR_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -89,7 +89,7 @@ void Vendedor::cargar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadena(telefonoVendedor, MAX_TELEFONO);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(telefonoVendedor);
@@ -140,7 +140,7 @@ void Vendedor::cargar() {
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
         cargarCadena(dni, MAX_DNI);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(dni);
@@ -252,6 +252,7 @@ void Vendedor::cargar() {
 
 
 void Vendedor::mostrar() const {
+    constexpr int OPCIONES = 6;
     string datos_titulo[OPCIONES] = {
                             "    ID    ",
                             "          N O M B R E           ",
@@ -269,11 +270,11 @@ void Vendedor::mostrar() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE VENDEDORES ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, VENDEDOR_CURSOR_START_X, VENDEDOR_CURSOR_START_Y, VENDEDOR_PAGINADO, VENDEDOR_OPCIONES_CARGA, 1);
 }
 
 void Vendedor::mostrar_activos() const {
-    string datos_titulo[OPCIONES] = {
+    string datos_titulo[VENDEDOR_OPCIONES_CARGA] = {
                             "    ID    ",
                             "          N O M B R E           ",
                             "    TELEFONO     ",
@@ -282,7 +283,7 @@ void Vendedor::mostrar_activos() const {
                             "  ESTADO  "
                             };
 
-    size_t datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
+    size_t datos_espacios[VENDEDOR_OPCIONES_CARGA] = {10, 32, 17, 10, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -290,7 +291,7 @@ void Vendedor::mostrar_activos() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 0);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, VENDEDOR_CURSOR_START_X, VENDEDOR_CURSOR_START_Y, VENDEDOR_PAGINADO, VENDEDOR_OPCIONES_CARGA, 0);
 }
 
 
@@ -319,16 +320,16 @@ void Vendedor::mostrarFila(int posX, int posY) const {
 }
 
 void Vendedor::modificar() {
-    string datos[OPCIONES-1] = {
-        "NOMBRE: [                                ]", 
+    string datos[VENDEDOR_OPCIONES_CARGA-1] = {
+        "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
         "FECHA: [ __/__/____ ]"                     };
 
     rlutil::setColor(rlutil::MAGENTA);
 
-    agregar("M O D I F I C A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("M O D I F I C A R  V E N D E D O R", VENDEDOR_INICIO_TITULO, VENDEDOR_OPCIONES_CARGA-2);
+    agregar_opciones(datos, VENDEDOR_INICIO_TABLA, VENDEDOR_OPCIONES_CARGA-1, datos[VENDEDOR_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -349,9 +350,9 @@ void Vendedor::modificar() {
     string diaStr = (fechaIngreso.getDia() < 10 ? "0" : "") + to_string(fechaIngreso.getDia());
     string mesStr = (fechaIngreso.getMes() < 10 ? "0" : "") + to_string(fechaIngreso.getMes());
     string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
-    
+
     string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
-    mostrarPlaceholdersActuales(valoresActuales, 4, 32, INICIO_TABLA, 2);
+    mostrarPlaceholdersActuales(valoresActuales, 4, 32, VENDEDOR_INICIO_TABLA, 2);
 
     rlutil::locate(81, 8); /// ID
     cout << legajo;
@@ -395,7 +396,7 @@ void Vendedor::modificar() {
     while(!valido) {
         rlutil::locate(44, 10); /// TELEFONO
         cargarCadenaConValor(telefonoVendedor, MAX_TELEFONO);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(telefonoVendedor);
@@ -446,7 +447,7 @@ void Vendedor::modificar() {
     while(!valido) {
         rlutil::locate(39, 12); /// DNI
         cargarCadenaConValor(dni, MAX_DNI);
-        
+
         size_t registros = vendedor.size();
 
         size_t can = strlen(dni);

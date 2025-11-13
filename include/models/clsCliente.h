@@ -10,13 +10,6 @@ private:
     char nombre[MAX_NOMBRE];
     char telefono[MAX_TELEFONO];
 
-    //UI
-    const size_t OPCIONES = 3;
-    const int INICIO_TITULO = 3;
-    const int INICIO_TABLA = INICIO_TITULO + 5;
-    const int CURSOR_START_X = 30;
-    const int CURSOR_START_Y = 4;
-    const int PAGINADO = 15;
 
 public:
     // Constructor

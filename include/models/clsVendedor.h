@@ -12,13 +12,7 @@ private:
     char telefonoVendedor[MAX_TELEFONO];
     char dni[MAX_DNI];
 
-    //IU
-    const size_t OPCIONES = 6;
-    const int INICIO_TITULO = 3;
-    const int INICIO_TABLA = INICIO_TITULO + 5;
-    const int CURSOR_START_X = 12;
-    const int CURSOR_START_Y = 4;
-    const int PAGINADO = 15;
+
 
 public:
     // Constructor
