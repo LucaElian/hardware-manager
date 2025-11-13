@@ -11,6 +11,7 @@
 #include "Contexto.h"
 
 void menuReports(Contexto objetos, ContextoGestores& gestores);
+
 void opcion1(Contexto objetos, ContextoGestores& gestores);
 
 void opcion2(Contexto objetos, ContextoGestores& gestores);

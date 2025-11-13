@@ -31,6 +31,7 @@ void cargarCadena(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
+
         else if (i < maxDigits - TECLA_ENTER && c >=
             TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
             cadena[i++] = c;
@@ -59,8 +60,10 @@ void cargarCadenaConValor(char *cadena, int maxDigits) {
             cout << "\b \b";
         }
 
+
         else if (i < maxDigits - TECLA_ENTER && c >=
-            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) {
+            TECLA_ESPACIO && c <= ASCII_IMPRIMIBLE_MAX) { /// CARACTERES IMPRIMIBLES
+
             cadena[i++] = c;
             cout << c;
         }
@@ -272,16 +275,11 @@ void toUpperCase(char *texto) {
 }
 
 void centrar_texto(string palabra, char dato, size_t cantidad) {
-
-    // --- INICIO DEL ARREGLO ---
-    // Verificamos si la palabra es MÁS GRANDE que el espacio
     if (palabra.length() >= cantidad) {
         // Si es más grande, la cortamos y la imprimimos
         cout << palabra.substr(0, cantidad);
-        return; // Y nos vamos, sin hacer cuentas raras
+        return;
     }
-    // --- FIN DEL ARREGLO ---
-
     // Si la palabra SÍ entra, hacemos la lógica de centrado normal
     size_t espacios_izq = (cantidad - palabra.length()) / 2;
     size_t espacios_der = cantidad - palabra.length() - espacios_izq;

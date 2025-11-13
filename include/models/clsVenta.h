@@ -12,6 +12,8 @@ private:
     double total;
     Fecha fechaVenta;
 
+
+
 public:
     // Constructor (solo declaración, valores por defecto van aquí)
     Venta(int _id = 0,

@@ -15,12 +15,6 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const size_t OPCIONES = 6;
-const int INICIO_TITULO = 3;
-const int INICIO_TABLA = INICIO_TITULO + 5;
-const int CURSOR_START_X = 12; // 3
-const int CURSOR_START_Y = 4;
-const int PAGINADO = 15;
 static ArchivoManager<Vendedor> archivo("vendedores.dat");
 
 Vendedor::Vendedor(int _legajo,
@@ -31,8 +25,8 @@ Vendedor::Vendedor(int _legajo,
                    Fecha _fecha)
     : Entidad(_legajo, _estado, _fecha) // El legajo se pasa como ID a la Entidad
 {
-    // El cuerpo del constructor va aquí
-    legajo = _legajo; // Asigna también al miembro 'legajo' local
+    // El cuerpo del constructor va aquï¿½
+    legajo = _legajo; // Asigna tambiï¿½n al miembro 'legajo' local
     strcpy(nombre, _nombre);
     strcpy(telefonoVendedor, _telefonoVendedor);
     strcpy(dni, _dni);
@@ -40,7 +34,7 @@ Vendedor::Vendedor(int _legajo,
 
 // Destructor
 Vendedor::~Vendedor() {
-    // Vacío, como estaba
+    // Vacï¿½o, como estaba
 }
 
 // Setters especificos
@@ -50,7 +44,7 @@ void Vendedor::setNombre(const char *_nombre) {
 
 void Vendedor::setLegajo(int _legajo) {
     legajo = _legajo;
-    // Quizás también quieras actualizar el ID de la Entidad base:
+    // Quizï¿½s tambiï¿½n quieras actualizar el ID de la Entidad base:
     // setID(_legajo);
 }
 
@@ -80,15 +74,15 @@ int Vendedor::getLegajo() const {
 }
 
 void Vendedor::cargar() {
-    string datos[OPCIONES-1] = {
+    string datos[VENDEDOR_OPCIONES_CARGA-1] = {
         "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
         "FECHA: [ __/__/____ ]"                     ,
         "ID: [          ]"                          };
 
-    agregar("A G R E G A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("A G R E G A R  V E N D E D O R", VENDEDOR_INICIO_TITULO, VENDEDOR_OPCIONES_CARGA-2);
+    agregar_opciones(datos, VENDEDOR_INICIO_TABLA, VENDEDOR_OPCIONES_CARGA-1, datos[VENDEDOR_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -314,6 +308,7 @@ void Vendedor::cargar() {
 
 
 void Vendedor::mostrar() const {
+    constexpr int OPCIONES = 6;
     string datos_titulo[OPCIONES] = {
                             "    ID    ",
                             "          N O M B R E           ",
@@ -331,11 +326,11 @@ void Vendedor::mostrar() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE VENDEDORES ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 1);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, VENDEDOR_CURSOR_START_X, VENDEDOR_CURSOR_START_Y, VENDEDOR_PAGINADO, VENDEDOR_OPCIONES_CARGA, 1);
 }
 
 void Vendedor::mostrar_activos() const {
-    string datos_titulo[OPCIONES] = {
+    string datos_titulo[VENDEDOR_OPCIONES_CARGA] = {
                             "    ID    ",
                             "          N O M B R E           ",
                             "    TELEFONO     ",
@@ -344,7 +339,7 @@ void Vendedor::mostrar_activos() const {
                             "  ESTADO  "
                             };
 
-    size_t datos_espacios[OPCIONES] = {10, 32, 17, 10, 12, 10};
+    size_t datos_espacios[VENDEDOR_OPCIONES_CARGA] = {10, 32, 17, 10, 12, 10};
 
     rlutil::locate(50, 1);
     rlutil::setColor(rlutil::MAGENTA);
@@ -352,7 +347,7 @@ void Vendedor::mostrar_activos() const {
     rlutil::locate(46, 2);
     cout << "CANTIDAD DE PRODUCTOS ACTIVOS: " << archivo.cantidadRegistrosActivos();
 
-    mostrarRegistros(archivo, datos_titulo, datos_espacios, CURSOR_START_X, CURSOR_START_Y, PAGINADO, OPCIONES, 0);
+    mostrarRegistros(archivo, datos_titulo, datos_espacios, VENDEDOR_CURSOR_START_X, VENDEDOR_CURSOR_START_Y, VENDEDOR_PAGINADO, VENDEDOR_OPCIONES_CARGA, 0);
 }
 
 
@@ -381,7 +376,7 @@ void Vendedor::mostrarFila(int posX, int posY) const {
 }
 
 void Vendedor::modificar() {
-    string datos[OPCIONES-1] = {
+    string datos[VENDEDOR_OPCIONES_CARGA-1] = {
         "NOMBRE: [                                ]",
         "TELEFONO: [                 ]"             ,
         "DNI: [          ]"                         ,
@@ -389,8 +384,8 @@ void Vendedor::modificar() {
 
     rlutil::setColor(rlutil::MAGENTA);
 
-    agregar("M O D I F I C A R  V E N D E D O R", INICIO_TITULO, OPCIONES-2);
-    agregar_opciones(datos, INICIO_TABLA, OPCIONES-1, datos[OPCIONES-2], 75);
+    agregar("M O D I F I C A R  V E N D E D O R", VENDEDOR_INICIO_TITULO, VENDEDOR_OPCIONES_CARGA-2);
+    agregar_opciones(datos, VENDEDOR_INICIO_TABLA, VENDEDOR_OPCIONES_CARGA-1, datos[VENDEDOR_OPCIONES_CARGA-2], 75);
 
     rlutil::setColor(rlutil::RED);
     rlutil::locate(68, 10);
@@ -413,7 +408,7 @@ void Vendedor::modificar() {
     string fechaStr = diaStr + "/" + mesStr + "/" + to_string(fechaIngreso.getAnio());
 
     string valoresActuales[4] = {nombre, telefonoVendedor, dni, fechaStr};
-    mostrarPlaceholdersActuales(valoresActuales, 4, 32, INICIO_TABLA, 2);
+    mostrarPlaceholdersActuales(valoresActuales, 4, 32, VENDEDOR_INICIO_TABLA, 2);
 
     rlutil::locate(81, 8); /// ID
     cout << legajo;

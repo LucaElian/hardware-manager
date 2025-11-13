@@ -13,6 +13,8 @@ private:
     char telefonoVendedor[MAX_TELEFONO];
     char dni[MAX_DNI];
 
+
+
 public:
     // Constructor (solo declaración)
     Vendedor(int _legajo = 0,

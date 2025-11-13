@@ -106,6 +106,30 @@ public:
         std::cout << "Total: $" << total << "\n";
     }
 
+    void mostrarProductosDisponibles() {
+        std::vector<Producto> productos;
+        _gestorProducto.leerTodosActivos(productos);
+        
+        rlutil::locate(5, 5);
+        rlutil::setColor(rlutil::CYAN);
+        std::cout << "=== PRODUCTOS DISPONIBLES (Stock Actualizado) ===";
+        
+        int linea = 5;
+        for (const auto& producto : productos) {
+            int stockDisponible = this->stockDisponible(producto.getID());
+            
+            rlutil::locate(5, linea);
+            rlutil::setColor(rlutil::WHITE);
+            std::cout << "ID: " << producto.getID() 
+                      << " | NOMBRE: " << producto.getNombre()
+                      << " | STOCK DISPONIBLE: " << stockDisponible 
+                      << " | PRECIO: $" << std::fixed << std::setprecision(2) << producto.getPrecio();
+            linea++;
+            
+            if(linea > 35) break;
+        }
+    }
+
     /**
      * @brief Finaliza la venta actual
      *
@@ -146,12 +170,11 @@ public:
 
             actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
 
-            detalle.setID(++detalleID_counter); // <-- ¡ESTA LÍNEA!
+            detalle.setID(++detalleID_counter);
 
             DetalleVenta* pDetalle = new DetalleVenta(detalle);
             //pDetalle.setID(_gestorDetalle.cantidadRegistros());
             //registra detalle
-
 
             if (!_gestorDetalle.escribir(pDetalle)) {
                 delete nuevaVenta;
@@ -240,6 +263,32 @@ public:
 
     int cantidadRegistrosActivos() {
         return _gestorVenta.cantidadRegistrosActivos();
+    }
+    int cantidadPedida() {
+        return static_cast<int>(_carrito.size());
+    }
+    int stockDisponible(int idProducto) {
+        int stockTotal = 0;
+        Producto producto;
+        if (_gestorProducto.leerPorID(idProducto, producto)) {
+            stockTotal = producto.getStock();
+        }
+
+        int reservado = 0;
+        for (const auto& d : _carrito) {
+            if (d.getIdProducto() == idProducto) reservado += d.getCantidad();
+        }
+        return stockTotal - reservado;
+    }
+    int getTotalCarrito() const {
+        int total = 0;
+        for (const auto& detalle : _carrito) {
+            total += detalle.getSubtotal();
+        }
+        return total;
+    }
+    std::vector<DetalleVenta> getCarrito() const {
+        return _carrito;
     }
 
 private:

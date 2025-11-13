@@ -11,6 +11,7 @@ private:
     char nombre[MAX_NOMBRE];
     char telefono[MAX_TELEFONO];
 
+
 public:
     // Constructor (solo declaración, valores por defecto van aquí)
     Cliente(int _id = 0,

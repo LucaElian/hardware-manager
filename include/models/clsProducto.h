@@ -45,6 +45,7 @@ public:
     void mostrarFila(int posX, int posY) const override;
 
     void mostrar_activos() const;
+    string getNombreProductoPorID(int idBuscado) const;
 };
 
 #endif // PRODUCTOS_H_INCLUDED

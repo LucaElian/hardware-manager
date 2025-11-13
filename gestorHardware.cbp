@@ -43,6 +43,7 @@
 		<Unit filename="gestorHardware.layout" />
 		<Unit filename="include/Contexto.h" />
 		<Unit filename="include/ContextoGestores.h" />
+		<Unit filename="include/constantes.h" />
 		<Unit filename="include/managers/archivoManager.h" />
 		<Unit filename="include/managers/gestorVenta.h" />
 		<Unit filename="include/managers/uiManager.h" />
@@ -79,8 +80,6 @@
 		<Unit filename="src/ui/menuVenta.cpp" />
 		<Unit filename="test/genDb.h" />
 		<Unit filename="utilidades.cpp" />
-		<Unit filename="test/genDb.h"/>
-		<Unit filename="include/constantes.h"/>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
