@@ -75,29 +75,33 @@ void agregarVendedor(Vendedor vendedor, ArchivoManager<Vendedor> &gestor) {
 }
 
 void eliminarVendedor(Vendedor vendedor, ArchivoManager<Vendedor> &gestor) {
-    vendedor.mostrar_activos();
+    vendedor.mostrar();
     
-    if(gestor.cantidadRegistrosActivos() > 0) {
+    if(gestor.cantidadRegistros() > 0) {
         int idEliminar;
         caja_eliminar(&idEliminar, 52, 24);
 
-        if(gestor.eliminarPorID(idEliminar)) {
+        if(gestor.leerPorID(idEliminar, vendedor)) {
+            vendedor.toggleEstado();
+            gestor.modificarPorId(idEliminar, vendedor);
             rlutil::setColor(rlutil::WHITE);
             rlutil::locate(41, 24+3);
-            cout << "VENDEDOR CON ID " << idEliminar << " ELIMINADO EXITOSAMENTE";
+            cout << "VENDEDOR CON ID " << idEliminar << " " << 
+            (vendedor.getEstado() ? "ACTIVADO" : "DESACTIVADO") << 
+            " EXITOSAMENTE";
         }
 
         else {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, 24+3);
-            cout << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
+            cout << "NO SE ENCONTRARON REGISTROS ACTIVOS/INACTIVOS CON ID " << idEliminar;
         }
     }
 
     else {
         rlutil::locate(40, 15);
         rlutil::setColor(rlutil::RED);
-        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS/INACTIVOS";
     }
 }
 

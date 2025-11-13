@@ -23,6 +23,9 @@ public:
     void setFecha(int dia, int mes, int anio) { 
         fechaIngreso = Fecha(dia, mes, anio); 
     }
+    void toggleEstado(){
+        this->estado = !estado;
+    }
 
     // Getters comunes
     int getID() const { return id; }

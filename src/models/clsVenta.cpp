@@ -9,21 +9,16 @@ using namespace std;
 #include "clsProducto.h"
 #include "utilidades.h"
 #include "ContextoGestores.h"
-#include "UiManager.h"
+#include "uiManager.h"
 #include "artworks.h"
 #include "constantes.h"
+#include "gestorVenta.h"
 
 #define byte windows_byte
 #include "rlutil.h"
 #undef byte
 
-const size_t OPCIONES = 6;
-const int INICIO_TITULO = 3;
-const int INICIO_TABLA = INICIO_TITULO + 5;
-const int CURSOR_START_X = 9;
-const int CURSOR_START_Y = 4;
-const int PAGINADO = 15;
-static ArchivoManager<Venta> archivo("ventas.dat");
+static ArchivoManager<Venta> archivo(ARCHIVO_VENTAS);
 
 Venta::Venta(int _id,
             int _idVenta,
@@ -58,7 +53,7 @@ Venta::Venta(int _id,
 // Destructor
 Venta::~Venta() {}
 
-// --- Implementing pure virtual functions ---
+// Metodos virtuales heredados
 
 void Venta::cargar() {
     string datos[OPCIONES-1] = {
@@ -81,15 +76,11 @@ void Venta::cargar() {
     rlutil::setColor(rlutil::MAGENTA);
     rlutil::showcursor();
 
-
-
     ContextoGestores contexto;
     int cantidad = contexto.gestorVenta.cantidadRegistros();
     setIdVenta(cantidad + 1);
     rlutil::locate(70, 8); /// ID VENTA
     cout << idVenta;
-
-
 
     bool valido = false;
     Cliente cliente;
@@ -136,7 +127,7 @@ void Venta::cargar() {
             cout << "          ";
         }
     }
-    limpiar_linea(32, 22);
+    limpiar_linea(44, 22);
 
 
     char est[3];
@@ -245,84 +236,73 @@ void Venta::cargar() {
     vector<Producto> productos;
     contexto.gestorP.leerTodosActivos(productos);
 
-    struct ItemCarrito {
-        int idProducto;
-        string nombre;
-        int cantidad;
-        double precioUnitario;
-        double subtotal;
-    };
-    
-    vector<ItemCarrito> carrito;
-    int cantidadesPedidas[1000] = {0};
-    
+    GestorVenta gestorVenta;
+    gestorVenta.iniciarNuevaVenta(idCliente, legajoVendedor);
     int idProducto = -1;
-    int cantidadPedida = 0;
-    total = 0.0;
     int terminacion = 0;
     
     Producto producto;
-    while(true) {        
+    while(idProducto != 0 || gestorVenta.cantidadPedida() != 0 || gestorVenta.cantidadPedida() > 10) {
         system("cls");
         rlutil::hidecursor();
-        producto.mostrar_activos();
+        producto.mostrar();
+        //gestorVenta.mostrarProductosDisponibles(); SOLUCIONAR INTERFAZ
 
         cin.ignore();
         system("cls");
 
         rlutil::setColor(rlutil::WHITE);
         rlutil::showcursor();
-        mostrar_carrito((int)carrito.size(), 5, &terminacion, total);
+        mostrar_carrito((int)gestorVenta.getCarrito().size(), 5, &terminacion, gestorVenta.getTotalCarrito());
         
         int y = 5 + 5;
-        for(const auto& item : carrito) {
+        for(const auto& item : gestorVenta.getCarrito()) {
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(13, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            cout << item.idProducto;
+            cout << item.getIdProducto();
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(27, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            cout << item.nombre;
+            cout << producto.getNombreProductoPorID(item.getIdProducto());
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(59, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            cout << item.cantidad;
+            cout << item.getCantidad();
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(71, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            cout << item.precioUnitario;
+            cout << item.getPrecioVenta();
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(89, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            cout << item.subtotal;
+            cout << item.getSubtotal();
             y++;
         }
 
         terminacion+=5 + 5 + 6;
-        caja_producto_cantidad(&idProducto, &cantidadPedida, &terminacion);
+        int cantidadActual = gestorVenta.cantidadPedida();
+        caja_producto_cantidad(&idProducto, &cantidadActual, &terminacion);
 
+        if(idProducto == 0 && cantidadActual > 0) break;
 
-        if(idProducto == 0 && cantidadPedida == 0) {
-            if (carrito.empty()) {
-                rlutil::setColor(rlutil::RED);
-                rlutil::locate(39, terminacion + 4);
-                cout << "ERROR: NO SE HA INGRESADO NINGUN PRODUCTO";
-                rlutil::hidecursor();
-                cin.ignore();
-                idProducto = -1;
-                continue;
-            }
-            break;
+        else if(idProducto == 0 && cantidadActual == 0) {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, terminacion + 4);
+            cout << "ERROR: NO SE HA INGRESADO NINGUN PRODUCTO";
+            rlutil::hidecursor();
+            cin.ignore();
+            idProducto = -1;
+            continue;
         }
 
         Producto prod;
@@ -333,7 +313,7 @@ void Venta::cargar() {
             if(p.getID() == idProducto && p.getEstado()) {
                 prod = p;
                 encontrado = true;
-                stockDisponible = p.getStock() - cantidadesPedidas[idProducto];
+                stockDisponible = gestorVenta.stockDisponible(idProducto);
                 break;
             }
         }
@@ -346,8 +326,8 @@ void Venta::cargar() {
             cin.ignore();
             continue;
         }
-        
-        if(cantidadPedida > stockDisponible) {
+
+        if(gestorVenta.cantidadPedida() > stockDisponible) {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, terminacion + 4);
             cout << "ERROR: STOCK INSUFICIENTE. DISPONIBLE: " << stockDisponible;
@@ -355,24 +335,19 @@ void Venta::cargar() {
             cin.ignore();
             continue;
         }
-        
-        ItemCarrito item;
-        item.idProducto = idProducto;
-        item.nombre = prod.getNombre();
-        item.cantidad = cantidadPedida;
-        item.precioUnitario = prod.getPrecio();
-        item.subtotal = prod.getPrecio() * cantidadPedida;
-        
-        carrito.push_back(item);
-        cantidadesPedidas[idProducto] += cantidadPedida;
-        total += item.subtotal;
 
-        rlutil::locate(45, terminacion + 4);
-        cout << "ARTICULO AGREGADO EXITOSAMENTE";
+        if (gestorVenta.agregarProducto(idProducto, cantidadActual)) {
+            rlutil::locate(45, terminacion + 4);
+            cout << "ARTICULO AGREGADO EXITOSAMENTE";
+        } else {
+            rlutil::setColor(rlutil::RED);
+            rlutil::locate(39, terminacion + 4);
+            cout << "ERROR: NO SE PUDO AGREGAR EL ARTICULO";
+        }
         rlutil::hidecursor();
         cin.ignore();
     }
-    
+    gestorVenta.finalizarVenta();
     rlutil::setColor(rlutil::WHITE);
     rlutil::locate(45, terminacion + 4);
     cout << "VENTA REGISTRADA EXITOSAMENTE";

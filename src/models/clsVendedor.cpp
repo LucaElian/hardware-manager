@@ -15,12 +15,6 @@ using namespace std;
 #include "rlutil.h"
 #undef byte
 
-const size_t OPCIONES = 6;
-const int INICIO_TITULO = 3;
-const int INICIO_TABLA = INICIO_TITULO + 5;
-const int CURSOR_START_X = 12; // 3
-const int CURSOR_START_Y = 4;
-const int PAGINADO = 15;
 static ArchivoManager<Vendedor> archivo("vendedores.dat");
 
 void Vendedor::cargar() {

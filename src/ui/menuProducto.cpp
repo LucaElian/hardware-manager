@@ -82,23 +82,27 @@ void eliminarProducto(Producto producto, ArchivoManager<Producto>& gestor) {
         int idEliminar;
         caja_eliminar(&idEliminar, 52, 24);
 
-        if(gestor.eliminarPorID(idEliminar)) {
+        if(gestor.leerPorID(idEliminar, producto)) {
+            producto.toggleEstado();
+            gestor.modificarPorId(idEliminar, producto);
             rlutil::setColor(rlutil::WHITE);
             rlutil::locate(41, 24+3);
-            cout << "PRODUCTO CON ID " << idEliminar << " ELIMINADO EXITOSAMENTE";
+            cout << "PRODUCTO CON ID " << idEliminar << 
+            " " << (producto.getEstado() ? "ACTIVADO" : "DESACTIVADO") 
+            << " EXITOSAMENTE";
         }
 
         else {
             rlutil::setColor(rlutil::RED);
             rlutil::locate(39, 24+3);
-            cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS CON ID " << idEliminar;
+            cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS/INACTIVOS CON ID " << idEliminar;
         }
     }
 
     else {
         rlutil::locate(40, 15);
         rlutil::setColor(rlutil::RED);
-        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS";
+        cerr << "NO SE ENCONTRARON REGISTROS ACTIVOS/INACTIVOS";
     }
 }
 
