@@ -474,3 +474,15 @@ void Producto::modificar() {
     rlutil::hidecursor();
     estado = true;
 }
+
+//funcion para obtener el nombre del producto por id
+string Producto::getNombreProductoPorID(int idBuscado) const{
+    vector<Producto> productos;
+    archivo.leer(productos);
+    for (const auto& producto : productos) {
+        if (producto.getID() == idBuscado) {
+            return producto.getNombre();
+        }
+    }
+    return ""; // Retorna cadena vacia si no se encuentra el producto
+}

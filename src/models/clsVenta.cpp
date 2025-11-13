@@ -225,14 +225,14 @@ void Venta::cargar() {
         system("cls");
         rlutil::hidecursor();
         producto.mostrar();
-        //gestorVenta.mostrarProductosDisponibles();
+        //gestorVenta.mostrarProductosDisponibles(); SOLUCIONAR INTERFAZ
 
         cin.ignore();
         system("cls");
 
         rlutil::setColor(rlutil::WHITE);
         rlutil::showcursor();
-        mostrar_carrito((int)gestorVenta.getCarrito().size(), 5, &terminacion, total);
+        mostrar_carrito((int)gestorVenta.getCarrito().size(), 5, &terminacion, gestorVenta.getTotalCarrito());
         
         int y = 5 + 5;
         for(const auto& item : gestorVenta.getCarrito()) {
@@ -246,7 +246,7 @@ void Venta::cargar() {
             rlutil::locate(27, y);
             cout << (char)ASCII_BARRA_VERTICAL << " ";
             rlutil::setColor(rlutil::GREY);
-            // cout << item.nombre;
+            cout << producto.getNombreProductoPorID(item.getIdProducto());
 
             rlutil::setColor(rlutil::MAGENTA);
             rlutil::locate(59, y);

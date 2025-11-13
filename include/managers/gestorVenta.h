@@ -280,6 +280,13 @@ public:
         }
         return stockTotal - reservado;
     }
+    int getTotalCarrito() const {
+        int total = 0;
+        for (const auto& detalle : _carrito) {
+            total += detalle.getSubtotal();
+        }
+        return total;
+    }
     std::vector<DetalleVenta> getCarrito() const {
         return _carrito;
     }
