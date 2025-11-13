@@ -17,6 +17,64 @@ using namespace std;
 
 static ArchivoManager<Producto> archivo("productos.dat");
 
+// Constructor
+// NOTA: Los valores por defecto NO se repiten aqu�.
+Producto::Producto(int _id,
+                   const char *_nombre,
+                   const char _tipo,
+                   int _stock,
+                   double _precio,
+                   bool _estado,
+                   Fecha _fecha)
+    : Entidad(_id, _estado, _fecha) // La lista de inicializaci�n va aqu�
+{
+    // El cuerpo del constructor va aqu�
+    strcpy(nombre, _nombre);
+    tipo = _tipo;
+    stock = _stock;
+    precio = _precio;
+}
+
+// Destructor
+Producto::~Producto() {
+    // Vac�o, como estaba
+}
+
+// Setters especificos
+void Producto::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Producto::setTipo(const char _tipo) {
+    tipo = _tipo;
+}
+
+void Producto::setStock(int _stock) {
+    stock = _stock;
+}
+
+void Producto::setPrecio(double _precio) {
+    precio = _precio;
+}
+
+// Getters especificos
+const char *Producto::getNombre() const {
+    return nombre;
+}
+
+char Producto::getTipo() const {
+    return tipo;
+}
+
+double Producto::getPrecio() const {
+    return precio;
+}
+
+int Producto::getStock() const {
+    return stock;
+}
+
+
 void Producto::cargar() {
     string datos[PRODUCTO_OPCIONES_CARGA-1] = {
                 "NOMBRE: [                                ]",

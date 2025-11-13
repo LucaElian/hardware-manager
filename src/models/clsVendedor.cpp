@@ -17,6 +17,62 @@ using namespace std;
 
 static ArchivoManager<Vendedor> archivo("vendedores.dat");
 
+Vendedor::Vendedor(int _legajo,
+                   const char *_nombre,
+                   const char *_telefonoVendedor,
+                   const char *_dni,
+                   bool _estado,
+                   Fecha _fecha)
+    : Entidad(_legajo, _estado, _fecha) // El legajo se pasa como ID a la Entidad
+{
+    // El cuerpo del constructor va aqu�
+    legajo = _legajo; // Asigna tambi�n al miembro 'legajo' local
+    strcpy(nombre, _nombre);
+    strcpy(telefonoVendedor, _telefonoVendedor);
+    strcpy(dni, _dni);
+}
+
+// Destructor
+Vendedor::~Vendedor() {
+    // Vac�o, como estaba
+}
+
+// Setters especificos
+void Vendedor::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Vendedor::setLegajo(int _legajo) {
+    legajo = _legajo;
+    // Quiz�s tambi�n quieras actualizar el ID de la Entidad base:
+    // setID(_legajo);
+}
+
+void Vendedor::setTelefonoVendedor(const char *_telefonoVendedor) {
+    strcpy(telefonoVendedor, _telefonoVendedor);
+}
+
+void Vendedor::setDni(const char *_dni) {
+    strcpy(dni, _dni);
+}
+
+// Getters especificos
+const char *Vendedor::getNombre() const {
+    return nombre;
+}
+
+const char *Vendedor::getTelefonoVendedor() const {
+    return telefonoVendedor;
+}
+
+const char *Vendedor::getDni() const {
+    return dni;
+}
+
+int Vendedor::getLegajo() const {
+    return legajo;
+}
+
 void Vendedor::cargar() {
     string datos[VENDEDOR_OPCIONES_CARGA-1] = {
         "NOMBRE: [                                ]",

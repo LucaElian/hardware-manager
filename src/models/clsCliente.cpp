@@ -16,6 +16,39 @@ using namespace std;
 
 static ArchivoManager<Cliente> archivo("clientes.dat");
 
+// Constructor
+// NOTA: Los valores por defecto NO se repiten aqu�.
+Cliente::Cliente(int _id, const char *_nombre, const char *_telefono)
+    : Entidad(_id, true, Fecha(1,1,1)) // <-- Arregl� el 'true' por una Fecha
+{
+    // El cuerpo del constructor va aqu�
+    strcpy(nombre, _nombre);
+    strcpy(telefono, _telefono);
+}
+
+// Destructor
+Cliente::~Cliente() {
+    // Vac�o, como estaba
+}
+
+// Setters especificos
+void Cliente::setNombre(const char *_nombre) {
+    strcpy(nombre, _nombre);
+}
+
+void Cliente::setTelefono(const char *_telefono) {
+    strcpy(telefono, _telefono);
+}
+
+// Getters especificos
+const char *Cliente::getNombre() const {
+    return nombre;
+}
+
+const char *Cliente::getTelefono() const {
+    return telefono;
+}
+
 void Cliente::cargar() {
     string datos[CLIENTE_OPCIONES_CARGA] = {
                 "NOMBRE: [                                ]",
